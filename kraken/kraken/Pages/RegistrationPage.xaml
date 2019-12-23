@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="kraken.Pages.RegistrationPage"
+             Title="Регистрация"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <!--Страница регистрации-->
+        <ScrollView>
+            <StackLayout Margin="20" Spacing="10">
+                <Entry Placeholder="ФИО" Text="{Binding FullName}"></Entry>
+                <Entry Placeholder="Организация" Text="{Binding Organization}"></Entry>
+                <Entry Placeholder="E-mail" Text="{Binding Email}"></Entry>
+                <Entry Placeholder="Телефон" Text="{Binding Phone}"></Entry>
+                <Editor Placeholder="Адрес" AutoSize="TextChanges" Text="{Binding Adress}"></Editor>
+                <Entry Placeholder="Пароль" Text="{Binding Password}" IsPassword="True"></Entry>
+                <Entry Placeholder="Повторите пароль" Text="{Binding RepeatPassword}" IsPassword="True"></Entry>
+                <Button Text="Зарегистрироваться" BackgroundColor="Red" TextColor="White" HorizontalOptions="Center" CornerRadius="10" WidthRequest="200" Clicked="Button_Clicked" Command="{Binding Register}"/>
+                <Button Text="Войти" BackgroundColor="Red" TextColor="White" HorizontalOptions="Center" CornerRadius="10" WidthRequest="200" Clicked="Button_Clicked_1" Command="{Binding LogIn}"/>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

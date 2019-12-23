@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="kraken.Pages.AuthorizationPage"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <!--Страница авторизации-->
+        <StackLayout Margin="20" VerticalOptions="Center" Spacing="0">
+            <Image Source="logo_Kraken.png" HorizontalOptions="Center" WidthRequest="150" HeightRequest="150"></Image>
+            <Grid Margin="10">
+                <Grid.Resources>
+                    <ResourceDictionary>
+                        <Style x:Key="Entry" TargetType="Entry">
+                            <Setter Property="VerticalOptions" Value="Center"/>
+                            <Setter Property="CursorPosition" Value="0"/>
+                        </Style>
+                    </ResourceDictionary>
+                </Grid.Resources>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="0" Grid.Row="0" VerticalOptions="Center" Source="avatar.png" WidthRequest="20" HeightRequest="20"/>
+                <Entry Grid.Column="1" Grid.Row="0" Placeholder="Логин" Text="{Binding Login}" Style="{StaticResource Entry}"/>
+                <Image Grid.Column="0" Grid.Row="1" VerticalOptions="Center" Source="pass.png" WidthRequest="20" HeightRequest="20"/>
+                <Entry Grid.Column="1" Grid.Row="1" Placeholder="Пароль" IsPassword="True" Text="{Binding Password}" Style="{StaticResource Entry}"/>
+            </Grid>
+            <Button Text="Вход" BackgroundColor="Red" TextColor="White" HorizontalOptions="Center" CornerRadius="10" WidthRequest="175" Clicked="Button_Clicked" Command="{Binding LogIn}"/>
+            <Label Text="Зарегистрироваться" VerticalOptions="EndAndExpand" HorizontalOptions="Center" Margin="0,100,0,0">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" Command="{Binding Register}" NumberOfTapsRequired="1"/>
+                </Label.GestureRecognizers>
+            </Label>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
