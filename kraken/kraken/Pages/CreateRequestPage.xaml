@@ -3,14 +3,71 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:accordion="clr-namespace:kraken.Views"
              mc:Ignorable="d"
-             x:Class="kraken.Pages.CreateRequestPage">
+             x:Class="kraken.Pages.CreateRequestPage"
+             Title="Создать запрос">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="ic_settings.png"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <!--Страница создания запроса-->
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <ScrollView>
+            <StackLayout>
+                <StackLayout.Resources>
+                    <ResourceDictionary>
+                        <Style x:Key="BoxView" TargetType="BoxView">
+                            <Setter Property="HeightRequest" Value="1"/>
+                            <Setter Property="BackgroundColor" Value="#CCCCCC"/>
+                        </Style>
+                    </ResourceDictionary>
+                </StackLayout.Resources>
+                <accordion:Accordion TitleView="Род работ" Margin="15,5" HorizontalOptions="Center">
+                    <accordion:Accordion.AccordionContentView>
+                        <Frame IsClippedToBounds="True" CornerRadius="5">
+                            <StackLayout BackgroundColor="White">
+                                <Label Text="Монтажные"></Label>
+                                <BoxView Style="{StaticResource BoxView}"></BoxView>
+                                <Label Text="Слесарные"></Label>
+                                <BoxView Style="{StaticResource BoxView}"></BoxView>
+                                <Label Text="Электротехнические"></Label>
+                            </StackLayout>
+                        </Frame>
+                    </accordion:Accordion.AccordionContentView>
+                    <accordion:Accordion.IndicatorView>
+                        <Image Source="ic_arrow_drop_down.png" WidthRequest="15" HeightRequest="15"></Image>
+                    </accordion:Accordion.IndicatorView>
+                </accordion:Accordion>
+                <accordion:Accordion TitleView="Срочность" Margin="15,5" HorizontalOptions="Center">
+                    <accordion:Accordion.AccordionContentView>
+                        <Frame IsClippedToBounds="True" CornerRadius="5">
+                            <StackLayout BackgroundColor="White">
+                                <Label Text="Высокая"></Label>
+                                <BoxView Style="{StaticResource BoxView}"></BoxView>
+                                <Label Text="Средняя"></Label>
+                                <BoxView Style="{StaticResource BoxView}"></BoxView>
+                                <Label Text="Низкая"></Label>
+                            </StackLayout>
+                        </Frame>
+                    </accordion:Accordion.AccordionContentView>
+                    <accordion:Accordion.IndicatorView>
+                        <Image Source="ic_arrow_drop_down.png" WidthRequest="15" HeightRequest="15"></Image>
+                    </accordion:Accordion.IndicatorView>
+                </accordion:Accordion>
+                <Frame IsClippedToBounds="True" Padding="0" CornerRadius="5" Margin="20,5">
+                    <Editor Placeholder="Описание работ" AutoSize="TextChanges"></Editor>
+                </Frame>
+                <Frame BackgroundColor="#eceff1" Margin="20,0" CornerRadius="5">
+                    <Frame CornerRadius="5">
+                        <StackLayout>
+                            <Image Source="ic_add_photo_alternate.png" HorizontalOptions="Center" WidthRequest="70"></Image>
+                            <Label Text="Прикрепите фото или видеофайл" HorizontalOptions="Center"></Label>
+                            <Button Text="Выбрать файл" TextColor="Red" BackgroundColor="White" CornerRadius="5" BorderColor="Red" BorderWidth="1" WidthRequest="175" Command="{Binding .}"></Button>
+                        </StackLayout>
+                    </Frame>
+                </Frame>
+                <Button Text="Опубликовать запрос" TextColor="White" BackgroundColor="Red" Margin="20,10" CornerRadius="5" Command="{Binding .}"></Button>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

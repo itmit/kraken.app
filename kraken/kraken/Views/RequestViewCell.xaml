@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="kraken.Views.RequestViewCell">
+  <ViewCell.View>
+      <!--Ячейка представление для списка мои запросы-->
+        <StackLayout Margin="0,5" BackgroundColor="White" Orientation="Horizontal">
+            <BoxView BackgroundColor="Red" HeightRequest="8" WidthRequest="8" CornerRadius="8" VerticalOptions="Start" HorizontalOptions="Center" Margin="5,15"></BoxView>
+            <StackLayout Margin="0,10">
+                <StackLayout Orientation="Horizontal" Spacing="0">
+                    <Label Text="Монтажные работы 23.11.2019" FontAttributes="Bold" HorizontalTextAlignment="Start"></Label>
+                    <Label Text="Срочно" HorizontalOptions="EndAndExpand" FontSize="12"></Label>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="36 мин" HorizontalTextAlignment="Start" FontSize="12"></Label>
+                    <Label Text="Описание ремонтных работ для, идентификации fdsgsrgsg sfgdgfsfgsdfg sgsfgsdfgs" HorizontalOptions="EndAndExpand" FontSize="12" LineBreakMode="TailTruncation" WidthRequest="275"></Label>
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+    </ViewCell.View>
+</ViewCell>

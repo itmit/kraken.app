@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:listMaster="clr-namespace:kraken.Views"
+             mc:Ignorable="d"
+             x:Class="kraken.Pages.RequestDetailPage"
+             Title="Мои запросы">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="ic_settings.png"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <!--Мои запросы детальная страница-->
+        <StackLayout>
+            <StackLayout BackgroundColor="White" Margin="0,5" Padding="20">
+                <Label Text="Монтажные работы 23.11.2019" FontAttributes="Bold"/>
+                <Label Text="Описание ремонтных работ. В соответствии с принципом неопределенности, кристалл выталкивает вихревой разрыв. Газ устойчив в магнитном поле"/>
+            </StackLayout>
+            <Label Text="Доступные мастера" FontSize="16" FontAttributes="Bold" Margin="20,0"></Label>
+            <ListView HasUnevenRows="True" VerticalScrollBarVisibility="Never" SeparatorVisibility="None">
+                <ListView.ItemsSource>
+                    <x:String>000</x:String>
+                </ListView.ItemsSource>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <listMaster:MasterViewCell/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

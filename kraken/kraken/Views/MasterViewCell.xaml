@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="kraken.Views.MasterViewCell">
+  <ViewCell.View>
+      <!--Ячейка представления для списка доступных мастеров-->
+      <StackLayout Orientation="Horizontal" BackgroundColor="White" Margin="0,5" Padding="10,5">
+            <Image Source="ic_build.png" WidthRequest="65"></Image>
+            <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                <StackLayout Orientation="Horizontal">
+                    <Label Text='ООО "Монтажник"' FontAttributes="Bold"></Label>
+                    <Label Text="36 мин" FontAttributes="Bold" HorizontalOptions="EndAndExpand"></Label>
+                </StackLayout>
+                <StackLayout>
+                    <Label Text="Монтажные работы" FontSize="12"></Label>
+                    <Label Text="Добавить в избранное" TextColor="Red" HorizontalOptions="End" FontSize="12"></Label>
+                </StackLayout>
+            </StackLayout>
+      </StackLayout>
+  </ViewCell.View>
+</ViewCell>

@@ -5,21 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration;
+using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 using Xamarin.Forms.Xaml;
 
-namespace kraken.Pages
+namespace kraken.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MyRequestPage : ContentPage
+    public partial class TabbedView : Xamarin.Forms.TabbedPage
     {
-        public MyRequestPage()
+        public TabbedView()
         {
             InitializeComponent();
-        }
-
-        private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
-        {
-            Navigation.PushAsync(new RequestDetailPage());
+            On<Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);
         }
     }
 }

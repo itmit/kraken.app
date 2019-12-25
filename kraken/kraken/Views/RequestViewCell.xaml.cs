@@ -7,19 +7,14 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace kraken.Pages
+namespace kraken.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MyRequestPage : ContentPage
+    public partial class RequestViewCell : ViewCell
     {
-        public MyRequestPage()
+        public RequestViewCell()
         {
             InitializeComponent();
-        }
-
-        private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
-        {
-            Navigation.PushAsync(new RequestDetailPage());
         }
     }
 }

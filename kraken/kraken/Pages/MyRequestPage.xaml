@@ -3,14 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewCell="clr-namespace:kraken.Views"
              mc:Ignorable="d"
-             x:Class="kraken.Pages.MyRequestPage">
+             x:Class="kraken.Pages.MyRequestPage"
+             Title="Мои запросы">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem IconImageSource="ic_settings.png"/>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <!--Страница мои запросы-->
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
+        <ListView HasUnevenRows="True" VerticalScrollBarVisibility="Never" SelectionMode="None" SeparatorVisibility="None" ItemTapped="ListView_ItemTapped">
+            <ListView.ItemsSource>
+                <x:String>000</x:String>
+            </ListView.ItemsSource>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <viewCell:RequestViewCell/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </ContentPage.Content>
 </ContentPage>

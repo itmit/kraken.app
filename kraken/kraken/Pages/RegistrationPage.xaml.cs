@@ -1,4 +1,5 @@
-﻿using System;
+﻿using kraken.Views;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +25,7 @@ namespace kraken.Pages
         /// <param name="e"></param>
         private void Button_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new MyProfilePage());
+            Navigation.PushAsync(new TabbedView());
         }
 
         /// <summary>

@@ -10,16 +10,11 @@ using Xamarin.Forms.Xaml;
 namespace kraken.Pages
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MyRequestPage : ContentPage
+    public partial class ExitPage : ContentPage
     {
-        public MyRequestPage()
+        public ExitPage()
         {
             InitializeComponent();
-        }
-
-        private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
-        {
-            Navigation.PushAsync(new RequestDetailPage());
         }
     }
 }

@@ -6,6 +6,10 @@
              mc:Ignorable="d"
              x:Class="kraken.App">
     <Application.Resources>
-
+        <ResourceDictionary>
+            <Style TargetType="NavigationPage">
+                <Setter Property="BarTextColor" Value="Gray"/>
+            </Style>
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
