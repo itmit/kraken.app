@@ -8,7 +8,7 @@
   <ViewCell.View>
       <!--Ячейка представление для списка мои запросы-->
         <StackLayout Margin="0,5" BackgroundColor="White" Orientation="Horizontal">
-            <BoxView BackgroundColor="Red" HeightRequest="8" WidthRequest="8" CornerRadius="8" VerticalOptions="Start" HorizontalOptions="Center" Margin="5,15"></BoxView>
+            <BoxView BackgroundColor="Red" HeightRequest="8" WidthRequest="8" CornerRadius="8" VerticalOptions="Start" HorizontalOptions="Center" Margin="10,15"></BoxView>
             <StackLayout Margin="0,10">
                 <StackLayout Orientation="Horizontal" Spacing="0">
                     <Label Text="Монтажные работы 23.11.2019" FontAttributes="Bold" HorizontalTextAlignment="Start"></Label>
@@ -16,7 +16,7 @@
                 </StackLayout>
                 <StackLayout Orientation="Horizontal">
                     <Label Text="36 мин" HorizontalTextAlignment="Start" FontSize="12"></Label>
-                    <Label Text="Описание ремонтных работ для, идентификации fdsgsrgsg sfgdgfsfgsdfg sgsfgsdfgs" HorizontalOptions="EndAndExpand" FontSize="12" LineBreakMode="TailTruncation" WidthRequest="275"></Label>
+                    <Label Text="Описание ремонтных работ для, идентификации какой-то текст" HorizontalOptions="EndAndExpand" FontSize="12" LineBreakMode="TailTruncation" WidthRequest="275"></Label>
                 </StackLayout>
             </StackLayout>
         </StackLayout>

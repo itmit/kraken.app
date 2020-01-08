@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:accordion="clr-namespace:kraken.Views"
              mc:Ignorable="d"
              x:Class="kraken.Pages.CreateRequestPage"
              Title="Создать запрос">
@@ -13,49 +12,40 @@
     <ContentPage.Content>
         <!--Страница создания запроса-->
         <ScrollView>
-            <StackLayout>
+            <StackLayout Margin="0,10,0,0">
                 <StackLayout.Resources>
                     <ResourceDictionary>
-                        <Style x:Key="BoxView" TargetType="BoxView">
-                            <Setter Property="HeightRequest" Value="1"/>
-                            <Setter Property="BackgroundColor" Value="#CCCCCC"/>
+                        <Style x:Key="Picker" TargetType="Picker">
+                            <Setter Property="FontSize" Value="14"/>
+                        </Style>
+                        <Style x:Key="Frame" TargetType="Frame">
+                            <Setter Property="IsClippedToBounds" Value="True"/>
+                            <Setter Property="CornerRadius" Value="5"/>
+                            <Setter Property="Padding" Value="0"/>
+                            <Setter Property="Margin" Value="20,0"/>
                         </Style>
                     </ResourceDictionary>
                 </StackLayout.Resources>
-                <accordion:Accordion TitleView="Род работ" Margin="15,5" HorizontalOptions="Center">
-                    <accordion:Accordion.AccordionContentView>
-                        <Frame IsClippedToBounds="True" CornerRadius="5">
-                            <StackLayout BackgroundColor="White">
-                                <Label Text="Монтажные"></Label>
-                                <BoxView Style="{StaticResource BoxView}"></BoxView>
-                                <Label Text="Слесарные"></Label>
-                                <BoxView Style="{StaticResource BoxView}"></BoxView>
-                                <Label Text="Электротехнические"></Label>
-                            </StackLayout>
-                        </Frame>
-                    </accordion:Accordion.AccordionContentView>
-                    <accordion:Accordion.IndicatorView>
-                        <Image Source="ic_arrow_drop_down.png" WidthRequest="15" HeightRequest="15"></Image>
-                    </accordion:Accordion.IndicatorView>
-                </accordion:Accordion>
-                <accordion:Accordion TitleView="Срочность" Margin="15,5" HorizontalOptions="Center">
-                    <accordion:Accordion.AccordionContentView>
-                        <Frame IsClippedToBounds="True" CornerRadius="5">
-                            <StackLayout BackgroundColor="White">
-                                <Label Text="Высокая"></Label>
-                                <BoxView Style="{StaticResource BoxView}"></BoxView>
-                                <Label Text="Средняя"></Label>
-                                <BoxView Style="{StaticResource BoxView}"></BoxView>
-                                <Label Text="Низкая"></Label>
-                            </StackLayout>
-                        </Frame>
-                    </accordion:Accordion.AccordionContentView>
-                    <accordion:Accordion.IndicatorView>
-                        <Image Source="ic_arrow_drop_down.png" WidthRequest="15" HeightRequest="15"></Image>
-                    </accordion:Accordion.IndicatorView>
-                </accordion:Accordion>
+                <Frame Style="{StaticResource Frame}">
+                    <Picker Title="Род работ" Style="{StaticResource Picker}">
+                        <Picker.Items>
+                            <x:String>Слесарные</x:String>
+                            <x:String>Монтажные</x:String>
+                            <x:String>Электротехнические</x:String>
+                        </Picker.Items>
+                    </Picker>
+                </Frame>
+                <Frame Style="{StaticResource Frame}">
+                    <Picker Title="Срочность" Style="{StaticResource Picker}">
+                        <Picker.Items>
+                            <x:String>Высокая</x:String>
+                            <x:String>Средняя</x:String>
+                            <x:String>Низкая</x:String>
+                        </Picker.Items>
+                    </Picker>
+                </Frame>
                 <Frame IsClippedToBounds="True" Padding="0" CornerRadius="5" Margin="20,5">
-                    <Editor Placeholder="Описание работ" AutoSize="TextChanges"></Editor>
+                    <Editor Placeholder="Описание работ" AutoSize="TextChanges" HeightRequest="100" FontSize="14"></Editor>
                 </Frame>
                 <Frame BackgroundColor="#eceff1" Margin="20,0" CornerRadius="5">
                     <Frame CornerRadius="5">

@@ -9,7 +9,7 @@
     <ContentPage.Content>
         <!--Страница авторизации-->
         <StackLayout Margin="20" VerticalOptions="Center" Spacing="0">
-            <Image Source="logo_Kraken.png" HorizontalOptions="Center" WidthRequest="150" HeightRequest="150"></Image>
+            <Image Source="ic_kraken.png" HorizontalOptions="Center" WidthRequest="150" HeightRequest="150"/>
             <Grid Margin="10">
                 <Grid.Resources>
                     <ResourceDictionary>

@@ -16,5 +16,11 @@ namespace kraken.Views
         {
             InitializeComponent();
         }
+
+        private void TapGestureRecognizer_Tapped(object sender, EventArgs e)
+        {
+            Favourites.IsVisible = false;
+            Grade.IsVisible = true;
+        }
     }
 }

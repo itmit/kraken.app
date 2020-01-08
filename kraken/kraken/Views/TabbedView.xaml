@@ -17,7 +17,7 @@
     <TabbedPage.UnselectedTabColor>
         <Color>#9E9E9E</Color>
     </TabbedPage.UnselectedTabColor>
-    <NavigationPage Title="Мой профиль" IconImageSource="ic_person.png">
+    <NavigationPage Title="Профиль" IconImageSource="ic_person.png">
         <x:Arguments>
             <Page:MyProfilePage/>
         </x:Arguments>
