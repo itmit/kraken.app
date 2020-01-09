@@ -16,5 +16,10 @@ namespace kraken.Pages
         {
             InitializeComponent();
         }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+            ListImage.IsVisible = true;
+        }
     }
 }

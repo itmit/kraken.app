@@ -7,19 +7,14 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace kraken.Pages
+namespace kraken.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class RequestDetailPage : ContentPage
+    public partial class ImageViewCell : ViewCell
     {
-        public RequestDetailPage()
+        public ImageViewCell()
         {
             InitializeComponent();
-        }
-
-        private void ImageButton_Clicked(object sender, EventArgs e)
-        {
-            Navigation.PopAsync();
         }
     }
 }

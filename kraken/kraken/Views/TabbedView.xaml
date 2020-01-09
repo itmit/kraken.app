@@ -4,6 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+            xmlns:local="clr-namespace:kraken"
             android:TabbedPage.IsSwipePagingEnabled="False"
             BarBackgroundColor="White"
              mc:Ignorable="d"
@@ -11,6 +12,9 @@
              x:Class="kraken.Views.TabbedView"
             NavigationPage.HasNavigationBar="False">
     <!--Нижнее меню-->
+    <TabbedPage.Effects>
+        <local:NoShiftEffect/>
+    </TabbedPage.Effects>
     <TabbedPage.SelectedTabColor>
         <Color>#e0e0e0</Color>
     </TabbedPage.SelectedTabColor>
