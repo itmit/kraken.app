@@ -54,8 +54,18 @@
                             <Image Source="ic_add_photo_alternate.png" HorizontalOptions="Center" WidthRequest="70"></Image>
                             <Label Text="Прикрепите фото или видеофайл" HorizontalOptions="Center"></Label>
                             <Button Text="Выбрать файл" TextColor="Red" BackgroundColor="White" CornerRadius="5" BorderColor="Red" BorderWidth="1" WidthRequest="175" Clicked="Button_Clicked" Command="{Binding .}"></Button>
-                            <StackLayout x:Name="ListImage" BackgroundColor="Transparent" HeightRequest="75" IsVisible="False" VerticalOptions="End" HorizontalOptions="Center">
-                                <ListView Rotation="270" HasUnevenRows="True" HeightRequest="275" SeparatorVisibility="None" SelectionMode="None" VerticalScrollBarVisibility="Never" VerticalOptions="Center" HorizontalOptions="Center">
+                            <RelativeLayout x:Name="ListImage" IsVisible="False" HorizontalOptions="Center" WidthRequest="275" HeightRequest="80">
+                                <ListView Rotation="270" 
+                                          RowHeight="80"
+                                          SeparatorVisibility="None" 
+                                          SelectionMode="None" 
+                                          VerticalScrollBarVisibility="Never" 
+                                          VerticalOptions="Center" 
+                                          HorizontalOptions="Center"
+                                          RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-50}"
+                                          RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=-0.5, Constant=50}"
+                                          RelativeLayout.WidthConstraint="{ConstraintExpression Type=Constant, Constant=80}"
+                                          RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
                                     <ListView.ItemsSource>
                                         <x:String>0000000</x:String>
                                     </ListView.ItemsSource>
@@ -65,7 +75,7 @@
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                 </ListView>
-                            </StackLayout>
+                            </RelativeLayout>
                         </StackLayout>
                     </Frame>
                 </Frame>
