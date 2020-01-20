@@ -5,7 +5,7 @@ using kraken.Droid;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
-[assembly: ResolutionGroupName("MyEffect")]
+[assembly: ResolutionGroupName("itmit")]
 [assembly: ExportEffect(typeof(NoShiftEffect), "NoShiftEffect")]
 namespace kraken.Droid
 {

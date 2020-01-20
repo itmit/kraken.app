@@ -8,7 +8,25 @@
     <Application.Resources>
         <ResourceDictionary>
             <Style TargetType="NavigationPage">
-                <Setter Property="BarTextColor" Value="Gray"/>
+                <Setter Property="BarBackgroundColor" Value="#ff0f0f"/>
+            </Style>
+            <Style x:Key="RedButton" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="#ff0f0f"/>
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="TextColor" Value="White"/>
+            </Style>
+            <Style x:Key="TransparentButton" TargetType="Button">
+                <Setter Property="TextColor" Value="#ff0f0f"/>
+                <Setter Property="BorderWidth" Value="1"/>
+                <Setter Property="BorderColor" Value="#ff0f0f"/>
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="CornerRadius" Value="10"/>
+            </Style>
+            <Style x:Key="PickerFrame" TargetType="Frame">
+                <Setter Property="IsClippedToBounds" Value="True"/>
+                <Setter Property="CornerRadius" Value="5"/>
+                <Setter Property="Padding" Value="0"/>
+                <Setter Property="Margin" Value="20,0"/>
             </Style>
         </ResourceDictionary>
     </Application.Resources>

@@ -4,7 +4,7 @@ namespace kraken
 {
     public class NoShiftEffect : RoutingEffect
     {
-        public NoShiftEffect() : base("MyEffect.NoShiftEffect")
+        public NoShiftEffect() : base("itmit.NoShiftEffect")
         {
         }
     }

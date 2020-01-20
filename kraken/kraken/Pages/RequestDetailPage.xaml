@@ -6,15 +6,9 @@
              xmlns:listMaster="clr-namespace:kraken.Views"
              mc:Ignorable="d"
              x:Class="kraken.Pages.RequestDetailPage"
-             NavigationPage.HasBackButton="False">
-    <NavigationPage.TitleView>
-        <StackLayout Orientation="Horizontal" Spacing="16">
-            <ImageButton BackgroundColor="Transparent" Source="ic_arrow_back_ios.png"  Clicked="ImageButton_Clicked" VerticalOptions="Center" WidthRequest="24"/>
-            <Label Text="Мои запросы" TextColor="Gray" FontSize="20" FontAttributes="Bold" FontFamily="Roboto" VerticalOptions="Center"></Label>
-        </StackLayout>
-    </NavigationPage.TitleView>
+             Title="Мои запросы">
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="ic_settings.png"/>
+        <ToolbarItem IconImageSource="ic_action_settings_applications.png"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <!--Мои запросы детальная страница-->

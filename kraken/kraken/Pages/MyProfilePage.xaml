@@ -7,7 +7,7 @@
              x:Class="kraken.Pages.MyProfilePage"
              Title="Мой профиль">
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="ic_settings.png"/>
+        <ToolbarItem IconImageSource="ic_action_settings_applications.png"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <!--Страница профиля-->

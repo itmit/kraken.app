@@ -23,7 +23,7 @@
                                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" Command="{Binding .}" NumberOfTapsRequired="1"/>
                             </Frame.GestureRecognizers>
                         </Frame>
-                        <Image x:Name="Grade" Source="ic_grade.png" WidthRequest="20" IsVisible="False" HorizontalOptions="End"/>
+                        <Image x:Name="Grade" Source="ic_action_star.png" IsVisible="False" HorizontalOptions="End" WidthRequest="24"/>
                     </Grid>
                 </StackLayout>
             </StackLayout>

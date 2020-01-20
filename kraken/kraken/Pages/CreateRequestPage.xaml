@@ -8,27 +8,14 @@
              x:Class="kraken.Pages.CreateRequestPage"
              Title="Создать запрос">
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="ic_settings.png"/>
+        <ToolbarItem IconImageSource="ic_action_settings_applications.png"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <!--Страница создания запроса-->
         <ScrollView>
             <StackLayout Margin="0,10,0,0">
-                <StackLayout.Resources>
-                    <ResourceDictionary>
-                        <Style x:Key="Picker" TargetType="Picker">
-                            <Setter Property="FontSize" Value="14"/>
-                        </Style>
-                        <Style x:Key="Frame" TargetType="Frame">
-                            <Setter Property="IsClippedToBounds" Value="True"/>
-                            <Setter Property="CornerRadius" Value="5"/>
-                            <Setter Property="Padding" Value="0"/>
-                            <Setter Property="Margin" Value="20,0"/>
-                        </Style>
-                    </ResourceDictionary>
-                </StackLayout.Resources>
-                <Frame Style="{StaticResource Frame}">
-                    <Picker Title="Род работ" Style="{StaticResource Picker}">
+                <Frame Style="{StaticResource PickerFrame}">
+                    <Picker Title="Род работ" FontSize="14">
                         <Picker.Items>
                             <x:String>Слесарные</x:String>
                             <x:String>Монтажные</x:String>
@@ -36,8 +23,8 @@
                         </Picker.Items>
                     </Picker>
                 </Frame>
-                <Frame Style="{StaticResource Frame}">
-                    <Picker Title="Срочность" Style="{StaticResource Picker}">
+                <Frame Style="{StaticResource PickerFrame}">
+                    <Picker Title="Срочность" FontSize = "14">
                         <Picker.Items>
                             <x:String>Высокая</x:String>
                             <x:String>Средняя</x:String>
@@ -79,7 +66,7 @@
                         </StackLayout>
                     </Frame>
                 </Frame>
-                <Button Text="Опубликовать запрос" TextColor="White" BackgroundColor="Red" Margin="20,10" CornerRadius="5" Command="{Binding .}"></Button>
+                <Button Text="Опубликовать запрос" Style="{StaticResource RedButton}" Margin="20,10" CornerRadius="5" Command="{Binding .}"></Button>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

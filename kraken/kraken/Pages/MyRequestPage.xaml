@@ -8,7 +8,7 @@
              x:Class="kraken.Pages.MyRequestPage"
              Title="Мои запросы">
     <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="ic_settings.png"/>
+        <ToolbarItem IconImageSource="ic_action_settings_applications.png"/>
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <!--Страница мои запросы-->
