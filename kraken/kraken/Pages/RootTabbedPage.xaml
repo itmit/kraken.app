@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="kraken.Pages.RootTabbedPage"
+             xmlns:Page="clr-namespace:kraken.Pages"
+             NavigationPage.HasNavigationBar="false">
+    <!--Нижнее меню-->
+    <TabbedPage.SelectedTabColor>
+        <Color>#e0e0e0</Color>
+    </TabbedPage.SelectedTabColor>
+    <TabbedPage.UnselectedTabColor>
+        <Color>#9E9E9E</Color>
+    </TabbedPage.UnselectedTabColor>
+    <NavigationPage Title="Профиль" IconImageSource="ic_action_person.png">
+        <x:Arguments>
+            <Page:MyProfilePage/>
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage Title="Создать запрос"  IconImageSource="ic_action_note_add.png">
+        <x:Arguments>
+            <Page:CreateRequestPage/>
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage Title="Мои запросы" IconImageSource="ic_action_list_alt.png">
+        <x:Arguments>
+            <Page:MyRequestPage/>
+        </x:Arguments>
+    </NavigationPage>
+    <Page:ExitPage Title="Выход" IconImageSource="ic_action_input.png"/>
+</TabbedPage>
