@@ -36,7 +36,6 @@
 
   <ItemGroup>
     <Folder Include="Controls\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,10 +1,7 @@
-﻿
-using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
+﻿using Xamarin.Forms;
 
 namespace kraken.Pages
 {
-    [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MyProfilePage : ContentPage
     {
         public MyProfilePage()

@@ -7,9 +7,7 @@
              x:Class="kraken.Pages.ExitPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <Button Text="Выйти" Style="{StaticResource RedButton}" Margin="20,10" CornerRadius="5" Command="{Binding ExitCommand}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

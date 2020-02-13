@@ -101,8 +101,8 @@ namespace kraken.PageModels
             client = new HttpClient();
             client.MaxResponseContentBufferSize = 209715200; // 200 MB
 
-            var restMethod = "login";
-            var uri = new System.Uri(string.Format(Constants.RestUrl, restMethod));
+            string restMethod = "login";
+            System.Uri uri = new System.Uri(string.Format(Constants.RestUrl, restMethod));
 
             try
             {
@@ -112,14 +112,14 @@ namespace kraken.PageModels
                 //jmessage.Add("device_token", user.Phone);
 
                 string json = jmessage.ToString();
-                var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+                StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = null;
                 response = client.PostAsync(uri, content).Result;
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var userInfo = await response.Content.ReadAsStringAsync();
+                    string userInfo = await response.Content.ReadAsStringAsync();
                     JObject userObj = JObject.Parse(userInfo);
 
                     User user = new User
@@ -128,6 +128,7 @@ namespace kraken.PageModels
                         Phone = userObj["data"]["client_info"]["phone"].ToString(),
                         Organization = userObj["data"]["client_info"]["organization"].ToString(),
                         Address = userObj["data"]["client_info"]["address"].ToString(),
+                        ClientType = userObj["data"]["client_type"].ToString(),
                     };
 
                     Realm.Write(() =>
@@ -140,7 +141,7 @@ namespace kraken.PageModels
                 else
                 {
                     string errorMessage = "";
-                    var errorInfo = await response.Content.ReadAsStringAsync();
+                    string errorInfo = await response.Content.ReadAsStringAsync();
                     JObject errorObj = JObject.Parse(errorInfo);
 
                     if (errorObj.ContainsKey("error"))

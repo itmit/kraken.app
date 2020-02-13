@@ -115,8 +115,8 @@ namespace kraken.PageModels
             client = new HttpClient();
             client.MaxResponseContentBufferSize = 209715200; // 200 MB
 
-            var restMethod = "register";
-            var uri = new System.Uri(string.Format(Constants.RestUrl, restMethod));
+            string restMethod = "register";
+            System.Uri uri = new System.Uri(string.Format(Constants.RestUrl, restMethod));
 
             try
             {
@@ -131,7 +131,7 @@ namespace kraken.PageModels
                 //jmessage.Add("device_token", user.Phone);
 
                 string json = jmessage.ToString();
-                var content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+                StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = null;
                 response = client.PostAsync(uri, content).Result;
@@ -143,7 +143,7 @@ namespace kraken.PageModels
                 else
                 {
                     string errorMessage = "";
-                    var errorInfo = await response.Content.ReadAsStringAsync();
+                    string errorInfo = await response.Content.ReadAsStringAsync();
                     JObject errorObj = JObject.Parse(errorInfo);
 
                     if (errorObj.ContainsKey("error"))

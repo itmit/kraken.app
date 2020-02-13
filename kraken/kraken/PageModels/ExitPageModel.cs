@@ -1,22 +1,54 @@
 ﻿using FreshMvvm;
+using kraken.Models;
 using PropertyChanged;
+using Realms;
 using System;
+using System.Linq;
+using System.Windows.Input;
 
 namespace kraken.PageModels
 {
     [AddINotifyPropertyChangedInterface]
     public class ExitPageModel : FreshBasePageModel
     {
+        public ICommand ExitCommand
+        {
+            get
+            {
+                return new Xamarin.Forms.Command((param) =>
+                {
+                    ExitClicked();
+                });
+            }
+        }
+
+        private async void ExitClicked()
+        {
+            bool answer = await CoreMethods.DisplayAlert("Внимание", "Вы действительно хотите выйти из приложения?", "Да", "Нет");
+
+            if (answer == true)
+            {
+                ExitAppAsync();
+            }
+        }
+
         public ExitPageModel()
         {
 
         }
 
-        protected override async void ViewIsAppearing(object sender, System.EventArgs e)
+        private async void ExitAppAsync()
         {
-            bool answer = await CoreMethods.DisplayAlert("Question?", "Would you like to play a game", "Yes", "No");
-            System.Diagnostics.Debug.WriteLine("Answer: " + answer);
-            base.ViewIsAppearing(sender, e);
+            Realm CurrentRealm = Realm.GetInstance();
+            CurrentRealm.Write(() =>
+            {
+                CurrentRealm.RemoveAll<User>();
+            });
+
+            App.IsUserLoggedIn = false;
+
+            await CoreMethods.PopPageModel(true, false, true);
+            CoreMethods.SwitchOutRootNavigation(NavigationContainerNames.AuthenticationContainer);
         }
     }
 }

@@ -3,6 +3,7 @@ using kraken.Models;
 using kraken.PageModels;
 using kraken.Pages;
 using Realms;
+using System;
 using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
@@ -17,10 +18,10 @@ namespace kraken
         {
             InitializeComponent();
 
-            var loginPage = FreshPageModelResolver.ResolvePageModel<AuthorizationPageModel>();
-            var loginContainer = new FreshNavigationContainer(loginPage, NavigationContainerNames.AuthenticationContainer);
+            Page loginPage = FreshPageModelResolver.ResolvePageModel<AuthorizationPageModel>();
+            FreshNavigationContainer loginContainer = new FreshNavigationContainer(loginPage, NavigationContainerNames.AuthenticationContainer);
 
-            var tabbedNavigation = new FreshTabbedNavigationContainer();
+            FreshTabbedNavigationContainer tabbedNavigation = new FreshTabbedNavigationContainer(NavigationContainerNames.MainContainer);
             tabbedNavigation.On<Xamarin.Forms.PlatformConfiguration.Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);
 
             tabbedNavigation.AddTab<MyProfilePageModel>("Профиль", "ic_action_person.png", null);
@@ -31,9 +32,9 @@ namespace kraken
             tabbedNavigation.SelectedTabColor = Color.FromHex("#e0e0e0");
             tabbedNavigation.UnselectedTabColor = Color.FromHex("#9E9E9E");
 
-            var realm = Realm.GetInstance();
-            var user = realm.All<User>();
-            var UserIsFound = user?.Count() > 0;
+            Realm realm = Realm.GetInstance();
+            IQueryable<User> user = realm.All<User>();
+            bool UserIsFound = user?.Count() > 0;
 
             if (!IsUserLoggedIn & !UserIsFound)
             {
