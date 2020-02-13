@@ -5,10 +5,11 @@ using kraken.Pages;
 using Realms;
 using System.Linq;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
 
 namespace kraken
 {
-    public partial class App : Application
+    public partial class App : Xamarin.Forms.Application
     {
         public static bool IsUserLoggedIn { get; set; }
 
@@ -19,8 +20,16 @@ namespace kraken
             var loginPage = FreshPageModelResolver.ResolvePageModel<AuthorizationPageModel>();
             var loginContainer = new FreshNavigationContainer(loginPage, NavigationContainerNames.AuthenticationContainer);
 
-            var mainPage = FreshPageModelResolver.ResolvePageModel<RootTabbedPageModel>();
-            var mainContainer = new FreshNavigationContainer(mainPage, NavigationContainerNames.MainContainer);
+            var tabbedNavigation = new FreshTabbedNavigationContainer();
+            tabbedNavigation.On<Xamarin.Forms.PlatformConfiguration.Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);
+
+            tabbedNavigation.AddTab<MyProfilePageModel>("Профиль", "ic_action_person.png", null);
+            tabbedNavigation.AddTab<CreateRequestPageModel>("Создать запрос", "ic_action_note_add.png", null);
+            tabbedNavigation.AddTab<MyRequestPageModel>("Мои запросы", "ic_action_list_alt.png", null);
+            tabbedNavigation.AddTab<ExitPageModel>("Выход", "ic_action_input.png", null);
+
+            tabbedNavigation.SelectedTabColor = Color.FromHex("#e0e0e0");
+            tabbedNavigation.UnselectedTabColor = Color.FromHex("#9E9E9E");
 
             var realm = Realm.GetInstance();
             var user = realm.All<User>();
@@ -32,7 +41,7 @@ namespace kraken
             }
             else
             {
-                MainPage = mainContainer;
+                MainPage = tabbedNavigation;
             }
         }
 

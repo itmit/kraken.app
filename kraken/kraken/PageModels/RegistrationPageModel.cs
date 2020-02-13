@@ -60,7 +60,7 @@ namespace kraken.PageModels
                 Organization = Organization,
                 Email = Email,
                 Phone = Phone,
-                Adress = Adress,
+                Address = Adress,
                 Password = Password,
                 //DeviceToken = App.DeviceToken
             };
@@ -124,7 +124,7 @@ namespace kraken.PageModels
                 jmessage.Add("email", user.Email);
                 jmessage.Add("name", user.Name);
                 jmessage.Add("organization", user.Organization);
-                jmessage.Add("address", user.Adress);
+                jmessage.Add("address", user.Address);
                 jmessage.Add("phone", ClearNumber(user.Phone));
                 jmessage.Add("password", user.Password);
                 jmessage.Add("password_confirmation", RepeatPassword);

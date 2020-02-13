@@ -13,14 +13,14 @@
         <!--Страница профиля-->
         <StackLayout BackgroundColor="White" Margin="0,10">
             <StackLayout Margin="20,20">
-                <Label Text="{Binding CurrentUser.Name}" FontAttributes="Bold"/>
-                <Label Text="{Binding CurrentUser.Organization}"/>
+                <Label Text="{Binding UserName}" FontAttributes="Bold"/>
+                <Label Text="{Binding UserOrganization}"/>
                 <Label>
                     <Label.FormattedText>
                         <FormattedString>
                             <FormattedString.Spans>
                                 <Span Text="E-mail: "></Span>
-                                <Span Text="{Binding UserName}"></Span>
+                                <Span Text="{Binding UserEmail}"></Span>
                             </FormattedString.Spans>
                         </FormattedString>
                     </Label.FormattedText>
@@ -30,7 +30,7 @@
                         <FormattedString>
                             <FormattedString.Spans>
                                 <Span Text="Телефон: "></Span>
-                                <Span Text="{Binding CurrentUser.Phone}"></Span>
+                                <Span Text="{Binding UserPhone}"></Span>
                             </FormattedString.Spans>
                         </FormattedString>
                     </Label.FormattedText>
@@ -40,12 +40,19 @@
                         <FormattedString>
                             <FormattedString.Spans>
                                 <Span Text="Адрес: "></Span>
-                                <Span Text="{Binding CurrentUser.Adress}"></Span>
+                                <Span Text="{Binding UserAddress}"></Span>
                             </FormattedString.Spans>
                         </FormattedString>
                     </Label.FormattedText>
                 </Label>
-                <Button Text="Мои запросы" TextColor="Red" BackgroundColor="White" BorderColor="Red" BorderWidth="1" Command="{Binding .}" CornerRadius="10"></Button>
+                <Button 
+                    Text="Мои запросы" 
+                    TextColor="Red" 
+                    BackgroundColor="White" 
+                    BorderColor="Red" 
+                    BorderWidth="1" 
+                    CornerRadius="10"
+                    Command="{Binding OnRequestsButtonClicked}"></Button>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

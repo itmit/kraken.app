@@ -127,7 +127,7 @@ namespace kraken.PageModels
                         Name = userObj["data"]["client_info"]["name"].ToString(),
                         Phone = userObj["data"]["client_info"]["phone"].ToString(),
                         Organization = userObj["data"]["client_info"]["organization"].ToString(),
-                        Adress = userObj["data"]["client_info"]["address"].ToString(),
+                        Address = userObj["data"]["client_info"]["address"].ToString(),
                     };
 
                     Realm.Write(() =>
