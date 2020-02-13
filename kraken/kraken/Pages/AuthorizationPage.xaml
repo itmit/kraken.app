@@ -16,6 +16,8 @@
                         <Style x:Key="Entry" TargetType="Entry">
                             <Setter Property="VerticalOptions" Value="Center"/>
                             <Setter Property="CursorPosition" Value="0"/>
+                            <Setter Property="PlaceholderColor" Value="Black"/>
+                            <Setter Property="TextColor" Value="Black"/>
                         </Style>
                     </ResourceDictionary>
                 </Grid.Resources>

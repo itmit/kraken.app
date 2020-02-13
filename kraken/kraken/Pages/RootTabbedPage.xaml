@@ -9,25 +9,50 @@
              NavigationPage.HasNavigationBar="false">
     <!--Нижнее меню-->
     <TabbedPage.SelectedTabColor>
-        <Color>#e0e0e0</Color>
+        <Color>Red</Color>
     </TabbedPage.SelectedTabColor>
     <TabbedPage.UnselectedTabColor>
         <Color>#9E9E9E</Color>
     </TabbedPage.UnselectedTabColor>
-    <NavigationPage Title="Профиль" IconImageSource="ic_action_person.png">
+    <NavigationPage Title="Профиль">
+        <NavigationPage.IconImageSource>
+            <OnPlatform x:TypeArguments="ImageSource">
+                <On Platform="iOS" Value="baseline_person_black_24pt_1x.png"/>
+                <On Platform="Android" Value="ic_action_person.png"/>
+            </OnPlatform>
+        </NavigationPage.IconImageSource>
         <x:Arguments>
             <Page:MyProfilePage/>
         </x:Arguments>
     </NavigationPage>
-    <NavigationPage Title="Создать запрос"  IconImageSource="ic_action_note_add.png">
+    <NavigationPage Title="Создать запрос">
+        <NavigationPage.IconImageSource>
+            <OnPlatform x:TypeArguments="ImageSource">
+                <On Platform="iOS" Value="baseline_note_add_black_24pt_1x.png"/>
+                <On Platform="Android" Value="ic_action_note_add.png"/>
+            </OnPlatform>
+        </NavigationPage.IconImageSource>
         <x:Arguments>
             <Page:CreateRequestPage/>
         </x:Arguments>
     </NavigationPage>
-    <NavigationPage Title="Мои запросы" IconImageSource="ic_action_list_alt.png">
+    <NavigationPage Title="Мои запросы">
+        <NavigationPage.IconImageSource>
+            <OnPlatform x:TypeArguments="ImageSource">
+                <On Platform="iOS" Value="baseline_list_alt_black_24pt_1x.png"/>
+                <On Platform="Android" Value="ic_action_list_alt.png"/>
+            </OnPlatform>
+        </NavigationPage.IconImageSource>
         <x:Arguments>
             <Page:MyRequestPage/>
         </x:Arguments>
     </NavigationPage>
-    <Page:ExitPage Title="Выход" IconImageSource="ic_action_input.png"/>
+    <Page:ExitPage Title="Выход">
+        <Page:ExitPage.IconImageSource>
+            <OnPlatform x:TypeArguments="ImageSource">
+                <On Platform="iOS" Value="baseline_input_black_24pt_1x.png"/>
+                <On Platform="Android" Value="ic_action_input.png"/>
+            </OnPlatform>
+        </Page:ExitPage.IconImageSource>
+    </Page:ExitPage>
 </TabbedPage>

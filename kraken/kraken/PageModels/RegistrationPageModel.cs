@@ -93,7 +93,7 @@ namespace kraken.PageModels
 
             if (Password != RepeatPassword)
             {
-                MessageLabel = "Парои не совпадают";
+                MessageLabel = "Пароли не совпадают";
                 return false;
             }
 

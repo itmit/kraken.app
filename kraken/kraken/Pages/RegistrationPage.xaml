@@ -11,13 +11,19 @@
         <!--Страница регистрации-->
         <ScrollView>
             <StackLayout Margin="20" Spacing="10">
-                <Entry Placeholder="ФИО" Text="{Binding FullName}"></Entry>
-                <Entry Placeholder="Организация" Text="{Binding Organization}"></Entry>
-                <Entry Placeholder="E-mail" Text="{Binding Email}"></Entry>
-                <Entry Placeholder="Телефон" Text="{Binding Phone}"></Entry>
-                <Editor Placeholder="Адрес" AutoSize="TextChanges" HeightRequest="70" Text="{Binding Adress}"></Editor>
-                <Entry Placeholder="Пароль" Text="{Binding Password}" IsPassword="True"></Entry>
-                <Entry Placeholder="Повторите пароль" Text="{Binding RepeatPassword}" IsPassword="True"></Entry>
+                <StackLayout.Resources>
+                    <Style TargetType="Entry">
+                        <Setter Property="PlaceholderColor" Value="Black"/>
+                        <Setter Property="TextColor" Value="Black"/>
+                    </Style>
+                </StackLayout.Resources>
+                <Entry Placeholder="ФИО" Text="{Binding FullName}"/>
+                <Entry Placeholder="Организация" Text="{Binding Organization}"/>
+                <Entry Placeholder="E-mail" Text="{Binding Email}"/>
+                <Entry Placeholder="Телефон" Text="{Binding Phone}"/>
+                <Editor Placeholder="Адрес" AutoSize="TextChanges" HeightRequest="70" Text="{Binding Adress}" TextColor="Black" PlaceholderColor="Black"/>
+                <Entry Placeholder="Пароль" Text="{Binding Password}" IsPassword="True"/>
+                <Entry Placeholder="Повторите пароль" Text="{Binding RepeatPassword}" IsPassword="True"/>
                 <Button Text="Зарегистрироваться" Style="{StaticResource RedButton}" HorizontalOptions="Center" WidthRequest="200" Command="{Binding OnRegisterButtonClicked}"/>
                 <Button Text="Войти" Style="{StaticResource RedButton}" HorizontalOptions="Center" WidthRequest="200" Clicked="Button_Clicked_1" Command="{Binding LogIn}"/>
             </StackLayout>

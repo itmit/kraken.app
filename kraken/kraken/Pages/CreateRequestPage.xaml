@@ -15,7 +15,7 @@
         <ScrollView>
             <StackLayout Margin="0,10,0,0">
                 <Frame Style="{StaticResource PickerFrame}">
-                    <Picker Title="Род работ" FontSize="14">
+                    <Picker Title="Род работ" FontSize="14" TitleColor="Black" TextColor="Black">
                         <Picker.Items>
                             <x:String>Слесарные</x:String>
                             <x:String>Монтажные</x:String>
@@ -24,7 +24,7 @@
                     </Picker>
                 </Frame>
                 <Frame Style="{StaticResource PickerFrame}">
-                    <Picker Title="Срочность" FontSize = "14">
+                    <Picker Title="Срочность" FontSize = "14" TitleColor="Black" TextColor="Black">
                         <Picker.Items>
                             <x:String>Высокая</x:String>
                             <x:String>Средняя</x:String>
@@ -33,7 +33,7 @@
                     </Picker>
                 </Frame>
                 <Frame IsClippedToBounds="True" Padding="0" CornerRadius="5" Margin="20,5">
-                    <Editor Placeholder="Описание работ" AutoSize="TextChanges" HeightRequest="100" FontSize="14"></Editor>
+                    <Editor Placeholder="Описание работ" AutoSize="TextChanges" HeightRequest="100" FontSize="14" TextColor="Black" PlaceholderColor="Black"/>
                 </Frame>
                 <Frame BackgroundColor="#eceff1" Margin="20,0" CornerRadius="5">
                     <Frame CornerRadius="5">
@@ -66,7 +66,7 @@
                         </StackLayout>
                     </Frame>
                 </Frame>
-                <Button Text="Опубликовать запрос" Style="{StaticResource RedButton}" Margin="20,10" CornerRadius="5" Command="{Binding .}"></Button>
+                <Button Text="Опубликовать запрос" Style="{StaticResource RedButton}" Margin="20,10" CornerRadius="5" Command="{Binding .}"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
