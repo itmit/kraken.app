@@ -12,15 +12,21 @@
     </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <!--Страница мои запросы-->
-        <ListView HasUnevenRows="True" VerticalScrollBarVisibility="Never" SelectionMode="None" SeparatorVisibility="None" ItemTapped="ListView_ItemTapped">
-            <ListView.ItemsSource>
-                <x:String>000</x:String>
-            </ListView.ItemsSource>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <viewCell:RequestViewCell/>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <StackLayout>
+            <ListView HasUnevenRows="True" 
+                      VerticalScrollBarVisibility="Never" 
+                      SelectionMode="None" 
+                      SeparatorVisibility="None" 
+                      ItemTapped="ListView_ItemTapped">
+                <ListView.ItemsSource>
+                    <x:String>000</x:String>
+                </ListView.ItemsSource>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <viewCell:RequestViewCell/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
     </ContentPage.Content>
 </ContentPage>

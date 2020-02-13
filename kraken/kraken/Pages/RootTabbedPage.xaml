@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="kraken.Pages.RootTabbedPage"
+             xmlns:Page="clr-namespace:kraken.Pages"
+             NavigationPage.HasNavigationBar="false">
+    <!--Нижнее меню-->
+    <TabbedPage.SelectedTabColor>
+        <Color>Red</Color>
+    </TabbedPage.SelectedTabColor>
+    <TabbedPage.UnselectedTabColor>
+        <Color>#9E9E9E</Color>
+    </TabbedPage.UnselectedTabColor>
+    <NavigationPage Title="Профиль">
+        <NavigationPage.IconImageSource>
+            <OnPlatform x:TypeArguments="ImageSource">
+                <On Platform="iOS" Value="baseline_person_black_24pt_1x.png"/>
+                <On Platform="Android" Value="ic_action_person.png"/>
+            </OnPlatform>
+        </NavigationPage.IconImageSource>
+        <x:Arguments>
+            <Page:MyProfilePage/>
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage Title="Создать запрос">
+        <NavigationPage.IconImageSource>
+            <OnPlatform x:TypeArguments="ImageSource">
+                <On Platform="iOS" Value="baseline_note_add_black_24pt_1x.png"/>
+                <On Platform="Android" Value="ic_action_note_add.png"/>
+            </OnPlatform>
+        </NavigationPage.IconImageSource>
+        <x:Arguments>
+            <Page:CreateRequestPage/>
+        </x:Arguments>
+    </NavigationPage>
+    <NavigationPage Title="Мои запросы">
+        <NavigationPage.IconImageSource>
+            <OnPlatform x:TypeArguments="ImageSource">
+                <On Platform="iOS" Value="baseline_list_alt_black_24pt_1x.png"/>
+                <On Platform="Android" Value="ic_action_list_alt.png"/>
+            </OnPlatform>
+        </NavigationPage.IconImageSource>
+        <x:Arguments>
+            <Page:MyRequestPage/>
+        </x:Arguments>
+    </NavigationPage>
+    <Page:ExitPage Title="Выход">
+        <Page:ExitPage.IconImageSource>
+            <OnPlatform x:TypeArguments="ImageSource">
+                <On Platform="iOS" Value="baseline_input_black_24pt_1x.png"/>
+                <On Platform="Android" Value="ic_action_input.png"/>
+            </OnPlatform>
+        </Page:ExitPage.IconImageSource>
+    </Page:ExitPage>
+</TabbedPage>
