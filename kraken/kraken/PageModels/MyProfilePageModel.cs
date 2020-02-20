@@ -13,7 +13,7 @@ namespace kraken.PageModels
         public Realm Realm { get { return Realm.GetInstance(); } }
         public User CurrentUser { get; set; }
 
-        public string UserName { get; set; } = "test";
+        public string UserName { get; set; }
         public string UserOrganization { get; set; }
         public string UserEmail { get; set; }
         public string UserPhone { get; set; }
