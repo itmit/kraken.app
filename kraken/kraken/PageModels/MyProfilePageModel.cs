@@ -32,7 +32,7 @@ namespace kraken.PageModels
 
         async void OpenRequestsPage()
         {
-            await CoreMethods.PushPageModel<MyRequestPageModel>();
+            await CoreMethods.SwitchSelectedTab<MyRequestPageModel>();
         }
 
         public MyProfilePageModel()

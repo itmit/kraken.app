@@ -21,5 +21,6 @@ namespace kraken.Models
         public string DeviceToken { get; set; }
 
         public string ClientType { get; set; }
+        public string Token { get; internal set; }
     }
 }

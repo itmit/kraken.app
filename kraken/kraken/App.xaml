@@ -28,6 +28,12 @@
                 <Setter Property="Padding" Value="0"/>
                 <Setter Property="Margin" Value="20,0"/>
             </Style>
+            <Style x:Key="DefaultPicker" TargetType="Picker">
+                <Setter Property="FontSize" Value="14"/>
+                <Setter Property="TitleColor" Value="Black"/>
+                <Setter Property="TextColor" Value="Black"/>
+                <Setter Property="Margin" Value="20,0"/>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
