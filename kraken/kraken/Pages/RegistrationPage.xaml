@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              x:Class="kraken.Pages.RegistrationPage"
              Title="Регистрация"
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasBackButton="False">
     <ContentPage.Content>
         <!--Страница регистрации-->
         <ScrollView>
@@ -21,7 +21,7 @@
                 <Entry Placeholder="Организация" Text="{Binding Organization}"/>
                 <Entry Placeholder="E-mail" Text="{Binding Email}"/>
                 <Entry Placeholder="Телефон" Text="{Binding Phone}"/>
-                <Editor Placeholder="Адрес" AutoSize="TextChanges" HeightRequest="70" Text="{Binding Adress}" TextColor="Black" PlaceholderColor="Black"/>
+                <Editor Placeholder="Адрес&#10;&#10;" AutoSize="TextChanges" Text="{Binding Adress}" TextColor="Black" PlaceholderColor="Black"/>
                 <Entry Placeholder="Пароль" Text="{Binding Password}" IsPassword="True"/>
                 <Entry Placeholder="Повторите пароль" Text="{Binding RepeatPassword}" IsPassword="True"/>
                 <Button Text="Зарегистрироваться" Style="{StaticResource RedButton}" HorizontalOptions="Center" WidthRequest="200" Command="{Binding OnRegisterButtonClicked}"/>

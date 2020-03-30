@@ -26,11 +26,11 @@
                         ItemsSource="{Binding Urgency}" 
                         SelectedItem="{Binding SelectedUrgency}"></Picker>
                 </Frame>
-                <Frame IsClippedToBounds="True" Padding="0" CornerRadius="5" Margin="20,5">
+                <Frame IsClippedToBounds="True" Padding="0" CornerRadius="5" Margin="20,5" BorderColor="LightGray">
                     <Editor Placeholder="Описание работ" AutoSize="TextChanges" HeightRequest="100" FontSize="14" TextColor="Black" PlaceholderColor="Black" Text="{Binding Description}"/>
                 </Frame>
-                <Frame BackgroundColor="#eceff1" Margin="20,0" CornerRadius="5">
-                    <Frame CornerRadius="5">
+                <Frame HasShadow="False" BackgroundColor="#eceff1" Margin="20,0" CornerRadius="5">
+                    <Frame HasShadow="False" CornerRadius="5">
                         <StackLayout>
                             <Image Source="ic_add_photo_alternate.png" HorizontalOptions="Center" WidthRequest="70"></Image>
                             <Label Text="Прикрепите фото или видеофайл" HorizontalOptions="Center"></Label>

@@ -24,12 +24,25 @@ namespace kraken
             FreshTabbedNavigationContainer tabbedNavigation = new FreshTabbedNavigationContainer(NavigationContainerNames.MainContainer);
             tabbedNavigation.On<Xamarin.Forms.PlatformConfiguration.Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);
 
-            tabbedNavigation.AddTab<MyProfilePageModel>("Профиль", "ic_action_person.png", null);
-            tabbedNavigation.AddTab<CreateRequestPageModel>("Создать запрос", "ic_action_note_add.png", null);
-            tabbedNavigation.AddTab<MyRequestPageModel>("Мои запросы", "ic_action_list_alt.png", null);
-            tabbedNavigation.AddTab<ExitPageModel>("Выход", "ic_action_input.png", null);
+            var tabIconProfile = "ic_action_person.png";
+            var tabIconCreateRequests = "ic_action_note_add.png";
+            var tabIconMyRequest = "ic_action_list_alt.png";
+            var tabIconExit = "ic_action_input.png";
 
-            tabbedNavigation.SelectedTabColor = Color.FromHex("#e0e0e0");
+            if(Device.iOS == Device.RuntimePlatform)
+            {
+                tabIconProfile = "baseline_person_black_24pt_1x.png";
+                tabIconCreateRequests = "baseline_note_add_black_24pt_1x.png";
+                tabIconMyRequest = "baseline_list_alt_black_24pt_1x.png";
+                tabIconExit = "baseline_input_black_24pt_1x.png";
+            }
+
+            tabbedNavigation.AddTab<MyProfilePageModel>("Профиль", tabIconProfile, null);
+            tabbedNavigation.AddTab<CreateRequestPageModel>("Создать запрос", tabIconCreateRequests, null);
+            tabbedNavigation.AddTab<MyRequestPageModel>("Мои запросы", tabIconMyRequest, null);
+            tabbedNavigation.AddTab<ExitPageModel>("Выход", tabIconExit, null);
+
+            tabbedNavigation.SelectedTabColor = Color.Red;
             tabbedNavigation.UnselectedTabColor = Color.FromHex("#9E9E9E");
 
             Realm realm = Realm.GetInstance();

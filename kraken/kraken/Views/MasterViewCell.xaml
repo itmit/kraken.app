@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:design="clr-namespace:kraken"
              mc:Ignorable="d"
              x:Class="kraken.Views.MasterViewCell">
   <ViewCell.View>
@@ -11,14 +12,14 @@
             <Image Source="ic_build.png" WidthRequest="65"/>
             <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                 <StackLayout Orientation="Horizontal">
-                    <Label Text='ООО "Монтажник"' FontAttributes="Bold"></Label>
-                    <Label Text="36 мин" FontAttributes="Bold" HorizontalOptions="EndAndExpand"></Label>
+                    <Label Text='ООО "Монтажник"' FontAttributes="Bold"/>
+                    <Label Text="36 мин" FontAttributes="Bold" HorizontalOptions="EndAndExpand"/>
                 </StackLayout>
                 <StackLayout>
-                    <Label Text="Монтажные работы" FontSize="12"></Label>
+                    <Label Text="Монтажные работы" FontSize="12"/>
                     <Grid HorizontalOptions="End">
-                        <Frame x:Name="Favourites" CornerRadius="5" BackgroundColor="Transparent" BorderColor="Red" HorizontalOptions="End" Padding="5">
-                            <Label Text="Добавить в избранное" TextColor="Red" HorizontalOptions="End" FontSize="12"></Label>
+                        <Frame x:Name="Favourites" HasShadow="False" CornerRadius="5" BorderColor="Red" HorizontalOptions="End" Padding="5">
+                            <Label Text="Добавить в избранное" TextColor="Red" HorizontalOptions="End" FontSize="12"/>
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" Command="{Binding .}" NumberOfTapsRequired="1"/>
                             </Frame.GestureRecognizers>
