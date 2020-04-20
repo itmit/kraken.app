@@ -15,6 +15,7 @@
                     <Picker 
                         Title="Род работ" 
                         Style="{StaticResource DefaultPicker}"
+                        ItemDisplayBinding="{Binding work}"
                         ItemsSource="{Binding WorkTypes}"
                         SelectedItem="{Binding SelectedType}">
                     </Picker>
@@ -23,6 +24,7 @@
                     <Picker 
                         Title="Срочность" 
                         Style="{StaticResource DefaultPicker}"
+                        ItemDisplayBinding="{Binding Name}"
                         ItemsSource="{Binding Urgency}" 
                         SelectedItem="{Binding SelectedUrgency}"></Picker>
                 </Frame>

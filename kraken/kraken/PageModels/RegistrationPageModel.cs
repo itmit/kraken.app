@@ -16,6 +16,8 @@ namespace kraken.PageModels
         public string MessageLabel { get; set; } = string.Empty;
         public Realm Realm { get { return Realm.GetInstance(); } }
 
+        public string UserToken { get; set; } = string.Empty;
+
         public string FullName { get; set; } = string.Empty;
         public string Organization { get; set; } = string.Empty;
         public string Email { get; set; } = string.Empty;
@@ -33,9 +35,9 @@ namespace kraken.PageModels
         {
             get
             {
-                return new FreshAwaitCommand((param, tcs) =>
+                return new FreshAwaitCommand(async (param, tcs) =>
                 {
-                    OnRegisterClicked();
+                    await OnRegisterClicked();
                     tcs.SetResult(true);
                 });
             }
@@ -46,13 +48,14 @@ namespace kraken.PageModels
             if (IsThereInternet() == false)
             {
                 MessageLabel = "Интернет-соединение отсутствует. Подключитесь к работающей сети.";
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Ошибка", MessageLabel, "OK");
                 return;
             }
 
-            //if (App.DeviceToken == null)
-            //{
-            //    App.DeviceToken = Plugin.FirebasePushNotification.CrossFirebasePushNotification.Current.Token;
-            //}
+            if (App.DeviceToken == null)
+            {
+                App.DeviceToken = Plugin.FirebasePushNotification.CrossFirebasePushNotification.Current.Token;
+            }
 
             User user = new User
             {
@@ -62,13 +65,15 @@ namespace kraken.PageModels
                 Phone = Phone,
                 Address = Adress,
                 Password = Password,
-                //DeviceToken = App.DeviceToken
+                DeviceToken = App.DeviceToken
             };
 
             bool isValid = await AreCredentialsCorrectAsync(user);
             if (isValid)
             {
                 App.IsUserLoggedIn = true;
+
+                user.Token = UserToken;
 
                 Realm.Write(() =>
                 {
@@ -84,16 +89,18 @@ namespace kraken.PageModels
         {
             //return user.Name == Constants.Username && user.PhoneNumber == Constants.Password;
             if (string.IsNullOrWhiteSpace(user.Name) |
-                string.IsNullOrWhiteSpace(user.Phone) | user.Phone.Length <= 7 |
+                string.IsNullOrWhiteSpace(user.Phone) | user.Phone.Length < 11 |
                 string.IsNullOrWhiteSpace(user.Password) | user.Password.Length < 5)
             {
-                MessageLabel = "НЕВЕРНО УКАЗАН НОМЕР ТЕЛЕФОНА ИЛИ ПАРОЛЬ";
+                MessageLabel = "Неверно указано имя, номер телефона или пароль";
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Ошибка", MessageLabel, "OK");
                 return false;
             }
 
             if (Password != RepeatPassword)
             {
                 MessageLabel = "Пароли не совпадают";
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Ошибка", MessageLabel, "OK");
                 return false;
             }
 
@@ -112,23 +119,27 @@ namespace kraken.PageModels
 
         private async Task<bool> SendUserInfoAsync(User user)
         {
-            client = new HttpClient();
-            client.MaxResponseContentBufferSize = 209715200; // 200 MB
+            client = new HttpClient
+            {
+                MaxResponseContentBufferSize = 209715200 // 200 MB
+            };
 
             string restMethod = "register";
             System.Uri uri = new System.Uri(string.Format(Constants.RestUrl, restMethod));
 
             try
             {
-                JObject jmessage = new JObject();
-                jmessage.Add("email", user.Email);
-                jmessage.Add("name", user.Name);
-                jmessage.Add("organization", user.Organization);
-                jmessage.Add("address", user.Address);
-                jmessage.Add("phone", ClearNumber(user.Phone));
-                jmessage.Add("password", user.Password);
-                jmessage.Add("password_confirmation", RepeatPassword);
-                //jmessage.Add("device_token", user.Phone);
+                JObject jmessage = new JObject
+                {
+                    { "email", user.Email },
+                    { "name", user.Name },
+                    { "organization", user.Organization },
+                    { "address", user.Address },
+                    { "phone", ClearNumber(user.Phone) },
+                    { "password", user.Password },
+                    { "password_confirmation", RepeatPassword },
+                    { "deviceToken", App.DeviceToken }
+                };
 
                 string json = jmessage.ToString();
                 StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
@@ -138,6 +149,10 @@ namespace kraken.PageModels
 
                 if (response.IsSuccessStatusCode)
                 {
+                    string result = await response.Content.ReadAsStringAsync();
+                    JObject resultArray = JObject.Parse(result);
+
+                    UserToken = resultArray["data"]["access_token"].ToString();
                     return true;
                 }
                 else
@@ -162,6 +177,18 @@ namespace kraken.PageModels
                         {
                             errorMessage = (string)(errors["password"].First);
                         }
+                        else if (errors["organization"] != null)
+                        {
+                            errorMessage = (string)(errors["organization"].First);
+                        }
+                        else if (errors["address"] != null)
+                        {
+                            errorMessage = (string)(errors["address"].First);
+                        }
+                        else if (errors["phone"] != null)
+                        {
+                            errorMessage = (string)(errors["phone"].First);
+                        }
 
                     }
 
@@ -172,11 +199,10 @@ namespace kraken.PageModels
             }
             catch (System.Exception ex)
             {
-                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("ERROR", ex.Message, "OK");
-                System.Diagnostics.Debug.WriteLine(@"				ERROR {0}", ex.Message);
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
             }
 
-            return true;
+            return false;
         }
 
         private string ClearNumber(string phoneNumber)

@@ -1,5 +1,4 @@
 ﻿using kraken.Models;
-using Xamarin.Forms;
 using Realms;
 using Newtonsoft.Json;
 using System;
@@ -8,154 +7,356 @@ using System.Net.Http;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Net.Http.Headers;
-using System.Diagnostics;
-using System.Text;
 using Newtonsoft.Json.Linq;
 
 namespace kraken.Services
 {
     public class RequestStorageService : IRequestStorageService
     {
-        HttpClient client;
+        readonly HttpClient client;
+
+        private bool AuthenticationHeaderIsSet { get; set; }
 
         public Realm Realm { get { return Realm.GetInstance(); } }
 
-        public List<Request> Requests { get; private set; }
-        public User CurrentUser { get; set; }
-
         public RequestStorageService()
         {
-            string authData = string.Format("{0}:{1}", Constants.Username, Constants.Password);
-            string authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes(authData));
-
-            client = new HttpClient();
-            client.MaxResponseContentBufferSize = 209715200; // 200 MB
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", authHeaderValue);
+            client = new HttpClient
+            {
+                MaxResponseContentBufferSize = 209715200 // 200 MB
+            };
             client.DefaultRequestHeaders.Add("Accept", "application/json");
+
+            SetAuthenticationHeader();
         }
 
-        public Request GetRequest(string id)
+        #region Get data methods
+        public async Task<Request> GetRequestFullInfo(string RequestUuid)
         {
-            return Realm.Find<Request>(id);
-        }
+            if (IsThereInternet() == false)
+            {
+                return null;
+            }
 
-        /// <summary>
-        /// Gets all Requests
-        /// </summary>
-        /// <returns>All Requests</returns>
-        public async Task<List<Request>> GetAllRequestsAsync()
-        {
-            string restMethod = "requests";
+            if (!AuthenticationHeaderIsSet)
+            {
+                SetAuthenticationHeader();
+            }
 
-            Requests = new List<Request>();
+            string restMethod = "entity/" + RequestUuid + "/edit";
+            Request Object = new Request();
 
-            Uri uri = new Uri(string.Format(Constants.RestUrl, restMethod));
+            System.Uri uri = new System.Uri(string.Format(Constants.RestUrl, restMethod));
 
             try
             {
-                HttpResponseMessage response = await client.GetAsync(uri);
+                var responseAwaiter = client.GetAsync(uri).ConfigureAwait(false);
+                var response = responseAwaiter.GetAwaiter().GetResult();
+
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
-                    Requests = JsonConvert.DeserializeObject<List<Request>>(content);
+                    JObject objectArr = JObject.Parse(content);
+                    var test = objectArr["data"]["entity"].ToString();
+                    Object = JsonConvert.DeserializeObject<Request>(objectArr["data"]["entity"].ToString());
+                    //Object.Nodes = JsonConvert.DeserializeObject<List<Node>>(objectArr["data"]["nodes"].ToString());
+                }
+                else
+                {
+                    string errorInfo = await response.Content.ReadAsStringAsync();
+                    string errorMessage = ParseErrorMessage(errorInfo);
+
+                    Xamarin.Forms.Device.BeginInvokeOnMainThread(async () => { await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", errorMessage, "OK"); });
                 }
             }
-            catch (Exception ex)
+            catch (System.Exception)
             {
-                Debug.WriteLine(@"				ERROR {0}", ex.Message);
             }
 
-            return Requests;
+            return Object;
         }
 
-        /// <summary>
-        /// Adds the Request
-        /// </summary>
-        /// <param name="request">Request to add</param>
-        public void AddRequest(Request request)
+        public async Task<List<Request>> GetUserRequestsAsync()
         {
-            Realm.Write(() =>
+            if (IsThereInternet() == false)
             {
-                Realm.Add<Request>(request);
-            });
-        }
+                return null;
+            }
 
-        public async Task<Request> CreateRequest()
-        {
-            string restMethod = "inquiry/store";
+            if (!AuthenticationHeaderIsSet)
+            {
+                SetAuthenticationHeader();
+            }
+
+            string restMethod = "inquiry";
+            List<Request> Requests = new List<Request>();
+
             Uri uri = new Uri(string.Format(Constants.RestUrl, restMethod));
-            Request newRequest = new Request();
 
             try
             {
-                JObject jcontact = new JObject();
-                jcontact.Add("work", "");
-                jcontact.Add("urgency", "");
-                jcontact.Add("description", "");
-                jcontact.Add("address", "");
-                string json = jcontact.ToString();
-                StringContent content = new StringContent(json, Encoding.UTF8, "application/json");
-
-                HttpResponseMessage response = null;
-                response = await client.PostAsync(uri, content).ConfigureAwait(continueOnCapturedContext: false);
+                var responseAwaiter = client.GetAsync(uri).ConfigureAwait(false);
+                var response = responseAwaiter.GetAwaiter().GetResult();
 
                 if (response.IsSuccessStatusCode)
                 {
-                    string responseContent = await response.Content.ReadAsStringAsync();
-                    //newRequest = JsonConvert.DeserializeObject<Request>(responseContent);
+                    string content = await response.Content.ReadAsStringAsync();
+                    JObject catalogArr = JObject.Parse(content);
+                    Requests = JsonConvert.DeserializeObject<List<Request>>(catalogArr["data"].ToString());
                 }
-
+                else
+                {
+                    string errorInfo = await response.Content.ReadAsStringAsync();
+                }
             }
             catch (Exception)
             {
             }
 
-            return newRequest;
+            return Requests;
         }
 
-        /// <summary>
-        /// Updates the Request
-        /// </summary>
-        /// <param name="request">Request to update</param>
-        public void UpdateRequest(Request request)
+        public async Task<List<WorkType>> GetWorkTypesAsync()
         {
-            Realm.Write(() =>
+            if (IsThereInternet() == false)
             {
-                Realm.Add<Request>(request, true);
-            });
-        }
+                return null;
+            }
 
-        /// <summary>
-        /// Deletes the request
-        /// </summary>
-        /// <param name="request">Request we want to delete</param>
-        public void DeleteRequest(Request request)
-        {
-            Realm.Write(() =>
+            if (!AuthenticationHeaderIsSet)
             {
-                Realm.Remove(request);
-            });
-        }
+                SetAuthenticationHeader();
+            }
 
-        /// <summary>
-        /// Checks if the given request exists
-        /// </summary>
-        /// <returns><c>true</c>, if request was found, <c>false</c> otherwise</returns>
-        /// <param name="request">The Request we want to know already exists</param>
-        public bool DoesRequestExist(Request request)
-        {
-            return Realm.All<Request>().Contains(request);
-        }
+            string restMethod = "getTypeOfWork";
+            List<WorkType> Types = new List<WorkType>();
 
-        /// <summary>
-        /// Deletes all the requests
-        /// </summary>
-        public void DeleteAllRequests()
-        {
-            Realm.Write(() =>
+            Uri uri = new Uri(string.Format(Constants.RestUrl, restMethod));
+
+            try
             {
-                Realm.RemoveAll<Request>();
-            });
+                var responseAwaiter = client.GetAsync(uri).ConfigureAwait(false);
+                var response = responseAwaiter.GetAwaiter().GetResult();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    JObject resultArr = JObject.Parse(content);
+                    Types = JsonConvert.DeserializeObject<List<WorkType>>(resultArr["data"].ToString());
+                }
+                else
+                {
+                    string errorInfo = await response.Content.ReadAsStringAsync();
+                    string errorMessage = ParseErrorMessage(errorInfo);
+
+                    Xamarin.Forms.Device.BeginInvokeOnMainThread(async () => { await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", errorMessage, "OK"); });
+                }
+            }
+            catch (System.Exception)
+            {
+            }
+
+            return Types;
         }
+
+
+        public async Task<List<Master>> GetMastersAsync(string RequestUuid)
+        {
+            if (IsThereInternet() == false)
+            {
+                return null;
+            }
+
+            if (!AuthenticationHeaderIsSet)
+            {
+                SetAuthenticationHeader();
+            }
+
+            string restMethod = "inquiry/masters";
+            List<Master> Masters = new List<Master>();
+
+            Uri uri = new Uri(string.Format(Constants.RestUrl, restMethod));
+
+            try
+            {
+                JObject jmessage = new JObject
+                {
+                    { "uuid", RequestUuid }
+                };
+                string json = jmessage.ToString();
+                StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = null;
+                response = client.PostAsync(uri, content).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    JObject resultArr = JObject.Parse(responseContent);
+                    Masters = JsonConvert.DeserializeObject<List<Master>>(resultArr["data"].ToString());
+                }
+                else
+                {
+                    string errorInfo = await response.Content.ReadAsStringAsync();
+                    string errorMessage = ParseErrorMessage(errorInfo);
+
+                    Xamarin.Forms.Device.BeginInvokeOnMainThread(async () => { await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", errorMessage, "OK"); });
+                }
+            }
+            catch (Exception)
+            {
+            }
+
+            return Masters;
+        }
+        #endregion
+
+        #region Add/Update methods
+        public async Task<bool> SendNewRequestAsync(Request CreatedRequest)
+        {
+            if (IsThereInternet() == false)
+            {
+                return false;
+            }
+
+            if (!AuthenticationHeaderIsSet)
+            {
+                SetAuthenticationHeader();
+            }
+
+            string restMethod = "inquiry";
+            System.Uri uri = new System.Uri(string.Format(Constants.RestUrl, restMethod));
+
+            try
+            {
+                string jmessage = JsonConvert.SerializeObject(CreatedRequest, Formatting.Indented);
+
+                StringContent content = new StringContent(jmessage, System.Text.Encoding.UTF8, "application/json");
+                HttpResponseMessage response = null;
+                response = client.PostAsync(uri, content).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseMessage = await response.Content.ReadAsStringAsync();
+
+                    return true;
+                }
+                else
+                {
+                    string errorInfo = await response.Content.ReadAsStringAsync();
+                    string errorMessage = ParseErrorMessage(errorInfo);
+
+                    Xamarin.Forms.Device.BeginInvokeOnMainThread(async () => { await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", errorMessage, "OK"); });
+
+                    return false;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
+                return false;
+            }
+        }
+        #endregion
+
+        #region Delete methods
+        public async Task<bool> DeleteUserObjectsAsync(object objectToDelete)
+        {
+            if (IsThereInternet() == false)
+            {
+                return false;
+            }
+
+            if (!AuthenticationHeaderIsSet)
+            {
+                SetAuthenticationHeader();
+            }
+
+            string restMethod = "entity/" + objectToDelete;
+            System.Uri uri = new System.Uri(string.Format(Constants.RestUrl, restMethod));
+
+            try
+            {
+                HttpResponseMessage response = null;
+                response = client.DeleteAsync(uri).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseMessage = await response.Content.ReadAsStringAsync();
+                    return true;
+                }
+                else
+                {
+                    string errorInfo = await response.Content.ReadAsStringAsync();
+                    await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", errorInfo, "OK");
+                    return false;
+                }
+
+            }
+            catch (System.Exception ex)
+            {
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
+            }
+
+            return false;
+        }
+        #endregion
+
+        #region Utility private methods
+        private bool IsThereInternet()
+        {
+            // TODO: if no internet, show alert
+            return Plugin.Connectivity.CrossConnectivity.Current.IsConnected;
+        }
+
+        private string ParseErrorMessage(string errorInfo)
+        {
+            string errorMessage = "";
+            JObject errorObj = JObject.Parse(errorInfo);
+
+            if (errorObj.ContainsKey("error"))
+            {
+                errorMessage = (string)errorObj["error"];
+            }
+            else if (errorObj.ContainsKey("message"))
+            {
+                errorMessage = (string)errorObj["message"];
+            }
+            else if (errorObj.ContainsKey("errors"))
+            {
+                JToken errors = errorObj["errors"];
+
+                if (errors["data"] != null)
+                {
+                    errorMessage = (string)(errors["data"].First);
+                }
+                else if (errors["name"] != null)
+                {
+                    errorMessage = (string)(errors["name"].First);
+                }
+
+            }
+
+            return errorMessage;
+        }
+
+        private void SetAuthenticationHeader()
+        {
+            Realm realm = Realm.GetInstance();
+            var users = realm.All<User>();
+            User user;
+
+            if (users.Count() > 0)
+            {
+                user = users.Last();
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
+                AuthenticationHeaderIsSet = true;
+            }
+            else
+            {
+                AuthenticationHeaderIsSet = false;
+            }
+        }
+        #endregion
     }
 }

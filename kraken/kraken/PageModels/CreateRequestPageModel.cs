@@ -1,122 +1,102 @@
 ﻿using FreshMvvm;
 using kraken.Models;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using kraken.Services;
 using PropertyChanged;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Forms;
 
 namespace kraken.PageModels
 {
     [AddINotifyPropertyChangedInterface]
     public class CreateRequestPageModel : FreshBasePageModel
     {
-        HttpClient client;
-        string _selectedUrgency;
-        public List<string> monkeyList;
+        readonly IRequestStorageService _requestStorage;
 
         public List<WorkType> WorkTypes { get; set; } = new List<WorkType>();
-        public List<string> Urgency { get; set; } = new List<string>();
+        public List<Urgency> Urgency { get; set; } = new List<Urgency>();
 
-        static Dictionary<string, string> UrgencyTypes { get; } = new Dictionary<string, string>
-        {
-            { "Срочно", "urgent" },
-            { "Сейчас", "now" },
-            { "Заданное время", "scheduled" },
-        };
-
-        public string SelectedType { get; set; }
-        public string SelectedUrgency {
-            get { return _selectedUrgency; }
-            set
-            {
-                _selectedUrgency = value;
-                if (string.IsNullOrEmpty(_selectedUrgency)) return;
-                var selectedValue = UrgencyTypes[_selectedUrgency];
-            }
-        }
+        public WorkType SelectedType { get; set; }
+        public Urgency SelectedUrgency { get; set; }
         public string Description { get; set; }
 
         public ICommand CreateRequestCommand
         {
             get
             {
-                return new FreshAwaitCommand((param, tcs) =>
+                return new FreshAwaitCommand(async (param, tcs) =>
                 {
-                    CreateRequest();
+                    bool isRequestSuccesful = await CreateRequest();
+                    if (isRequestSuccesful)
+                    {
+                        await CoreMethods.PushPageModel<MyRequestPageModel>();
+                    }
                 });
             }
         }
 
-        public CreateRequestPageModel()
+        public CreateRequestPageModel(IRequestStorageService requestStorage)
         {
-            client = new HttpClient();
-            client.MaxResponseContentBufferSize = 209715200; // 200 MB
+            _requestStorage = requestStorage;
         }
 
         protected override async void ViewIsAppearing(object sender, EventArgs e)
         {
             base.ViewIsAppearing(sender, e);
 
-            if (IsThereInternet() == false)
-            {
-                return;
-            }
-
-            WorkTypes = (await GetWorkTypes());
+            WorkTypes = await GetWorkTypes();
             GetUrgencyTypes();
         }
 
         private async Task<List<WorkType>> GetWorkTypes()
         {
-            string restMethod = "getTypeOfWork";
-            List<WorkType> Types = new List<WorkType>();
+            List<WorkType> Types;
 
-            Realms.Realm realm = Realms.Realm.GetInstance();
-            User user = realm.All<User>().Last();
-
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", user.Token);
-
-            Uri uri = new Uri(string.Format(Constants.RestUrl, restMethod));
-
-            try
-            {
-                var responseAwaiter = client.GetAsync(uri).ConfigureAwait(false);
-                var response = responseAwaiter.GetAwaiter().GetResult();
-
-                if (response.IsSuccessStatusCode)
-                {
-                    string content = await response.Content.ReadAsStringAsync();
-                    JObject catalogArr = JObject.Parse(content);
-                    Types = JsonConvert.DeserializeObject<List<WorkType>>(catalogArr["data"].ToString());
-                }
-            }
-            catch (System.Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine(@"				ERROR {0}", ex.Message);
-            }
+            Types = await _requestStorage.GetWorkTypesAsync();
 
             return Types;
         }
 
         private void GetUrgencyTypes()
         {
-            return;
+            Urgency = new List<Urgency>
+            {
+                new Urgency()
+                {
+                    Id = 0,
+                    Code = "urgent",
+                    Name = "Срочно"
+                },
+                new Urgency()
+                {
+                    Id = 0,
+                    Code = "now",
+                    Name = "Сейчас"
+                },
+                new Urgency()
+                {
+                    Id = 0,
+                    Code = "scheduled",
+                    Name = "Заданное время"
+                },
+            };
         }
 
-        private void CreateRequest()
+        private async Task<bool> CreateRequest()
         {
-            throw new NotImplementedException();
-        }
+            Request NewRequest = new Request()
+            {
+                Work = SelectedType.id,
+                Urgency = SelectedUrgency.Code,
+                Description = Description,
+                Address = "address",
+                StartedAt = "",
+            };
 
-        private bool IsThereInternet()
-        {
-            return Plugin.Connectivity.CrossConnectivity.Current.IsConnected;
+            var response = await _requestStorage.SendNewRequestAsync(NewRequest);
+
+            return response;
         }
     }
 }

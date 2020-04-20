@@ -12,12 +12,12 @@
             <Image Source="ic_build.png" WidthRequest="65"/>
             <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                 <StackLayout Orientation="Horizontal">
-                    <Label Text='ООО "Монтажник"' FontAttributes="Bold"/>
+                    <Label Text="{Binding Name}" FontAttributes="Bold"/>
                     <Label Text="36 мин" FontAttributes="Bold" HorizontalOptions="EndAndExpand"/>
                 </StackLayout>
                 <StackLayout>
-                    <Label Text="Монтажные работы" FontSize="12"/>
-                    <Grid HorizontalOptions="End">
+                    <Label Text="{Binding Work}" FontSize="12"/>
+                    <!--<Grid HorizontalOptions="End">
                         <Frame x:Name="Favourites" HasShadow="False" CornerRadius="5" BorderColor="Red" HorizontalOptions="End" Padding="5">
                             <Label Text="Добавить в избранное" TextColor="Red" HorizontalOptions="End" FontSize="12"/>
                             <Frame.GestureRecognizers>
@@ -25,7 +25,7 @@
                             </Frame.GestureRecognizers>
                         </Frame>
                         <Image x:Name="Grade" Source="ic_action_star.png" IsVisible="False" HorizontalOptions="End" WidthRequest="24"/>
-                    </Grid>
+                    </Grid>-->
                 </StackLayout>
             </StackLayout>
       </StackLayout>

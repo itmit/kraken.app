@@ -9,5 +9,7 @@ namespace kraken.Models
         public string id { get; set; }
 
         public string work { get; set; }
+
+        public string Name { get { return work; } }
     }
 }

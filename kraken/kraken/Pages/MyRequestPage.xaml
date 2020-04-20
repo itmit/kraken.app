@@ -14,13 +14,9 @@
         <!--Страница мои запросы-->
         <StackLayout>
             <ListView HasUnevenRows="True" 
-                      VerticalScrollBarVisibility="Never" 
-                      SelectionMode="None" 
                       SeparatorVisibility="None" 
-                      ItemTapped="ListView_ItemTapped">
-                <ListView.ItemsSource>
-                    <x:String>000</x:String>
-                </ListView.ItemsSource>
+                      ItemsSource="{Binding UserRequests}"
+                      SelectedItem="{Binding SelectedRequest, Mode=TwoWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <viewCell:RequestViewCell/>

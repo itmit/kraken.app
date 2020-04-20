@@ -12,10 +12,5 @@ namespace kraken.Pages
         {
             InitializeComponent();
         }
-
-        private void ImageButton_Clicked(object sender, EventArgs e)
-        {
-            Navigation.PopAsync();
-        }
     }
 }

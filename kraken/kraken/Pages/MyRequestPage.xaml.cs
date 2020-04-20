@@ -11,10 +11,5 @@ namespace kraken.Pages
         {
             InitializeComponent();
         }
-
-        private void ListView_ItemTapped(object sender, ItemTappedEventArgs e)
-        {
-            Navigation.PushAsync(new RequestDetailPage());
-        }
     }
 }

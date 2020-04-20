@@ -14,14 +14,16 @@
         <!--Мои запросы детальная страница-->
         <StackLayout>
             <StackLayout BackgroundColor="White" Margin="0,5" Padding="20">
-                <Label Text="Монтажные работы 23.11.2019" FontAttributes="Bold"/>
-                <Label Text="Описание ремонтных работ. В соответствии с принципом неопределенности, кристалл выталкивает вихревой разрыв. Газ устойчив в магнитном поле"/>
+                <Label Text="{Binding RequestName}" FontAttributes="Bold"/>
+                <Label Text="{Binding RequestDescription}"/>
             </StackLayout>
             <Label Text="Доступные мастера" FontSize="16" FontAttributes="Bold" Margin="20,0"></Label>
-            <ListView HasUnevenRows="True" VerticalScrollBarVisibility="Never" SeparatorVisibility="None" SelectionMode="None">
-                <ListView.ItemsSource>
-                    <x:String>000</x:String>
-                </ListView.ItemsSource>
+            <ListView 
+                HasUnevenRows="True" 
+                VerticalScrollBarVisibility="Never" 
+                SeparatorVisibility="None" 
+                SelectionMode="None"
+                ItemsSource="{Binding Masters}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <listMaster:MasterViewCell/>

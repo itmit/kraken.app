@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "784396358342",
+    "firebase_url": "https://kraken-cefed.firebaseio.com",
+    "project_id": "kraken-cefed",
+    "storage_bucket": "kraken-cefed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:784396358342:android:716d1ff4f94bcd7f07fdc7",
+        "android_client_info": {
+          "package_name": "com.itmit.kraken"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "784396358342-d4iarl87g2de3e7e7m73629tpb4o0l36.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC18Vk_nnJflNBzH0EefdJozuUsxbxd-3c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "784396358342-d4iarl87g2de3e7e7m73629tpb4o0l36.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

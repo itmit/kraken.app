@@ -9,7 +9,6 @@ namespace kraken.Pages
     {
         public ExitPage()
         {
-            Application.Current.Quit();
             InitializeComponent();
         }
     }

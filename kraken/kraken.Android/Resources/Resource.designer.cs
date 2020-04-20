@@ -15,7 +15,7 @@ namespace kraken.Droid
 {
 	
 	
-	[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Android.Build.Tasks", "1.0.0.0")]
+	[System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Android.Build.Tasks", "1.0.0.0")]
 	public partial class Resource
 	{
 		
@@ -26,6 +26,275 @@ namespace kraken.Droid
 		
 		public static void UpdateIdValues()
 		{
+			global::Plugin.FirebasePushNotification.Resource.Attribute.alpha = global::kraken.Droid.Resource.Attribute.alpha;
+			global::Plugin.FirebasePushNotification.Resource.Attribute.buttonSize = global::kraken.Droid.Resource.Attribute.buttonSize;
+			global::Plugin.FirebasePushNotification.Resource.Attribute.circleCrop = global::kraken.Droid.Resource.Attribute.circleCrop;
+			global::Plugin.FirebasePushNotification.Resource.Attribute.colorScheme = global::kraken.Droid.Resource.Attribute.colorScheme;
+			global::Plugin.FirebasePushNotification.Resource.Attribute.coordinatorLayoutStyle = global::kraken.Droid.Resource.Attribute.coordinatorLayoutStyle;
+			global::Plugin.FirebasePushNotification.Resource.Attribute.font = global::kraken.Droid.Resource.Attribute.font;
+			global::Plugin.FirebasePushNotification.Resource.Attribute.fontProviderAuthority = global::kraken.Droid.Resource.Attribute.fontProviderAuthority;
+			global::Plugin.FirebasePushNotification.Resource.Attribute.fontProviderCerts = global::kraken.Droid.Resource.Attribute.fontProviderCerts;
+			global::Plugin.FirebasePushNotification.Resource.Attribute.fontProviderFetchStrategy = global::kraken.Droid.Resource.Attribute.fontProviderFetchStrategy;
+			global::Plugin.FirebasePushNotification.Resource.Attribute.fontProviderFetchTimeout = global::kraken.Droid.Resource.Attribute.fontProviderFetchTimeout;
+			global::Plugin.FirebasePushNotification.Resource.Attribute.fontProviderPackage = global::kraken.Droid.Resource.Attribute.fontProviderPackage;
+			global::Plugin.FirebasePushNotification.Resource.Attribute.fontProviderQuery = global::kraken.Droid.Resource.Attribute.fontProviderQuery;
+			global::Plugin.FirebasePushNotification.Resource.Attribute.fontStyle = global::kraken.Droid.Resource.Attribute.fontStyle;
+			global::Plugin.FirebasePushNotification.Resource.Attribute.fontVariationSettings = global::kraken.Droid.Resource.Attribute.fontVariationSettings;
+			global::Plugin.FirebasePushNotification.Resource.Attribute.fontWeight = global::kraken.Droid.Resource.Attribute.fontWeight;
+			global::Plugin.FirebasePushNotification.Resource.Attribute.imageAspectRatio = global::kraken.Droid.Resource.Attribute.imageAspectRatio;
+			global::Plugin.FirebasePushNotification.Resource.Attribute.imageAspectRatioAdjust = global::kraken.Droid.Resource.Attribute.imageAspectRatioAdjust;
+			global::Plugin.FirebasePushNotification.Resource.Attribute.keylines = global::kraken.Droid.Resource.Attribute.keylines;
+			global::Plugin.FirebasePushNotification.Resource.Attribute.layout_anchor = global::kraken.Droid.Resource.Attribute.layout_anchor;
+			global::Plugin.FirebasePushNotification.Resource.Attribute.layout_anchorGravity = global::kraken.Droid.Resource.Attribute.layout_anchorGravity;
+			global::Plugin.FirebasePushNotification.Resource.Attribute.layout_behavior = global::kraken.Droid.Resource.Attribute.layout_behavior;
+			global::Plugin.FirebasePushNotification.Resource.Attribute.layout_dodgeInsetEdges = global::kraken.Droid.Resource.Attribute.layout_dodgeInsetEdges;
+			global::Plugin.FirebasePushNotification.Resource.Attribute.layout_insetEdge = global::kraken.Droid.Resource.Attribute.layout_insetEdge;
+			global::Plugin.FirebasePushNotification.Resource.Attribute.layout_keyline = global::kraken.Droid.Resource.Attribute.layout_keyline;
+			global::Plugin.FirebasePushNotification.Resource.Attribute.scopeUris = global::kraken.Droid.Resource.Attribute.scopeUris;
+			global::Plugin.FirebasePushNotification.Resource.Attribute.statusBarBackground = global::kraken.Droid.Resource.Attribute.statusBarBackground;
+			global::Plugin.FirebasePushNotification.Resource.Attribute.ttcIndex = global::kraken.Droid.Resource.Attribute.ttcIndex;
+			global::Plugin.FirebasePushNotification.Resource.Color.common_google_signin_btn_text_dark = global::kraken.Droid.Resource.Color.common_google_signin_btn_text_dark;
+			global::Plugin.FirebasePushNotification.Resource.Color.common_google_signin_btn_text_dark_default = global::kraken.Droid.Resource.Color.common_google_signin_btn_text_dark_default;
+			global::Plugin.FirebasePushNotification.Resource.Color.common_google_signin_btn_text_dark_disabled = global::kraken.Droid.Resource.Color.common_google_signin_btn_text_dark_disabled;
+			global::Plugin.FirebasePushNotification.Resource.Color.common_google_signin_btn_text_dark_focused = global::kraken.Droid.Resource.Color.common_google_signin_btn_text_dark_focused;
+			global::Plugin.FirebasePushNotification.Resource.Color.common_google_signin_btn_text_dark_pressed = global::kraken.Droid.Resource.Color.common_google_signin_btn_text_dark_pressed;
+			global::Plugin.FirebasePushNotification.Resource.Color.common_google_signin_btn_text_light = global::kraken.Droid.Resource.Color.common_google_signin_btn_text_light;
+			global::Plugin.FirebasePushNotification.Resource.Color.common_google_signin_btn_text_light_default = global::kraken.Droid.Resource.Color.common_google_signin_btn_text_light_default;
+			global::Plugin.FirebasePushNotification.Resource.Color.common_google_signin_btn_text_light_disabled = global::kraken.Droid.Resource.Color.common_google_signin_btn_text_light_disabled;
+			global::Plugin.FirebasePushNotification.Resource.Color.common_google_signin_btn_text_light_focused = global::kraken.Droid.Resource.Color.common_google_signin_btn_text_light_focused;
+			global::Plugin.FirebasePushNotification.Resource.Color.common_google_signin_btn_text_light_pressed = global::kraken.Droid.Resource.Color.common_google_signin_btn_text_light_pressed;
+			global::Plugin.FirebasePushNotification.Resource.Color.common_google_signin_btn_tint = global::kraken.Droid.Resource.Color.common_google_signin_btn_tint;
+			global::Plugin.FirebasePushNotification.Resource.Color.notification_action_color_filter = global::kraken.Droid.Resource.Color.notification_action_color_filter;
+			global::Plugin.FirebasePushNotification.Resource.Color.notification_icon_bg_color = global::kraken.Droid.Resource.Color.notification_icon_bg_color;
+			global::Plugin.FirebasePushNotification.Resource.Color.notification_material_background_media_default_color = global::kraken.Droid.Resource.Color.notification_material_background_media_default_color;
+			global::Plugin.FirebasePushNotification.Resource.Color.primary_text_default_material_dark = global::kraken.Droid.Resource.Color.primary_text_default_material_dark;
+			global::Plugin.FirebasePushNotification.Resource.Color.ripple_material_light = global::kraken.Droid.Resource.Color.ripple_material_light;
+			global::Plugin.FirebasePushNotification.Resource.Color.secondary_text_default_material_dark = global::kraken.Droid.Resource.Color.secondary_text_default_material_dark;
+			global::Plugin.FirebasePushNotification.Resource.Color.secondary_text_default_material_light = global::kraken.Droid.Resource.Color.secondary_text_default_material_light;
+			global::Plugin.FirebasePushNotification.Resource.Dimension.compat_button_inset_horizontal_material = global::kraken.Droid.Resource.Dimension.compat_button_inset_horizontal_material;
+			global::Plugin.FirebasePushNotification.Resource.Dimension.compat_button_inset_vertical_material = global::kraken.Droid.Resource.Dimension.compat_button_inset_vertical_material;
+			global::Plugin.FirebasePushNotification.Resource.Dimension.compat_button_padding_horizontal_material = global::kraken.Droid.Resource.Dimension.compat_button_padding_horizontal_material;
+			global::Plugin.FirebasePushNotification.Resource.Dimension.compat_button_padding_vertical_material = global::kraken.Droid.Resource.Dimension.compat_button_padding_vertical_material;
+			global::Plugin.FirebasePushNotification.Resource.Dimension.compat_control_corner_material = global::kraken.Droid.Resource.Dimension.compat_control_corner_material;
+			global::Plugin.FirebasePushNotification.Resource.Dimension.compat_notification_large_icon_max_height = global::kraken.Droid.Resource.Dimension.compat_notification_large_icon_max_height;
+			global::Plugin.FirebasePushNotification.Resource.Dimension.compat_notification_large_icon_max_width = global::kraken.Droid.Resource.Dimension.compat_notification_large_icon_max_width;
+			global::Plugin.FirebasePushNotification.Resource.Dimension.notification_action_icon_size = global::kraken.Droid.Resource.Dimension.notification_action_icon_size;
+			global::Plugin.FirebasePushNotification.Resource.Dimension.notification_action_text_size = global::kraken.Droid.Resource.Dimension.notification_action_text_size;
+			global::Plugin.FirebasePushNotification.Resource.Dimension.notification_big_circle_margin = global::kraken.Droid.Resource.Dimension.notification_big_circle_margin;
+			global::Plugin.FirebasePushNotification.Resource.Dimension.notification_content_margin_start = global::kraken.Droid.Resource.Dimension.notification_content_margin_start;
+			global::Plugin.FirebasePushNotification.Resource.Dimension.notification_large_icon_height = global::kraken.Droid.Resource.Dimension.notification_large_icon_height;
+			global::Plugin.FirebasePushNotification.Resource.Dimension.notification_large_icon_width = global::kraken.Droid.Resource.Dimension.notification_large_icon_width;
+			global::Plugin.FirebasePushNotification.Resource.Dimension.notification_main_column_padding_top = global::kraken.Droid.Resource.Dimension.notification_main_column_padding_top;
+			global::Plugin.FirebasePushNotification.Resource.Dimension.notification_media_narrow_margin = global::kraken.Droid.Resource.Dimension.notification_media_narrow_margin;
+			global::Plugin.FirebasePushNotification.Resource.Dimension.notification_right_icon_size = global::kraken.Droid.Resource.Dimension.notification_right_icon_size;
+			global::Plugin.FirebasePushNotification.Resource.Dimension.notification_right_side_padding_top = global::kraken.Droid.Resource.Dimension.notification_right_side_padding_top;
+			global::Plugin.FirebasePushNotification.Resource.Dimension.notification_small_icon_background_padding = global::kraken.Droid.Resource.Dimension.notification_small_icon_background_padding;
+			global::Plugin.FirebasePushNotification.Resource.Dimension.notification_small_icon_size_as_large = global::kraken.Droid.Resource.Dimension.notification_small_icon_size_as_large;
+			global::Plugin.FirebasePushNotification.Resource.Dimension.notification_subtext_size = global::kraken.Droid.Resource.Dimension.notification_subtext_size;
+			global::Plugin.FirebasePushNotification.Resource.Dimension.notification_top_pad = global::kraken.Droid.Resource.Dimension.notification_top_pad;
+			global::Plugin.FirebasePushNotification.Resource.Dimension.notification_top_pad_large_text = global::kraken.Droid.Resource.Dimension.notification_top_pad_large_text;
+			global::Plugin.FirebasePushNotification.Resource.Dimension.subtitle_corner_radius = global::kraken.Droid.Resource.Dimension.subtitle_corner_radius;
+			global::Plugin.FirebasePushNotification.Resource.Dimension.subtitle_outline_width = global::kraken.Droid.Resource.Dimension.subtitle_outline_width;
+			global::Plugin.FirebasePushNotification.Resource.Dimension.subtitle_shadow_offset = global::kraken.Droid.Resource.Dimension.subtitle_shadow_offset;
+			global::Plugin.FirebasePushNotification.Resource.Dimension.subtitle_shadow_radius = global::kraken.Droid.Resource.Dimension.subtitle_shadow_radius;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.common_full_open_on_phone = global::kraken.Droid.Resource.Drawable.common_full_open_on_phone;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.common_google_signin_btn_icon_dark = global::kraken.Droid.Resource.Drawable.common_google_signin_btn_icon_dark;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.common_google_signin_btn_icon_dark_focused = global::kraken.Droid.Resource.Drawable.common_google_signin_btn_icon_dark_focused;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.common_google_signin_btn_icon_dark_normal = global::kraken.Droid.Resource.Drawable.common_google_signin_btn_icon_dark_normal;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.common_google_signin_btn_icon_dark_normal_background = global::kraken.Droid.Resource.Drawable.common_google_signin_btn_icon_dark_normal_background;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.common_google_signin_btn_icon_disabled = global::kraken.Droid.Resource.Drawable.common_google_signin_btn_icon_disabled;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.common_google_signin_btn_icon_light = global::kraken.Droid.Resource.Drawable.common_google_signin_btn_icon_light;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.common_google_signin_btn_icon_light_focused = global::kraken.Droid.Resource.Drawable.common_google_signin_btn_icon_light_focused;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.common_google_signin_btn_icon_light_normal = global::kraken.Droid.Resource.Drawable.common_google_signin_btn_icon_light_normal;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.common_google_signin_btn_icon_light_normal_background = global::kraken.Droid.Resource.Drawable.common_google_signin_btn_icon_light_normal_background;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.common_google_signin_btn_text_dark = global::kraken.Droid.Resource.Drawable.common_google_signin_btn_text_dark;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.common_google_signin_btn_text_dark_focused = global::kraken.Droid.Resource.Drawable.common_google_signin_btn_text_dark_focused;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.common_google_signin_btn_text_dark_normal = global::kraken.Droid.Resource.Drawable.common_google_signin_btn_text_dark_normal;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.common_google_signin_btn_text_dark_normal_background = global::kraken.Droid.Resource.Drawable.common_google_signin_btn_text_dark_normal_background;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.common_google_signin_btn_text_disabled = global::kraken.Droid.Resource.Drawable.common_google_signin_btn_text_disabled;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.common_google_signin_btn_text_light = global::kraken.Droid.Resource.Drawable.common_google_signin_btn_text_light;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.common_google_signin_btn_text_light_focused = global::kraken.Droid.Resource.Drawable.common_google_signin_btn_text_light_focused;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.common_google_signin_btn_text_light_normal = global::kraken.Droid.Resource.Drawable.common_google_signin_btn_text_light_normal;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.common_google_signin_btn_text_light_normal_background = global::kraken.Droid.Resource.Drawable.common_google_signin_btn_text_light_normal_background;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.googleg_disabled_color_18 = global::kraken.Droid.Resource.Drawable.googleg_disabled_color_18;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.googleg_standard_color_18 = global::kraken.Droid.Resource.Drawable.googleg_standard_color_18;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.notification_action_background = global::kraken.Droid.Resource.Drawable.notification_action_background;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.notification_bg = global::kraken.Droid.Resource.Drawable.notification_bg;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.notification_bg_low = global::kraken.Droid.Resource.Drawable.notification_bg_low;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.notification_bg_low_normal = global::kraken.Droid.Resource.Drawable.notification_bg_low_normal;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.notification_bg_low_pressed = global::kraken.Droid.Resource.Drawable.notification_bg_low_pressed;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.notification_bg_normal = global::kraken.Droid.Resource.Drawable.notification_bg_normal;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.notification_bg_normal_pressed = global::kraken.Droid.Resource.Drawable.notification_bg_normal_pressed;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.notification_icon_background = global::kraken.Droid.Resource.Drawable.notification_icon_background;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.notification_template_icon_bg = global::kraken.Droid.Resource.Drawable.notification_template_icon_bg;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.notification_template_icon_low_bg = global::kraken.Droid.Resource.Drawable.notification_template_icon_low_bg;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.notification_tile_bg = global::kraken.Droid.Resource.Drawable.notification_tile_bg;
+			global::Plugin.FirebasePushNotification.Resource.Drawable.notify_panel_notification_icon_bg = global::kraken.Droid.Resource.Drawable.notify_panel_notification_icon_bg;
+			global::Plugin.FirebasePushNotification.Resource.Id.action0 = global::kraken.Droid.Resource.Id.action0;
+			global::Plugin.FirebasePushNotification.Resource.Id.actions = global::kraken.Droid.Resource.Id.actions;
+			global::Plugin.FirebasePushNotification.Resource.Id.action_container = global::kraken.Droid.Resource.Id.action_container;
+			global::Plugin.FirebasePushNotification.Resource.Id.action_divider = global::kraken.Droid.Resource.Id.action_divider;
+			global::Plugin.FirebasePushNotification.Resource.Id.action_image = global::kraken.Droid.Resource.Id.action_image;
+			global::Plugin.FirebasePushNotification.Resource.Id.action_text = global::kraken.Droid.Resource.Id.action_text;
+			global::Plugin.FirebasePushNotification.Resource.Id.adjust_height = global::kraken.Droid.Resource.Id.adjust_height;
+			global::Plugin.FirebasePushNotification.Resource.Id.adjust_width = global::kraken.Droid.Resource.Id.adjust_width;
+			global::Plugin.FirebasePushNotification.Resource.Id.all = global::kraken.Droid.Resource.Id.all;
+			global::Plugin.FirebasePushNotification.Resource.Id.async = global::kraken.Droid.Resource.Id.async;
+			global::Plugin.FirebasePushNotification.Resource.Id.auto = global::kraken.Droid.Resource.Id.auto;
+			global::Plugin.FirebasePushNotification.Resource.Id.blocking = global::kraken.Droid.Resource.Id.blocking;
+			global::Plugin.FirebasePushNotification.Resource.Id.bottom = global::kraken.Droid.Resource.Id.bottom;
+			global::Plugin.FirebasePushNotification.Resource.Id.cancel_action = global::kraken.Droid.Resource.Id.cancel_action;
+			global::Plugin.FirebasePushNotification.Resource.Id.center = global::kraken.Droid.Resource.Id.center;
+			global::Plugin.FirebasePushNotification.Resource.Id.center_horizontal = global::kraken.Droid.Resource.Id.center_horizontal;
+			global::Plugin.FirebasePushNotification.Resource.Id.center_vertical = global::kraken.Droid.Resource.Id.center_vertical;
+			global::Plugin.FirebasePushNotification.Resource.Id.chronometer = global::kraken.Droid.Resource.Id.chronometer;
+			global::Plugin.FirebasePushNotification.Resource.Id.clip_horizontal = global::kraken.Droid.Resource.Id.clip_horizontal;
+			global::Plugin.FirebasePushNotification.Resource.Id.clip_vertical = global::kraken.Droid.Resource.Id.clip_vertical;
+			global::Plugin.FirebasePushNotification.Resource.Id.dark = global::kraken.Droid.Resource.Id.dark;
+			global::Plugin.FirebasePushNotification.Resource.Id.end = global::kraken.Droid.Resource.Id.end;
+			global::Plugin.FirebasePushNotification.Resource.Id.end_padder = global::kraken.Droid.Resource.Id.end_padder;
+			global::Plugin.FirebasePushNotification.Resource.Id.fill = global::kraken.Droid.Resource.Id.fill;
+			global::Plugin.FirebasePushNotification.Resource.Id.fill_horizontal = global::kraken.Droid.Resource.Id.fill_horizontal;
+			global::Plugin.FirebasePushNotification.Resource.Id.fill_vertical = global::kraken.Droid.Resource.Id.fill_vertical;
+			global::Plugin.FirebasePushNotification.Resource.Id.forever = global::kraken.Droid.Resource.Id.forever;
+			global::Plugin.FirebasePushNotification.Resource.Id.icon = global::kraken.Droid.Resource.Id.icon;
+			global::Plugin.FirebasePushNotification.Resource.Id.icon_group = global::kraken.Droid.Resource.Id.icon_group;
+			global::Plugin.FirebasePushNotification.Resource.Id.icon_only = global::kraken.Droid.Resource.Id.icon_only;
+			global::Plugin.FirebasePushNotification.Resource.Id.info = global::kraken.Droid.Resource.Id.info;
+			global::Plugin.FirebasePushNotification.Resource.Id.italic = global::kraken.Droid.Resource.Id.italic;
+			global::Plugin.FirebasePushNotification.Resource.Id.left = global::kraken.Droid.Resource.Id.left;
+			global::Plugin.FirebasePushNotification.Resource.Id.light = global::kraken.Droid.Resource.Id.light;
+			global::Plugin.FirebasePushNotification.Resource.Id.line1 = global::kraken.Droid.Resource.Id.line1;
+			global::Plugin.FirebasePushNotification.Resource.Id.line3 = global::kraken.Droid.Resource.Id.line3;
+			global::Plugin.FirebasePushNotification.Resource.Id.media_actions = global::kraken.Droid.Resource.Id.media_actions;
+			global::Plugin.FirebasePushNotification.Resource.Id.none = global::kraken.Droid.Resource.Id.none;
+			global::Plugin.FirebasePushNotification.Resource.Id.normal = global::kraken.Droid.Resource.Id.normal;
+			global::Plugin.FirebasePushNotification.Resource.Id.notification_background = global::kraken.Droid.Resource.Id.notification_background;
+			global::Plugin.FirebasePushNotification.Resource.Id.notification_main_column = global::kraken.Droid.Resource.Id.notification_main_column;
+			global::Plugin.FirebasePushNotification.Resource.Id.notification_main_column_container = global::kraken.Droid.Resource.Id.notification_main_column_container;
+			global::Plugin.FirebasePushNotification.Resource.Id.right = global::kraken.Droid.Resource.Id.right;
+			global::Plugin.FirebasePushNotification.Resource.Id.right_icon = global::kraken.Droid.Resource.Id.right_icon;
+			global::Plugin.FirebasePushNotification.Resource.Id.right_side = global::kraken.Droid.Resource.Id.right_side;
+			global::Plugin.FirebasePushNotification.Resource.Id.standard = global::kraken.Droid.Resource.Id.standard;
+			global::Plugin.FirebasePushNotification.Resource.Id.start = global::kraken.Droid.Resource.Id.start;
+			global::Plugin.FirebasePushNotification.Resource.Id.status_bar_latest_event_content = global::kraken.Droid.Resource.Id.status_bar_latest_event_content;
+			global::Plugin.FirebasePushNotification.Resource.Id.tag_transition_group = global::kraken.Droid.Resource.Id.tag_transition_group;
+			global::Plugin.FirebasePushNotification.Resource.Id.tag_unhandled_key_event_manager = global::kraken.Droid.Resource.Id.tag_unhandled_key_event_manager;
+			global::Plugin.FirebasePushNotification.Resource.Id.tag_unhandled_key_listeners = global::kraken.Droid.Resource.Id.tag_unhandled_key_listeners;
+			global::Plugin.FirebasePushNotification.Resource.Id.text = global::kraken.Droid.Resource.Id.text;
+			global::Plugin.FirebasePushNotification.Resource.Id.text2 = global::kraken.Droid.Resource.Id.text2;
+			global::Plugin.FirebasePushNotification.Resource.Id.time = global::kraken.Droid.Resource.Id.time;
+			global::Plugin.FirebasePushNotification.Resource.Id.title = global::kraken.Droid.Resource.Id.title;
+			global::Plugin.FirebasePushNotification.Resource.Id.top = global::kraken.Droid.Resource.Id.top;
+			global::Plugin.FirebasePushNotification.Resource.Id.wide = global::kraken.Droid.Resource.Id.wide;
+			global::Plugin.FirebasePushNotification.Resource.Integer.cancel_button_image_alpha = global::kraken.Droid.Resource.Integer.cancel_button_image_alpha;
+			global::Plugin.FirebasePushNotification.Resource.Integer.google_play_services_version = global::kraken.Droid.Resource.Integer.google_play_services_version;
+			global::Plugin.FirebasePushNotification.Resource.Integer.status_bar_notification_info_maxnum = global::kraken.Droid.Resource.Integer.status_bar_notification_info_maxnum;
+			global::Plugin.FirebasePushNotification.Resource.Layout.notification_action = global::kraken.Droid.Resource.Layout.notification_action;
+			global::Plugin.FirebasePushNotification.Resource.Layout.notification_action_tombstone = global::kraken.Droid.Resource.Layout.notification_action_tombstone;
+			global::Plugin.FirebasePushNotification.Resource.Layout.notification_media_action = global::kraken.Droid.Resource.Layout.notification_media_action;
+			global::Plugin.FirebasePushNotification.Resource.Layout.notification_media_cancel_action = global::kraken.Droid.Resource.Layout.notification_media_cancel_action;
+			global::Plugin.FirebasePushNotification.Resource.Layout.notification_template_big_media = global::kraken.Droid.Resource.Layout.notification_template_big_media;
+			global::Plugin.FirebasePushNotification.Resource.Layout.notification_template_big_media_custom = global::kraken.Droid.Resource.Layout.notification_template_big_media_custom;
+			global::Plugin.FirebasePushNotification.Resource.Layout.notification_template_big_media_narrow = global::kraken.Droid.Resource.Layout.notification_template_big_media_narrow;
+			global::Plugin.FirebasePushNotification.Resource.Layout.notification_template_big_media_narrow_custom = global::kraken.Droid.Resource.Layout.notification_template_big_media_narrow_custom;
+			global::Plugin.FirebasePushNotification.Resource.Layout.notification_template_custom_big = global::kraken.Droid.Resource.Layout.notification_template_custom_big;
+			global::Plugin.FirebasePushNotification.Resource.Layout.notification_template_icon_group = global::kraken.Droid.Resource.Layout.notification_template_icon_group;
+			global::Plugin.FirebasePushNotification.Resource.Layout.notification_template_lines_media = global::kraken.Droid.Resource.Layout.notification_template_lines_media;
+			global::Plugin.FirebasePushNotification.Resource.Layout.notification_template_media = global::kraken.Droid.Resource.Layout.notification_template_media;
+			global::Plugin.FirebasePushNotification.Resource.Layout.notification_template_media_custom = global::kraken.Droid.Resource.Layout.notification_template_media_custom;
+			global::Plugin.FirebasePushNotification.Resource.Layout.notification_template_part_chronometer = global::kraken.Droid.Resource.Layout.notification_template_part_chronometer;
+			global::Plugin.FirebasePushNotification.Resource.Layout.notification_template_part_time = global::kraken.Droid.Resource.Layout.notification_template_part_time;
+			global::Plugin.FirebasePushNotification.Resource.String.common_google_play_services_enable_button = global::kraken.Droid.Resource.String.common_google_play_services_enable_button;
+			global::Plugin.FirebasePushNotification.Resource.String.common_google_play_services_enable_text = global::kraken.Droid.Resource.String.common_google_play_services_enable_text;
+			global::Plugin.FirebasePushNotification.Resource.String.common_google_play_services_enable_title = global::kraken.Droid.Resource.String.common_google_play_services_enable_title;
+			global::Plugin.FirebasePushNotification.Resource.String.common_google_play_services_install_button = global::kraken.Droid.Resource.String.common_google_play_services_install_button;
+			global::Plugin.FirebasePushNotification.Resource.String.common_google_play_services_install_text = global::kraken.Droid.Resource.String.common_google_play_services_install_text;
+			global::Plugin.FirebasePushNotification.Resource.String.common_google_play_services_install_title = global::kraken.Droid.Resource.String.common_google_play_services_install_title;
+			global::Plugin.FirebasePushNotification.Resource.String.common_google_play_services_notification_channel_name = global::kraken.Droid.Resource.String.common_google_play_services_notification_channel_name;
+			global::Plugin.FirebasePushNotification.Resource.String.common_google_play_services_notification_ticker = global::kraken.Droid.Resource.String.common_google_play_services_notification_ticker;
+			global::Plugin.FirebasePushNotification.Resource.String.common_google_play_services_unknown_issue = global::kraken.Droid.Resource.String.common_google_play_services_unknown_issue;
+			global::Plugin.FirebasePushNotification.Resource.String.common_google_play_services_unsupported_text = global::kraken.Droid.Resource.String.common_google_play_services_unsupported_text;
+			global::Plugin.FirebasePushNotification.Resource.String.common_google_play_services_update_button = global::kraken.Droid.Resource.String.common_google_play_services_update_button;
+			global::Plugin.FirebasePushNotification.Resource.String.common_google_play_services_update_text = global::kraken.Droid.Resource.String.common_google_play_services_update_text;
+			global::Plugin.FirebasePushNotification.Resource.String.common_google_play_services_update_title = global::kraken.Droid.Resource.String.common_google_play_services_update_title;
+			global::Plugin.FirebasePushNotification.Resource.String.common_google_play_services_updating_text = global::kraken.Droid.Resource.String.common_google_play_services_updating_text;
+			global::Plugin.FirebasePushNotification.Resource.String.common_google_play_services_wear_update_text = global::kraken.Droid.Resource.String.common_google_play_services_wear_update_text;
+			global::Plugin.FirebasePushNotification.Resource.String.common_open_on_phone = global::kraken.Droid.Resource.String.common_open_on_phone;
+			global::Plugin.FirebasePushNotification.Resource.String.common_signin_button_text = global::kraken.Droid.Resource.String.common_signin_button_text;
+			global::Plugin.FirebasePushNotification.Resource.String.common_signin_button_text_long = global::kraken.Droid.Resource.String.common_signin_button_text_long;
+			global::Plugin.FirebasePushNotification.Resource.String.fcm_fallback_notification_channel_label = global::kraken.Droid.Resource.String.fcm_fallback_notification_channel_label;
+			global::Plugin.FirebasePushNotification.Resource.String.status_bar_notification_info_overflow = global::kraken.Droid.Resource.String.status_bar_notification_info_overflow;
+			global::Plugin.FirebasePushNotification.Resource.Style.TextAppearance_Compat_Notification = global::kraken.Droid.Resource.Style.TextAppearance_Compat_Notification;
+			global::Plugin.FirebasePushNotification.Resource.Style.TextAppearance_Compat_Notification_Info = global::kraken.Droid.Resource.Style.TextAppearance_Compat_Notification_Info;
+			global::Plugin.FirebasePushNotification.Resource.Style.TextAppearance_Compat_Notification_Info_Media = global::kraken.Droid.Resource.Style.TextAppearance_Compat_Notification_Info_Media;
+			global::Plugin.FirebasePushNotification.Resource.Style.TextAppearance_Compat_Notification_Line2 = global::kraken.Droid.Resource.Style.TextAppearance_Compat_Notification_Line2;
+			global::Plugin.FirebasePushNotification.Resource.Style.TextAppearance_Compat_Notification_Line2_Media = global::kraken.Droid.Resource.Style.TextAppearance_Compat_Notification_Line2_Media;
+			global::Plugin.FirebasePushNotification.Resource.Style.TextAppearance_Compat_Notification_Media = global::kraken.Droid.Resource.Style.TextAppearance_Compat_Notification_Media;
+			global::Plugin.FirebasePushNotification.Resource.Style.TextAppearance_Compat_Notification_Time = global::kraken.Droid.Resource.Style.TextAppearance_Compat_Notification_Time;
+			global::Plugin.FirebasePushNotification.Resource.Style.TextAppearance_Compat_Notification_Time_Media = global::kraken.Droid.Resource.Style.TextAppearance_Compat_Notification_Time_Media;
+			global::Plugin.FirebasePushNotification.Resource.Style.TextAppearance_Compat_Notification_Title = global::kraken.Droid.Resource.Style.TextAppearance_Compat_Notification_Title;
+			global::Plugin.FirebasePushNotification.Resource.Style.TextAppearance_Compat_Notification_Title_Media = global::kraken.Droid.Resource.Style.TextAppearance_Compat_Notification_Title_Media;
+			global::Plugin.FirebasePushNotification.Resource.Style.Widget_Compat_NotificationActionContainer = global::kraken.Droid.Resource.Style.Widget_Compat_NotificationActionContainer;
+			global::Plugin.FirebasePushNotification.Resource.Style.Widget_Compat_NotificationActionText = global::kraken.Droid.Resource.Style.Widget_Compat_NotificationActionText;
+			global::Plugin.FirebasePushNotification.Resource.Style.Widget_Support_CoordinatorLayout = global::kraken.Droid.Resource.Style.Widget_Support_CoordinatorLayout;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.ColorStateListItem = global::kraken.Droid.Resource.Styleable.ColorStateListItem;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.ColorStateListItem_alpha = global::kraken.Droid.Resource.Styleable.ColorStateListItem_alpha;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.ColorStateListItem_android_alpha = global::kraken.Droid.Resource.Styleable.ColorStateListItem_android_alpha;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.ColorStateListItem_android_color = global::kraken.Droid.Resource.Styleable.ColorStateListItem_android_color;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.CoordinatorLayout = global::kraken.Droid.Resource.Styleable.CoordinatorLayout;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.CoordinatorLayout_keylines = global::kraken.Droid.Resource.Styleable.CoordinatorLayout_keylines;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.CoordinatorLayout_Layout = global::kraken.Droid.Resource.Styleable.CoordinatorLayout_Layout;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.CoordinatorLayout_Layout_android_layout_gravity = global::kraken.Droid.Resource.Styleable.CoordinatorLayout_Layout_android_layout_gravity;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.CoordinatorLayout_Layout_layout_anchor = global::kraken.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_anchor;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.CoordinatorLayout_Layout_layout_anchorGravity = global::kraken.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_anchorGravity;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.CoordinatorLayout_Layout_layout_behavior = global::kraken.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_behavior;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.CoordinatorLayout_Layout_layout_dodgeInsetEdges = global::kraken.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_dodgeInsetEdges;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.CoordinatorLayout_Layout_layout_insetEdge = global::kraken.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_insetEdge;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.CoordinatorLayout_Layout_layout_keyline = global::kraken.Droid.Resource.Styleable.CoordinatorLayout_Layout_layout_keyline;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.CoordinatorLayout_statusBarBackground = global::kraken.Droid.Resource.Styleable.CoordinatorLayout_statusBarBackground;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.FontFamily = global::kraken.Droid.Resource.Styleable.FontFamily;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.FontFamilyFont = global::kraken.Droid.Resource.Styleable.FontFamilyFont;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.FontFamilyFont_android_font = global::kraken.Droid.Resource.Styleable.FontFamilyFont_android_font;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.FontFamilyFont_android_fontStyle = global::kraken.Droid.Resource.Styleable.FontFamilyFont_android_fontStyle;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.FontFamilyFont_android_fontVariationSettings = global::kraken.Droid.Resource.Styleable.FontFamilyFont_android_fontVariationSettings;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.FontFamilyFont_android_fontWeight = global::kraken.Droid.Resource.Styleable.FontFamilyFont_android_fontWeight;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.FontFamilyFont_android_ttcIndex = global::kraken.Droid.Resource.Styleable.FontFamilyFont_android_ttcIndex;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.FontFamilyFont_font = global::kraken.Droid.Resource.Styleable.FontFamilyFont_font;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.FontFamilyFont_fontStyle = global::kraken.Droid.Resource.Styleable.FontFamilyFont_fontStyle;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.FontFamilyFont_fontVariationSettings = global::kraken.Droid.Resource.Styleable.FontFamilyFont_fontVariationSettings;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.FontFamilyFont_fontWeight = global::kraken.Droid.Resource.Styleable.FontFamilyFont_fontWeight;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.FontFamilyFont_ttcIndex = global::kraken.Droid.Resource.Styleable.FontFamilyFont_ttcIndex;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.FontFamily_fontProviderAuthority = global::kraken.Droid.Resource.Styleable.FontFamily_fontProviderAuthority;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.FontFamily_fontProviderCerts = global::kraken.Droid.Resource.Styleable.FontFamily_fontProviderCerts;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.FontFamily_fontProviderFetchStrategy = global::kraken.Droid.Resource.Styleable.FontFamily_fontProviderFetchStrategy;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.FontFamily_fontProviderFetchTimeout = global::kraken.Droid.Resource.Styleable.FontFamily_fontProviderFetchTimeout;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.FontFamily_fontProviderPackage = global::kraken.Droid.Resource.Styleable.FontFamily_fontProviderPackage;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.FontFamily_fontProviderQuery = global::kraken.Droid.Resource.Styleable.FontFamily_fontProviderQuery;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.GradientColor = global::kraken.Droid.Resource.Styleable.GradientColor;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.GradientColorItem = global::kraken.Droid.Resource.Styleable.GradientColorItem;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.GradientColorItem_android_color = global::kraken.Droid.Resource.Styleable.GradientColorItem_android_color;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.GradientColorItem_android_offset = global::kraken.Droid.Resource.Styleable.GradientColorItem_android_offset;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.GradientColor_android_centerColor = global::kraken.Droid.Resource.Styleable.GradientColor_android_centerColor;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.GradientColor_android_centerX = global::kraken.Droid.Resource.Styleable.GradientColor_android_centerX;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.GradientColor_android_centerY = global::kraken.Droid.Resource.Styleable.GradientColor_android_centerY;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.GradientColor_android_endColor = global::kraken.Droid.Resource.Styleable.GradientColor_android_endColor;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.GradientColor_android_endX = global::kraken.Droid.Resource.Styleable.GradientColor_android_endX;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.GradientColor_android_endY = global::kraken.Droid.Resource.Styleable.GradientColor_android_endY;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.GradientColor_android_gradientRadius = global::kraken.Droid.Resource.Styleable.GradientColor_android_gradientRadius;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.GradientColor_android_startColor = global::kraken.Droid.Resource.Styleable.GradientColor_android_startColor;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.GradientColor_android_startX = global::kraken.Droid.Resource.Styleable.GradientColor_android_startX;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.GradientColor_android_startY = global::kraken.Droid.Resource.Styleable.GradientColor_android_startY;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.GradientColor_android_tileMode = global::kraken.Droid.Resource.Styleable.GradientColor_android_tileMode;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.GradientColor_android_type = global::kraken.Droid.Resource.Styleable.GradientColor_android_type;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.LoadingImageView = global::kraken.Droid.Resource.Styleable.LoadingImageView;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.LoadingImageView_circleCrop = global::kraken.Droid.Resource.Styleable.LoadingImageView_circleCrop;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.LoadingImageView_imageAspectRatio = global::kraken.Droid.Resource.Styleable.LoadingImageView_imageAspectRatio;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.LoadingImageView_imageAspectRatioAdjust = global::kraken.Droid.Resource.Styleable.LoadingImageView_imageAspectRatioAdjust;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.SignInButton = global::kraken.Droid.Resource.Styleable.SignInButton;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.SignInButton_buttonSize = global::kraken.Droid.Resource.Styleable.SignInButton_buttonSize;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.SignInButton_colorScheme = global::kraken.Droid.Resource.Styleable.SignInButton_colorScheme;
+			global::Plugin.FirebasePushNotification.Resource.Styleable.SignInButton_scopeUris = global::kraken.Droid.Resource.Styleable.SignInButton_scopeUris;
 			global::Xamarin.Essentials.Resource.Attribute.alpha = global::kraken.Droid.Resource.Attribute.alpha;
 			global::Xamarin.Essentials.Resource.Attribute.coordinatorLayoutStyle = global::kraken.Droid.Resource.Attribute.coordinatorLayoutStyle;
 			global::Xamarin.Essentials.Resource.Attribute.font = global::kraken.Droid.Resource.Attribute.font;
@@ -7214,37 +7483,64 @@ namespace kraken.Droid
 			public const int common_signin_button_text_long = 2131558460;
 			
 			// aapt resource value: 0x7F0D003D
-			public const int fab_transformation_scrim_behavior = 2131558461;
+			public const int default_web_client_id = 2131558461;
 			
 			// aapt resource value: 0x7F0D003E
-			public const int fab_transformation_sheet_behavior = 2131558462;
+			public const int fab_transformation_scrim_behavior = 2131558462;
 			
 			// aapt resource value: 0x7F0D003F
-			public const int hide_bottom_view_on_scroll_behavior = 2131558463;
+			public const int fab_transformation_sheet_behavior = 2131558463;
 			
 			// aapt resource value: 0x7F0D0040
-			public const int mtrl_chip_close_icon_content_description = 2131558464;
+			public const int fcm_fallback_notification_channel_label = 2131558464;
 			
 			// aapt resource value: 0x7F0D0041
-			public const int password_toggle_content_description = 2131558465;
+			public const int firebase_database_url = 2131558465;
 			
 			// aapt resource value: 0x7F0D0042
-			public const int path_password_eye = 2131558466;
+			public const int gcm_defaultSenderId = 2131558466;
 			
 			// aapt resource value: 0x7F0D0043
-			public const int path_password_eye_mask_strike_through = 2131558467;
+			public const int google_api_key = 2131558467;
 			
 			// aapt resource value: 0x7F0D0044
-			public const int path_password_eye_mask_visible = 2131558468;
+			public const int google_app_id = 2131558468;
 			
 			// aapt resource value: 0x7F0D0045
-			public const int path_password_strike_through = 2131558469;
+			public const int google_crash_reporting_api_key = 2131558469;
 			
 			// aapt resource value: 0x7F0D0046
-			public const int search_menu_title = 2131558470;
+			public const int google_storage_bucket = 2131558470;
 			
 			// aapt resource value: 0x7F0D0047
-			public const int status_bar_notification_info_overflow = 2131558471;
+			public const int hide_bottom_view_on_scroll_behavior = 2131558471;
+			
+			// aapt resource value: 0x7F0D0048
+			public const int mtrl_chip_close_icon_content_description = 2131558472;
+			
+			// aapt resource value: 0x7F0D0049
+			public const int password_toggle_content_description = 2131558473;
+			
+			// aapt resource value: 0x7F0D004A
+			public const int path_password_eye = 2131558474;
+			
+			// aapt resource value: 0x7F0D004B
+			public const int path_password_eye_mask_strike_through = 2131558475;
+			
+			// aapt resource value: 0x7F0D004C
+			public const int path_password_eye_mask_visible = 2131558476;
+			
+			// aapt resource value: 0x7F0D004D
+			public const int path_password_strike_through = 2131558477;
+			
+			// aapt resource value: 0x7F0D004E
+			public const int project_id = 2131558478;
+			
+			// aapt resource value: 0x7F0D004F
+			public const int search_menu_title = 2131558479;
+			
+			// aapt resource value: 0x7F0D0050
+			public const int status_bar_notification_info_overflow = 2131558480;
 			
 			static String()
 			{

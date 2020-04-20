@@ -15,16 +15,6 @@ namespace kraken.Pages
         }
 
         /// <summary>
-        /// Выполняет переход на страницу профиля 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void Button_Clicked(object sender, EventArgs e)
-        {
-            Navigation.PushAsync(new TabbedView());
-        }
-
-        /// <summary>
         /// Выполняет переход на страницу авторизации
         /// </summary>
         /// <param name="sender"></param>

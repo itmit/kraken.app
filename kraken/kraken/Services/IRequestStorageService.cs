@@ -9,14 +9,12 @@ namespace kraken.Services
     {
         Realm Realm { get; }
 
-        Request GetRequest(string id);
-        Task<List<Request>> GetAllRequestsAsync();
-        Task<Request> CreateRequest();
+        Task<Request> GetRequestFullInfo(string RequestUuid);
+        Task<List<Request>> GetUserRequestsAsync();
+        Task<List<WorkType>> GetWorkTypesAsync();
+        Task<List<Master>> GetMastersAsync(string RequestUuid);
 
-        void AddRequest(Request dialog);
-        void UpdateRequest(Request dialog);
-        void DeleteRequest(Request dialog);
-        bool DoesRequestExist(Request dialog);
-        void DeleteAllRequests();
+        Task<bool> SendNewRequestAsync(Request CreatedRequest);
+        Task<bool> DeleteUserObjectsAsync(object objectToDelete);
     }
 }

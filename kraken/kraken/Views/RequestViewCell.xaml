@@ -11,12 +11,12 @@
             <BoxView BackgroundColor="Red" HeightRequest="8" WidthRequest="8" CornerRadius="4" VerticalOptions="Start" HorizontalOptions="Center" Margin="0,5"/>
             <StackLayout>
                 <StackLayout Orientation="Horizontal" Spacing="0">
-                    <Label Text="Монтажные работы 23.11.2019 Монтажные работы 23.11.2019" WidthRequest="275" FontAttributes="Bold" HorizontalTextAlignment="Start"/>
-                    <Label Text="Срочно" HorizontalOptions="End" FontSize="Caption"/>
+                    <Label Text="{Binding Work}" WidthRequest="275" FontAttributes="Bold" HorizontalTextAlignment="Start"/>
+                    <Label Text="{Binding Urgency}" HorizontalOptions="End" FontSize="Caption"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" Spacing="0">
-                    <Label Text="36 мин" HorizontalTextAlignment="Start" FontSize="Caption"/>
-                    <Label Text="Описание ремонтных работ для, идентификации какой-то текст" HorizontalTextAlignment="End" FontSize="12" LineBreakMode="TailTruncation" WidthRequest="275" MaxLines="1"></Label>
+                    <Label Text="{Binding Description}" HorizontalTextAlignment="Start" FontSize="Caption"/>
+                    <Label Text="36 мин" HorizontalTextAlignment="End" FontSize="12" LineBreakMode="TailTruncation" WidthRequest="275" MaxLines="1"></Label>
                 </StackLayout>
             </StackLayout>
         </StackLayout>

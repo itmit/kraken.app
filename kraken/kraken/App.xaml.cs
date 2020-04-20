@@ -1,9 +1,8 @@
 ﻿using FreshMvvm;
 using kraken.Models;
 using kraken.PageModels;
-using kraken.Pages;
+using Plugin.FirebasePushNotification;
 using Realms;
-using System;
 using System.Linq;
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration.AndroidSpecific;
@@ -14,14 +13,36 @@ namespace kraken
     {
         public static bool IsUserLoggedIn { get; set; }
 
+        public static string DeviceToken { get; set; }
+
         public App()
         {
             InitializeComponent();
 
+            SetUpNotifications();
+
+            SetUpIoC();
+
             Page loginPage = FreshPageModelResolver.ResolvePageModel<AuthorizationPageModel>();
             FreshNavigationContainer loginContainer = new FreshNavigationContainer(loginPage, NavigationContainerNames.AuthenticationContainer);
 
-            FreshTabbedNavigationContainer tabbedNavigation = new FreshTabbedNavigationContainer(NavigationContainerNames.MainContainer);
+            ExtendedTabbedPage tabbedNavigation = SetUpTabbedNavigation();
+
+            bool UserIsFound = IsUserFound();
+
+            if (!IsUserLoggedIn & !UserIsFound)
+            {
+                MainPage = loginContainer;
+            }
+            else
+            {
+                MainPage = tabbedNavigation;
+            }
+        }
+
+        private ExtendedTabbedPage SetUpTabbedNavigation()
+        {
+            ExtendedTabbedPage tabbedNavigation = new ExtendedTabbedPage(NavigationContainerNames.MainContainer);
             tabbedNavigation.On<Xamarin.Forms.PlatformConfiguration.Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);
 
             var tabIconProfile = "ic_action_person.png";
@@ -29,7 +50,7 @@ namespace kraken
             var tabIconMyRequest = "ic_action_list_alt.png";
             var tabIconExit = "ic_action_input.png";
 
-            if(Device.iOS == Device.RuntimePlatform)
+            if (Device.iOS == Device.RuntimePlatform)
             {
                 tabIconProfile = "baseline_person_black_24pt_1x.png";
                 tabIconCreateRequests = "baseline_note_add_black_24pt_1x.png";
@@ -45,18 +66,57 @@ namespace kraken
             tabbedNavigation.SelectedTabColor = Color.Red;
             tabbedNavigation.UnselectedTabColor = Color.FromHex("#9E9E9E");
 
+            //tabbedNavigation.CurrentPageChanged += TabbedNavigation_CurrentPageChanged;
+
+            return tabbedNavigation;
+        }
+
+        private void TabbedNavigation_CurrentPageChanged(object sender, System.EventArgs e)
+        {
+            var navigationContainer = (FreshTabbedNavigationContainer)sender;
+            navigationContainer.CurrentPage.Navigation.PopToRootAsync();
+        }
+
+        private void SetUpNotifications()
+        {
+            CrossFirebasePushNotification.Current.Subscribe("general");
+
+            CrossFirebasePushNotification.Current.OnNotificationOpened += (s, p) =>
+            {
+                //if (p.Data.Keys.Contains("dialog_id"))
+                //{
+                //    string id = p.Data["dialog_id"].ToString();
+                //    string updatedAt = p.Data["updated_at"].ToString();
+                //    string phone = p.Data["phone"].ToString();
+                //    string avatar = p.Data["avatar"].ToString();
+
+                //    SelectedDialog = new Dialog
+                //    {
+                //        Id = id,
+                //        UserPhone = phone,
+                //        Updated_at = updatedAt,
+                //        ImageUri = avatar
+                //    };
+                //    IsNotificationOpened = true;
+                //}
+            };
+
+            CrossFirebasePushNotification.Current.OnTokenRefresh += (s, p) =>
+            {
+                DeviceToken = p.Token;
+            };
+        }
+
+        private void SetUpIoC()
+        {
+            FreshIOC.Container.Register<Services.IRequestStorageService, Services.RequestStorageService>();
+        }
+
+        private bool IsUserFound()
+        {
             Realm realm = Realm.GetInstance();
             IQueryable<User> user = realm.All<User>();
-            bool UserIsFound = user?.Count() > 0;
-
-            if (!IsUserLoggedIn & !UserIsFound)
-            {
-                MainPage = loginContainer;
-            }
-            else
-            {
-                MainPage = tabbedNavigation;
-            }
+            return user?.Count() > 0;
         }
 
         protected override void OnStart()
