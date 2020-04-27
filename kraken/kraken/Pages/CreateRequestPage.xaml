@@ -4,9 +4,6 @@
              xmlns:imageCell="clr-namespace:kraken.Views"
              x:Class="kraken.Pages.CreateRequestPage"
              Title="Создать запрос">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="ic_action_settings_applications.png"/>
-    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <!--Страница создания запроса-->
         <ScrollView>
@@ -41,7 +38,7 @@
                         <StackLayout>
                             <Image Source="ic_add_photo_alternate.png" HorizontalOptions="Center" WidthRequest="70"></Image>
                             <Label Text="Прикрепите фото или видеофайл" HorizontalOptions="Center"></Label>
-                            <Button Text="Выбрать файл" TextColor="Red" BackgroundColor="White" CornerRadius="5" BorderColor="Red" BorderWidth="1" WidthRequest="175" Command="{Binding .}"></Button>
+                            <Button Text="Выбрать файл" TextColor="Red" BackgroundColor="White" CornerRadius="5" BorderColor="Red" BorderWidth="1" WidthRequest="175" Command="{Binding OpenFileManagerCommand}"></Button>
                             <RelativeLayout x:Name="ListImage" IsVisible="False" HorizontalOptions="Center" WidthRequest="275" HeightRequest="80">
                                 <ListView Rotation="270" 
                                           RowHeight="80"
@@ -50,13 +47,11 @@
                                           VerticalScrollBarVisibility="Never" 
                                           VerticalOptions="Center" 
                                           HorizontalOptions="Center"
+                                          ItemsSource="{Binding UserFiles}"
                                           RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-50}"
                                           RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=-0.5, Constant=50}"
                                           RelativeLayout.WidthConstraint="{ConstraintExpression Type=Constant, Constant=80}"
                                           RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
-                                    <ListView.ItemsSource>
-                                        <x:String>0000000</x:String>
-                                    </ListView.ItemsSource>
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
                                             <imageCell:ImageViewCell/>

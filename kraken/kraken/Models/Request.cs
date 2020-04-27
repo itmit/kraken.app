@@ -40,8 +40,10 @@ namespace kraken.Models
         [JsonProperty("status")]
         public string Status { get; set; }
 
+        [JsonIgnore]
         public string StatusText { get { return StatusDictionary[Status]; } }
 
+        [JsonIgnore]
         public string UrgencyText { get { return UrgencyDictionary[Urgency]; } }
 
 

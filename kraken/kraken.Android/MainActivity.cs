@@ -11,6 +11,10 @@ namespace kraken.Droid
     [Activity(Label = "kraken", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
+        public static readonly int PickImageId = 1000;
+
+        public System.Threading.Tasks.TaskCompletionSource<string> PickImageTaskCompletionSource { set; get; }
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             TabLayoutResource = Resource.Layout.Tabbar;

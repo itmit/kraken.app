@@ -152,7 +152,7 @@ namespace kraken.Services
                     Xamarin.Forms.Device.BeginInvokeOnMainThread(async () => { await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", errorMessage, "OK"); });
                 }
             }
-            catch (System.Exception)
+            catch (Exception)
             {
             }
 

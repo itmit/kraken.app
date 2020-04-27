@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace kraken.PageModels
 {
@@ -13,6 +14,7 @@ namespace kraken.PageModels
     public class CreateRequestPageModel : FreshBasePageModel
     {
         readonly IRequestStorageService _requestStorage;
+        private byte[] byteImage;
 
         public List<WorkType> WorkTypes { get; set; } = new List<WorkType>();
         public List<Urgency> Urgency { get; set; } = new List<Urgency>();
@@ -20,6 +22,9 @@ namespace kraken.PageModels
         public WorkType SelectedType { get; set; }
         public Urgency SelectedUrgency { get; set; }
         public string Description { get; set; }
+
+        public List<string> UserFiles { get; set; } = new List<string>();
+        public string UserImage { get; set; }
 
         public ICommand CreateRequestCommand
         {
@@ -32,6 +37,18 @@ namespace kraken.PageModels
                     {
                         await CoreMethods.PushPageModel<MyRequestPageModel>();
                     }
+                    tcs.SetResult(true);
+                });
+            }
+        }
+
+        public ICommand OpenFileManagerCommand
+        {
+            get
+            {
+                return new Xamarin.Forms.Command(async (param) =>
+                {
+                    await OpenFileManager();
                 });
             }
         }
@@ -97,6 +114,24 @@ namespace kraken.PageModels
             var response = await _requestStorage.SendNewRequestAsync(NewRequest);
 
             return response;
+        }
+
+        private async Task OpenFileManager()
+        {
+            try
+            {
+                Plugin.FilePicker.Abstractions.FileData fileData = await Plugin.FilePicker.CrossFilePicker.Current.PickFile();
+                if (fileData == null)
+                    return; // user canceled file picking
+                
+                UserFiles.Add(fileData.FileName);
+
+                byteImage = fileData.DataArray;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception choosing file: " + ex.ToString());
+            }
         }
     }
 }
