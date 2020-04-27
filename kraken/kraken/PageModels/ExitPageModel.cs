@@ -45,7 +45,10 @@ namespace kraken.PageModels
                 CurrentRealm.RemoveAll<User>();
             });
 
+            Services.RequestStorageService.AuthenticationHeaderIsSet = false;
+
             App.IsUserLoggedIn = false;
+            App.IsUserMaster = false;
 
             await CoreMethods.PopPageModel(true, false, true);
             CoreMethods.SwitchOutRootNavigation(NavigationContainerNames.AuthenticationContainer);

@@ -6,6 +6,8 @@ namespace kraken.Models
     [AddINotifyPropertyChangedInterface]
     public class User : RealmObject
     {
+        public string MasterId { get; set; }
+
         public string Name { get; set; }
 
         public string Organization { get; set; }

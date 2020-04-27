@@ -1,16 +1,20 @@
 ﻿using Newtonsoft.Json;
 using PropertyChanged;
 using Realms;
+using System.Collections.Generic;
 
 namespace kraken.Models
 {
     [AddINotifyPropertyChangedInterface]
-    public class Request : RealmObject
+    public class Request
     {
         [PrimaryKey]
         public string Id { get; set; }
 
         public string uuid { get; set; }
+
+        [JsonProperty("master_id")]
+        public string MasterId { get; set; }
 
         [JsonProperty("work")]
         public string Work { get; set; }
@@ -35,5 +39,28 @@ namespace kraken.Models
 
         [JsonProperty("status")]
         public string Status { get; set; }
+
+        public string StatusText { get { return StatusDictionary[Status]; } }
+
+        public string UrgencyText { get { return UrgencyDictionary[Urgency]; } }
+
+
+        private Dictionary<string, string> StatusDictionary { get; set; }
+        private Dictionary<string, string> UrgencyDictionary { get; set; }
+
+        public Request()
+        {
+            StatusDictionary = new Dictionary<string, string> {
+                { "created", "Создан" },
+                { "appointed", "Назначен исполнитель" },
+                { "active", "На исполнении" }
+            };
+
+            UrgencyDictionary = new Dictionary<string, string> {
+                { "urgent", "Срочно" },
+                { "now", "Сейчас" },
+                { "scheduled", "Заданное время" }
+            };
+        }
     }
 }

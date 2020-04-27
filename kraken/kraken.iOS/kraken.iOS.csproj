@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Services\iOSLongRunningTaskExample.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -210,4 +211,5 @@
   <ItemGroup>
     <BundleResource Include="Resources\baseline_input_black_24pt_1x.png" />
   </ItemGroup>
+  <ItemGroup />
 </Project>

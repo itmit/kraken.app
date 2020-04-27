@@ -12,7 +12,7 @@
             <StackLayout>
                 <StackLayout Orientation="Horizontal" Spacing="0">
                     <Label Text="{Binding Work}" WidthRequest="275" FontAttributes="Bold" HorizontalTextAlignment="Start"/>
-                    <Label Text="{Binding Urgency}" HorizontalOptions="End" FontSize="Caption"/>
+                    <Label Text="{Binding UrgencyText}" HorizontalOptions="End" FontSize="Caption"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" Spacing="0">
                     <Label Text="{Binding Description}" HorizontalTextAlignment="Start" FontSize="Caption"/>

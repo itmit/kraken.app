@@ -1,11 +1,10 @@
-﻿using System;
-
-using Android.App;
+﻿using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
+using Xamarin.Forms;
+using Android.Content;
+using kraken.Messages;
 
 namespace kraken.Droid
 {
@@ -24,6 +23,8 @@ namespace kraken.Droid
             LoadApplication(new App());
 
             Plugin.FirebasePushNotification.FirebasePushNotificationManager.ProcessIntent(this, Intent);
+
+            WireUpLongRunningTask();
         }
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
@@ -33,10 +34,23 @@ namespace kraken.Droid
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
-        protected override void OnNewIntent(Android.Content.Intent intent)
+        protected override void OnNewIntent(Intent intent)
         {
             base.OnNewIntent(intent);
             Plugin.FirebasePushNotification.FirebasePushNotificationManager.ProcessIntent(this, intent);
+        }
+
+        void WireUpLongRunningTask()
+        {
+            MessagingCenter.Subscribe<StartLongRunningTaskMessage>(this, "StartLongRunningTaskMessage", message => {
+                var intent = new Intent(this, typeof(LongRunningTaskService));
+                StartService(intent);
+            });
+
+            MessagingCenter.Subscribe<StopLongRunningTaskMessage>(this, "StopLongRunningTaskMessage", message => {
+                Intent intent = new Intent(this, typeof(LongRunningTaskService));
+                StopService(intent);
+            });
         }
     }
 }

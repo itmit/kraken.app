@@ -50,6 +50,14 @@
                     BorderWidth="1" 
                     CornerRadius="10"
                     Command="{Binding OnRequestsButtonClicked}"></Button>
+                <Button 
+                    Text="Отправить координаты" 
+                    TextColor="Red" 
+                    BackgroundColor="White" 
+                    BorderColor="Red" 
+                    BorderWidth="1" 
+                    CornerRadius="10"
+                    Command="{Binding SendCoordsCommand}"></Button>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

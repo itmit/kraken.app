@@ -15,7 +15,7 @@ namespace kraken.Services
     {
         readonly HttpClient client;
 
-        private bool AuthenticationHeaderIsSet { get; set; }
+        public static bool AuthenticationHeaderIsSet { get; set; }
 
         public Realm Realm { get { return Realm.GetInstance(); } }
 
@@ -232,6 +232,106 @@ namespace kraken.Services
                 string jmessage = JsonConvert.SerializeObject(CreatedRequest, Formatting.Indented);
 
                 StringContent content = new StringContent(jmessage, System.Text.Encoding.UTF8, "application/json");
+                HttpResponseMessage response = null;
+                response = client.PostAsync(uri, content).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseMessage = await response.Content.ReadAsStringAsync();
+
+                    return true;
+                }
+                else
+                {
+                    string errorInfo = await response.Content.ReadAsStringAsync();
+                    string errorMessage = ParseErrorMessage(errorInfo);
+
+                    Xamarin.Forms.Device.BeginInvokeOnMainThread(async () => { await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", errorMessage, "OK"); });
+
+                    return false;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
+                return false;
+            }
+        }
+
+        public async Task<bool> SendAcceptRequest(string RequestUuid)
+        {
+            if (IsThereInternet() == false)
+            {
+                return false;
+            }
+
+            if (!AuthenticationHeaderIsSet)
+            {
+                SetAuthenticationHeader();
+            }
+
+            string restMethod = "masters/applyInquiry";
+            System.Uri uri = new System.Uri(string.Format(Constants.RestUrl, restMethod));
+
+            try
+            {
+                JObject jmessage = new JObject
+                {
+                    { "uuid", RequestUuid }
+                };
+                string json = jmessage.ToString();
+
+                StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+                HttpResponseMessage response = null;
+                response = client.PostAsync(uri, content).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseMessage = await response.Content.ReadAsStringAsync();
+
+                    return true;
+                }
+                else
+                {
+                    string errorInfo = await response.Content.ReadAsStringAsync();
+                    string errorMessage = ParseErrorMessage(errorInfo);
+
+                    Xamarin.Forms.Device.BeginInvokeOnMainThread(async () => { await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", errorMessage, "OK"); });
+
+                    return false;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
+                return false;
+            }
+        }
+
+        public async Task<bool> SendDeclineRequest(string RequestUuid)
+        {
+            if (IsThereInternet() == false)
+            {
+                return false;
+            }
+
+            if (!AuthenticationHeaderIsSet)
+            {
+                SetAuthenticationHeader();
+            }
+
+            string restMethod = "masters/cancelInquiry";
+            System.Uri uri = new System.Uri(string.Format(Constants.RestUrl, restMethod));
+
+            try
+            {
+                JObject jmessage = new JObject
+                {
+                    { "uuid", RequestUuid }
+                };
+                string json = jmessage.ToString();
+
+                StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
                 HttpResponseMessage response = null;
                 response = client.PostAsync(uri, content).Result;
 

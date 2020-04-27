@@ -15,6 +15,8 @@ namespace kraken.Services
         Task<List<Master>> GetMastersAsync(string RequestUuid);
 
         Task<bool> SendNewRequestAsync(Request CreatedRequest);
+        Task<bool> SendAcceptRequest(string RequestUuid);
+        Task<bool> SendDeclineRequest(string RequestUuid);
         Task<bool> DeleteUserObjectsAsync(object objectToDelete);
     }
 }

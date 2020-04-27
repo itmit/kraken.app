@@ -3,33 +3,47 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:listMaster="clr-namespace:kraken.Views"
+             xmlns:converters="clr-namespace:kraken.Converters"
              mc:Ignorable="d"
              x:Class="kraken.Pages.RequestDetailPage"
              Title="Мои запросы">
-    <ContentPage.ToolbarItems>
-        <ToolbarItem IconImageSource="ic_action_settings_applications.png"/>
-    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <!--Мои запросы детальная страница-->
         <StackLayout>
             <StackLayout BackgroundColor="White" Margin="0,5" Padding="20">
                 <Label Text="{Binding RequestName}" FontAttributes="Bold"/>
                 <Label Text="{Binding RequestDescription}"/>
+                <Label Text="{Binding RequestUrgency}"/>
+                <Label Text="{Binding RequestStatus}"/>
+                <Button 
+                    Text="Доступные мастера" 
+                    Style="{StaticResource RedButton}" 
+                    Margin="20,10" 
+                    CornerRadius="5" 
+                    IsVisible="{Binding IsCurrentUserMaster, Converter={StaticResource InverseBoolConverter}}"
+                    Command="{Binding ShowMasterListCommand}"/>
             </StackLayout>
-            <Label Text="Доступные мастера" FontSize="16" FontAttributes="Bold" Margin="20,0"></Label>
-            <ListView 
-                HasUnevenRows="True" 
-                VerticalScrollBarVisibility="Never" 
-                SeparatorVisibility="None" 
-                SelectionMode="None"
-                ItemsSource="{Binding Masters}">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <listMaster:MasterViewCell/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <StackLayout IsVisible="{Binding IsCurrentUserMaster}">
+                <Button 
+                    Text="Отменить" 
+                    Style="{StaticResource RedButton}" 
+                    Margin="20,10" 
+                    CornerRadius="5" 
+                    IsVisible="{Binding IsMasterSelected}"
+                    Command="{Binding DeclineRequestCommand}"/>
+                <Button 
+                    Text="Принять заявку" 
+                    Style="{StaticResource RedButton}" 
+                    Margin="20,10" 
+                    CornerRadius="5" 
+                    IsVisible="{Binding IsMasterSelected, Converter={StaticResource InverseBoolConverter}}"
+                    Command="{Binding AcceptRequestCommand}"/>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

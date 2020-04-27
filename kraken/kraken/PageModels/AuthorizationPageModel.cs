@@ -6,6 +6,10 @@ using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using kraken.Models;
 using System.Threading.Tasks;
+using System;
+using kraken.Services;
+using Xamarin.Forms;
+using kraken.Messages;
 
 namespace kraken.PageModels
 {
@@ -20,6 +24,8 @@ namespace kraken.PageModels
         public string UsernameEntry { get; set; } = string.Empty;
         public string EmailEntry { get; set; } = string.Empty;
         public string PasswordEntry { get; set; } = string.Empty;
+
+        private User currentUser;
 
         public AuthorizationPageModel()
         {
@@ -70,6 +76,11 @@ namespace kraken.PageModels
             bool isValid = await AreCredentialsCorrectAsync();
             if (isValid)
             {
+                if(currentUser.ClientType == "master")
+                {
+                    App.IsUserMaster = true;
+                    StartSendingCoordinates();
+                }
                 App.IsUserLoggedIn = true;
                 CoreMethods.SwitchOutRootNavigation(NavigationContainerNames.MainContainer);
             }
@@ -104,7 +115,7 @@ namespace kraken.PageModels
             };
 
             string restMethod = "login";
-            System.Uri uri = new System.Uri(string.Format(Constants.RestUrl, restMethod));
+            Uri uri = new Uri(string.Format(Constants.RestUrl, restMethod));
 
             try
             {
@@ -126,20 +137,37 @@ namespace kraken.PageModels
                     string userInfo = await response.Content.ReadAsStringAsync();
                     JObject userObj = JObject.Parse(userInfo);
 
-                    User user = new User
+                    var userType = userObj["data"]["client_type"].ToString();
+
+                    if (userType == "master")
                     {
-                        Name = userObj["data"]["client_info"]["name"].ToString(),
-                        Phone = userObj["data"]["client_info"]["phone"].ToString(),
-                        Organization = userObj["data"]["client_info"]["organization"].ToString(),
-                        Address = userObj["data"]["client_info"]["address"].ToString(),
-                        ClientType = userObj["data"]["client_type"].ToString(),
-                        Token = userObj["data"]["access_token"].ToString(),
-                        DeviceToken = App.DeviceToken,
-                    };
+                        currentUser = new User
+                        {
+                            MasterId = userObj["data"]["client_info"]["master_id"].ToString(),
+                            Name = userObj["data"]["client_info"]["name"].ToString(),
+                            Phone = userObj["data"]["client_info"]["phone"].ToString(),
+                            ClientType = userObj["data"]["client_type"].ToString(),
+                            Token = userObj["data"]["access_token"].ToString(),
+                            DeviceToken = App.DeviceToken,
+                        };
+                    }
+                    else
+                    {
+                        currentUser = new User
+                        {
+                            Name = userObj["data"]["client_info"]["name"].ToString(),
+                            Phone = userObj["data"]["client_info"]["phone"].ToString(),
+                            Organization = userObj["data"]["client_info"]["organization"].ToString(),
+                            Address = userObj["data"]["client_info"]["address"].ToString(),
+                            ClientType = userObj["data"]["client_type"].ToString(),
+                            Token = userObj["data"]["access_token"].ToString(),
+                            DeviceToken = App.DeviceToken,
+                        };
+                    }
 
                     Realm.Write(() =>
                     {
-                        Realm.Add(user, true);
+                        Realm.Add(currentUser, true);
                     });
 
                     return true;
@@ -180,6 +208,12 @@ namespace kraken.PageModels
             }
 
             return false;
+        }
+
+        private void StartSendingCoordinates()
+        {
+            var message = new StartLongRunningTaskMessage();
+            MessagingCenter.Send(message, "StartLongRunningTaskMessage");
         }
     }
 }

@@ -12,6 +12,7 @@ namespace kraken
     public partial class App : Xamarin.Forms.Application
     {
         public static bool IsUserLoggedIn { get; set; }
+        public static bool IsUserMaster { get; set; } = false;
 
         public static string DeviceToken { get; set; }
 
@@ -22,6 +23,8 @@ namespace kraken
             SetUpNotifications();
 
             SetUpIoC();
+
+            Current.On<Xamarin.Forms.PlatformConfiguration.Android>().UseWindowSoftInputModeAdjust(WindowSoftInputModeAdjust.Resize);
 
             Page loginPage = FreshPageModelResolver.ResolvePageModel<AuthorizationPageModel>();
             FreshNavigationContainer loginContainer = new FreshNavigationContainer(loginPage, NavigationContainerNames.AuthenticationContainer);
