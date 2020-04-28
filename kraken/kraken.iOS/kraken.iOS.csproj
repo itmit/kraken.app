@@ -72,6 +72,10 @@
     <BundleResource Include="GoogleService-Info.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <BundleResource Include="Resources\ic_action_input%403x.png" />
+    <BundleResource Include="Resources\ic_action_list_alt%403x.png" />
+    <BundleResource Include="Resources\ic_action_note_add%403x.png" />
+    <BundleResource Include="Resources\ic_action_person%403x.png" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcons.appiconset\Contents.json">
@@ -175,7 +179,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\kraken\kraken.csproj">
-      <Project>{DACF82D3-1CDA-4FFC-8E47-CBD5A118407F}</Project>
+      <Project>{0A6C32E1-7E4B-4F2B-A52B-1E910C2863B1}</Project>
       <Name>kraken</Name>
     </ProjectReference>
   </ItemGroup>
@@ -205,18 +209,6 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\ic_kraken.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\baseline_person_black_24pt_1x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\baseline_note_add_black_24pt_1x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\baseline_list_alt_black_24pt_1x.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <BundleResource Include="Resources\baseline_input_black_24pt_1x.png" />
   </ItemGroup>
   <ItemGroup />
 </Project>
