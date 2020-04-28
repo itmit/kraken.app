@@ -230,8 +230,6 @@ namespace kraken.Services
             {
                 string userAddress = GetUserAddress();
 
-                var test = FilesArray[0];
-
                 JArray FilesJArray = new JArray();
                 foreach (string parameterName in FilesArray)
                 {
@@ -248,7 +246,7 @@ namespace kraken.Services
                 };
                 string json = jmessage.ToString();
 
-                StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/form-data");
+                StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
                 HttpResponseMessage response = null;
                 response = client.PostAsync(uri, content).Result;
 

@@ -4,6 +4,7 @@ using kraken.Services;
 using PropertyChanged;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -15,7 +16,7 @@ namespace kraken.PageModels
     {
         readonly IRequestStorageService _requestStorage;
 
-        public List<WorkType> WorkTypes { get; set; } = new List<WorkType>();
+        public ObservableCollection<WorkType> WorkTypes { get; set; }
         public List<Urgency> Urgency { get; set; } = new List<Urgency>();
 
         public WorkType SelectedType { get; set; }
@@ -57,10 +58,13 @@ namespace kraken.PageModels
             _requestStorage = requestStorage;
         }
 
-        public override void Init(object initData)
+        protected override async void ViewIsAppearing(object sender, System.EventArgs e)
         {
-            base.Init(initData);
-            WorkTypes = GetWorkTypes().Result;
+            base.ViewIsAppearing(sender, e);
+
+            var typeList = await GetWorkTypes();
+            WorkTypes = new ObservableCollection<WorkType>(typeList);
+
             GetUrgencyTypes();
         }
 

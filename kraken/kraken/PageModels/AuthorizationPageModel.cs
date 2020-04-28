@@ -148,6 +148,7 @@ namespace kraken.PageModels
                             Phone = userObj["data"]["client_info"]["phone"].ToString(),
                             ClientType = userObj["data"]["client_type"].ToString(),
                             Token = userObj["data"]["access_token"].ToString(),
+                            Email = EmailEntry,
                             DeviceToken = App.DeviceToken,
                         };
                     }
@@ -161,6 +162,7 @@ namespace kraken.PageModels
                             Address = userObj["data"]["client_info"]["address"].ToString(),
                             ClientType = userObj["data"]["client_type"].ToString(),
                             Token = userObj["data"]["access_token"].ToString(),
+                            Email = EmailEntry,
                             DeviceToken = App.DeviceToken,
                         };
                     }

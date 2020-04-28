@@ -51,6 +51,7 @@ namespace kraken.PageModels
             App.IsUserMaster = false;
 
             await CoreMethods.PopPageModel(true, false, true);
+            await CoreMethods.SwitchSelectedTab<MyProfilePageModel>();
             CoreMethods.SwitchOutRootNavigation(NavigationContainerNames.AuthenticationContainer);
         }
     }
