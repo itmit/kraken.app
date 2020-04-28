@@ -12,6 +12,9 @@
         <StackLayout>
             <ListView HasUnevenRows="True" 
                       SeparatorVisibility="None" 
+                      IsPullToRefreshEnabled="True"
+                      RefreshCommand="{Binding UpdateListCommand}"
+                      IsRefreshing="{Binding IsRefreshing}"
                       ItemsSource="{Binding UserRequests}"
                       SelectedItem="{Binding SelectedRequest, Mode=TwoWay}">
                 <ListView.ItemTemplate>

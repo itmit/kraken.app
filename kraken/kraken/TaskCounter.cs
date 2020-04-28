@@ -13,7 +13,7 @@ namespace kraken
 {
     public class TaskCounter
     {
-        private const int MinuteInMilliseconds = 60000;
+        private const int MinutesInMilliseconds = 300000; // 5 minutes
         private HttpClient client;
         private Uri uri = new Uri(string.Format(Constants.RestUrl, "masters/updateLocation"));
 
@@ -43,7 +43,7 @@ namespace kraken
                 {
                     token.ThrowIfCancellationRequested();
 
-                    await Task.Delay(MinuteInMilliseconds);
+                    await Task.Delay(MinutesInMilliseconds);
 
                     SendUserCoordinates();
                 }

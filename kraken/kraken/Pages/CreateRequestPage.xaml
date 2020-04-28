@@ -14,7 +14,7 @@
                         Style="{StaticResource DefaultPicker}"
                         ItemDisplayBinding="{Binding work}"
                         ItemsSource="{Binding WorkTypes}"
-                        SelectedItem="{Binding SelectedType}">
+                        SelectedItem="{Binding SelectedType, Mode=TwoWay}">
                     </Picker>
                 </Frame>
                 <Frame Style="{StaticResource PickerFrame}" Margin="20,0">

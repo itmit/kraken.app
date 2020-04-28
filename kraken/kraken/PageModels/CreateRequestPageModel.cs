@@ -14,7 +14,6 @@ namespace kraken.PageModels
     public class CreateRequestPageModel : FreshBasePageModel
     {
         readonly IRequestStorageService _requestStorage;
-        private byte[] byteImage;
 
         public List<WorkType> WorkTypes { get; set; } = new List<WorkType>();
         public List<Urgency> Urgency { get; set; } = new List<Urgency>();
@@ -24,7 +23,7 @@ namespace kraken.PageModels
         public string Description { get; set; }
 
         public List<string> UserFiles { get; set; } = new List<string>();
-        public string UserImage { get; set; }
+        private List<string> UserFilesBase64 { get; set; } = new List<string>();
 
         public ICommand CreateRequestCommand
         {
@@ -58,11 +57,10 @@ namespace kraken.PageModels
             _requestStorage = requestStorage;
         }
 
-        protected override async void ViewIsAppearing(object sender, EventArgs e)
+        public override void Init(object initData)
         {
-            base.ViewIsAppearing(sender, e);
-
-            WorkTypes = await GetWorkTypes();
+            base.Init(initData);
+            WorkTypes = GetWorkTypes().Result;
             GetUrgencyTypes();
         }
 
@@ -102,16 +100,23 @@ namespace kraken.PageModels
 
         private async Task<bool> CreateRequest()
         {
+            bool isValid = ValidateInputData();
+
+            if(isValid == false)
+            {
+                await CoreMethods.DisplayAlert("Ошибка", "Неуказаны род работ, срочность или описание", "Ok");
+                return false;
+            }
+
             Request NewRequest = new Request()
             {
                 Work = SelectedType.id,
                 Urgency = SelectedUrgency.Code,
                 Description = Description,
-                Address = "address",
                 StartedAt = "",
             };
 
-            var response = await _requestStorage.SendNewRequestAsync(NewRequest);
+            var response = await _requestStorage.SendNewRequestAsync(NewRequest, UserFilesBase64.ToArray());
 
             return response;
         }
@@ -125,13 +130,22 @@ namespace kraken.PageModels
                     return; // user canceled file picking
                 
                 UserFiles.Add(fileData.FileName);
-
-                byteImage = fileData.DataArray;
+                UserFilesBase64.Add("data:image/png;base64," + Convert.ToBase64String(fileData.DataArray));
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Exception choosing file: " + ex.ToString());
             }
+        }
+
+        private bool ValidateInputData()
+        {
+            if(SelectedType != null | SelectedUrgency != null | Description != null)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

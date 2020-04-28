@@ -28,19 +28,36 @@ namespace kraken.PageModels
             }
         }
 
+        public bool IsRefreshing { get; set; } = false;
+
+        public ICommand UpdateListCommand
+        {
+            get
+            {
+                return new Xamarin.Forms.Command(async () =>
+                {
+                    IsRefreshing = true;
+
+                    await GetUserRequestsAsync();
+
+                    IsRefreshing = false;
+                });
+            }
+        }
+
         public MyRequestPageModel(IRequestStorageService requestStorage)
         {
             _requestStorage = requestStorage;
         }
 
-        protected override void ViewIsAppearing(object sender, EventArgs e)
+        protected override async void ViewIsAppearing(object sender, EventArgs e)
         {
             base.ViewIsAppearing(sender, e);
 
-            GetUserRequestsAsync();
+            await GetUserRequestsAsync();
         }
 
-        private async void GetUserRequestsAsync()
+        private async Task GetUserRequestsAsync()
         {
             UserRequests = await _requestStorage.GetUserRequestsAsync();
         }

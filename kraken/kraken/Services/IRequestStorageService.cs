@@ -14,7 +14,7 @@ namespace kraken.Services
         Task<List<WorkType>> GetWorkTypesAsync();
         Task<List<Master>> GetMastersAsync(string RequestUuid);
 
-        Task<bool> SendNewRequestAsync(Request CreatedRequest);
+        Task<bool> SendNewRequestAsync(Request CreatedRequest, string[] FilesArray);
         Task<bool> SendAcceptRequest(string RequestUuid);
         Task<bool> SendDeclineRequest(string RequestUuid);
         Task<bool> DeleteUserObjectsAsync(object objectToDelete);

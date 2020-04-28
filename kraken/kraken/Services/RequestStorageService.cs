@@ -159,7 +159,6 @@ namespace kraken.Services
             return Types;
         }
 
-
         public async Task<List<Master>> GetMastersAsync(string RequestUuid)
         {
             if (IsThereInternet() == false)
@@ -212,7 +211,7 @@ namespace kraken.Services
         #endregion
 
         #region Add/Update methods
-        public async Task<bool> SendNewRequestAsync(Request CreatedRequest)
+        public async Task<bool> SendNewRequestAsync(Request CreatedRequest, string[] FilesArray)
         {
             if (IsThereInternet() == false)
             {
@@ -229,9 +228,27 @@ namespace kraken.Services
 
             try
             {
-                string jmessage = JsonConvert.SerializeObject(CreatedRequest, Formatting.Indented);
+                string userAddress = GetUserAddress();
 
-                StringContent content = new StringContent(jmessage, System.Text.Encoding.UTF8, "application/json");
+                var test = FilesArray[0];
+
+                JArray FilesJArray = new JArray();
+                foreach (string parameterName in FilesArray)
+                {
+                    FilesJArray.Add(parameterName);
+                }
+
+                JObject jmessage = new JObject
+                {
+                    { "work", CreatedRequest.Work },
+                    { "urgency", CreatedRequest.Urgency },
+                    { "description", CreatedRequest.Description },
+                    { "address", userAddress },
+                    { "docs", FilesJArray }
+                };
+                string json = jmessage.ToString();
+
+                StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/form-data");
                 HttpResponseMessage response = null;
                 response = client.PostAsync(uri, content).Result;
 
@@ -456,6 +473,21 @@ namespace kraken.Services
             {
                 AuthenticationHeaderIsSet = false;
             }
+        }
+
+        private string GetUserAddress()
+        {
+            Realm realm = Realm.GetInstance();
+            var users = realm.All<User>();
+            User user;
+
+            if (users.Count() > 0)
+            {
+                user = users.Last();
+                return user.Address;
+            }
+
+            return null;
         }
         #endregion
     }
