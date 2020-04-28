@@ -31,10 +31,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <MandroidI18n />
-    <AotAssemblies>false</AotAssemblies>
-    <EnableLLVM>false</EnableLLVM>
-    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
-    <BundleAssemblies>false</BundleAssemblies>
     <AndroidLinkMode>None</AndroidLinkMode>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -46,10 +42,6 @@
     <WarningLevel>4</WarningLevel>
     <AndroidManagedSymbols>true</AndroidManagedSymbols>
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
-    <AotAssemblies>false</AotAssemblies>
-    <EnableLLVM>false</EnableLLVM>
-    <AndroidEnableProfiledAot>false</AndroidEnableProfiledAot>
-    <BundleAssemblies>false</BundleAssemblies>
     <AndroidSupportedAbis>
     </AndroidSupportedAbis>
   </PropertyGroup>
@@ -132,7 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\kraken\kraken.csproj">
-      <Project>{EE90271E-1495-451D-BB39-B428CF86A363}</Project>
+      <Project>{0A6C32E1-7E4B-4F2B-A52B-1E910C2863B1}</Project>
       <Name>kraken</Name>
     </ProjectReference>
   </ItemGroup>
