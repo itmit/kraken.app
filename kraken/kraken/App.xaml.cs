@@ -100,6 +100,7 @@ namespace kraken
         private void SetUpIoC()
         {
             FreshIOC.Container.Register<Services.IRequestStorageService, Services.RequestStorageService>();
+            FreshIOC.Container.Register<Services.IUserService, Services.UserService>();
         }
 
         private bool IsUserFound()

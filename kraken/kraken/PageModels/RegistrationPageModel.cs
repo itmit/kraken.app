@@ -1,5 +1,4 @@
 ﻿using FreshMvvm;
-using PropertyChanged;
 using System.Windows.Input;
 using Realms;
 using Newtonsoft.Json.Linq;
@@ -82,7 +81,6 @@ namespace kraken.PageModels
 
                 CoreMethods.SwitchOutRootNavigation(NavigationContainerNames.MainContainer);
             }
-
         }
 
         async Task<bool> AreCredentialsCorrectAsync(User user)

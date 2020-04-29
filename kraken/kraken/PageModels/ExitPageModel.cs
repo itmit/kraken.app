@@ -2,8 +2,6 @@
 using kraken.Models;
 using PropertyChanged;
 using Realms;
-using System;
-using System.Linq;
 using System.Windows.Input;
 
 namespace kraken.PageModels

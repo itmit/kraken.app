@@ -1,8 +1,5 @@
-﻿using kraken.Views;
-using System;
-
+﻿
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace kraken.Pages
 {

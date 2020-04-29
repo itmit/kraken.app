@@ -3,7 +3,6 @@ using kraken.Models;
 using kraken.Services;
 using PropertyChanged;
 using Realms;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;

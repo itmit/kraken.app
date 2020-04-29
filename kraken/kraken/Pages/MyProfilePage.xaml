@@ -44,20 +44,20 @@
                 <Picker 
                     Title="Радиус поиска (км)" 
                     Style="{StaticResource DefaultPicker}"
-                    ItemDisplayBinding="{Binding Name}"
-                    ItemsSource="{Binding DistanceFilter}" 
+                    ItemDisplayBinding="{Binding Value}"
+                    ItemsSource="{Binding DistanceList}" 
                     SelectedItem="{Binding SelectedDistance}"></Picker>
                 <Picker 
                     Title="Средство передвижения" 
                     Style="{StaticResource DefaultPicker}"
-                    ItemDisplayBinding="{Binding Name}"
-                    ItemsSource="{Binding VehicleFilter}" 
+                    ItemDisplayBinding="{Binding Value}"
+                    ItemsSource="{Binding DrivingList}" 
                     SelectedItem="{Binding SelectedVehicle}"></Picker>
                 <Picker 
                     Title="Cтатус" 
                     Style="{StaticResource DefaultPicker}"
-                    ItemDisplayBinding="{Binding Name}"
-                    ItemsSource="{Binding MasterStatus}" 
+                    ItemDisplayBinding="{Binding Value}"
+                    ItemsSource="{Binding StatusList}" 
                     SelectedItem="{Binding SelectedStatus}"></Picker>
                 <Button 
                     Text="Мои запросы" 
