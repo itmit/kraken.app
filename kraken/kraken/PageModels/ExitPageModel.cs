@@ -48,6 +48,9 @@ namespace kraken.PageModels
             App.IsUserLoggedIn = false;
             App.IsUserMaster = false;
 
+            Services.IUserService userService = new Services.UserService();
+            userService.StopSendingCoordinates();
+
             await CoreMethods.PopPageModel(true, false, true);
             await CoreMethods.SwitchSelectedTab<MyProfilePageModel>();
             CoreMethods.SwitchOutRootNavigation(NavigationContainerNames.AuthenticationContainer);

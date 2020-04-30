@@ -34,7 +34,7 @@ namespace kraken.PageModels
                     bool isRequestSuccesful = await CreateRequest();
                     if (isRequestSuccesful)
                     {
-                        await CoreMethods.PushPageModel<MyRequestPageModel>();
+                        await CoreMethods.SwitchSelectedTab<MyRequestPageModel>();
                     }
                     tcs.SetResult(true);
                 });

@@ -89,6 +89,12 @@ namespace kraken.Services
             }
 
             string restMethod = "inquiry";
+
+            if (App.IsUserMaster)
+            {
+                restMethod = "masters/getInquiryList";
+            }
+            
             List<Request> Requests = new List<Request>();
 
             Uri uri = new Uri(string.Format(Constants.RestUrl, restMethod));

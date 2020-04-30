@@ -291,10 +291,15 @@ namespace kraken.Services
         }
 
         #region Utility private methods
-        private void StartSendingCoordinates()
+        public void StartSendingCoordinates()
         {
             var message = new StartLongRunningTaskMessage();
             MessagingCenter.Send(message, "StartLongRunningTaskMessage");
+        }
+        public void StopSendingCoordinates()
+        {
+            var message = new StopLongRunningTaskMessage();
+            MessagingCenter.Send(message, "StopLongRunningTaskMessage");
         }
         private bool IsThereInternet()
         {

@@ -29,9 +29,9 @@ namespace kraken
             Page loginPage = FreshPageModelResolver.ResolvePageModel<AuthorizationPageModel>();
             FreshNavigationContainer loginContainer = new FreshNavigationContainer(loginPage, NavigationContainerNames.AuthenticationContainer);
 
-            ExtendedTabbedPage tabbedNavigation = SetUpTabbedNavigation();
-
             bool UserIsFound = IsUserFound();
+
+            ExtendedTabbedPage tabbedNavigation = SetUpTabbedNavigation();
 
             if (!IsUserLoggedIn & !UserIsFound)
             {
@@ -41,16 +41,33 @@ namespace kraken
             {
                 MainPage = tabbedNavigation;
             }
+
+            if (UserIsFound & IsUserMaster)
+            {
+                Services.IUserService userService = new Services.UserService();
+                userService.StartSendingCoordinates();
+            }
         }
 
         private ExtendedTabbedPage SetUpTabbedNavigation()
         {
+            var RequestPageLable = "Мои запросы";
+
             ExtendedTabbedPage tabbedNavigation = new ExtendedTabbedPage(NavigationContainerNames.MainContainer);
             tabbedNavigation.On<Xamarin.Forms.PlatformConfiguration.Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);
 
             tabbedNavigation.AddTab<MyProfilePageModel>("Профиль", "ic_action_person.png", null);
-            tabbedNavigation.AddTab<CreateRequestPageModel>("Создать запрос", "ic_action_note_add.png", null);
-            tabbedNavigation.AddTab<MyRequestPageModel>("Мои запросы", "ic_action_list_alt.png", null);
+
+            if (IsUserMaster)
+            {
+                RequestPageLable = "Зпросы";
+            }
+            else
+            {
+                tabbedNavigation.AddTab<CreateRequestPageModel>("Создать запрос", "ic_action_note_add.png", null);
+            }
+            
+            tabbedNavigation.AddTab<MyRequestPageModel>(RequestPageLable, "ic_action_list_alt.png", null);
             tabbedNavigation.AddTab<ExitPageModel>("Выход", "ic_action_input.png", null);
 
             tabbedNavigation.SelectedTabColor = Color.Red;
@@ -106,8 +123,15 @@ namespace kraken
         private bool IsUserFound()
         {
             Realm realm = Realm.GetInstance();
-            IQueryable<User> user = realm.All<User>();
-            return user?.Count() > 0;
+            IQueryable<User> users = realm.All<User>();
+            if(users?.Count() > 0)
+            {
+                var user = users.Last();
+                IsUserMaster = (user.ClientType == "master");
+                return true;
+            }
+
+            return false;
         }
 
         protected override void OnStart()

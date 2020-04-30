@@ -16,6 +16,7 @@ namespace kraken.PageModels
 
         public Realm Realm { get { return Realm.GetInstance(); } }
         public User CurrentUser { get; set; }
+        public bool IsUserMaster { get; set; } = false;
 
         public string UserName { get; set; }
         public string UserOrganization { get; set; }
@@ -110,6 +111,7 @@ namespace kraken.PageModels
         protected override void ViewIsAppearing(object sender, System.EventArgs e)
         {
             LoadUserInfo();
+            IsUserMaster = App.IsUserMaster;
             base.ViewIsAppearing(sender, e);
         }
 
@@ -146,7 +148,7 @@ namespace kraken.PageModels
             };
 
             Dictionary<string, string> DrivingModeItems = new Dictionary<string, string>() {
-                { "driving", "на атомобиле" },
+                { "driving", "на автомобиле" },
                 { "walking", "пешком" }
             };
 

@@ -9,5 +9,8 @@ namespace kraken.Services
         Task<bool> SetDrivingModeAsync(string modeCode);
         Task<bool> SetStatusAsync(string radiusValue);
         Task<bool> SetSearchFilterAsync(string statusValue);
+
+        void StartSendingCoordinates();
+        void StopSendingCoordinates();
     }
 }

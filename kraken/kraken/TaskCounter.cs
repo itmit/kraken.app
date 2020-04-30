@@ -13,9 +13,9 @@ namespace kraken
 {
     public class TaskCounter
     {
-        private const int MinutesInMilliseconds = 300000; // 5 minutes
-        private HttpClient client;
-        private Uri uri = new Uri(string.Format(Constants.RestUrl, "masters/updateLocation"));
+        private const int MinutesInMilliseconds = 120000; // 5 minutes
+        private readonly HttpClient client;
+        private readonly Uri uri = new Uri(string.Format(Constants.RestUrl, "masters/updateLocation"));
 
         public TaskCounter()
         {
@@ -95,7 +95,14 @@ namespace kraken
             Location UserLocation = new Location();
             try
             {
-                UserLocation = await Geolocation.GetLastKnownLocationAsync();
+                var location = await Geolocation.GetLastKnownLocationAsync();
+                //var request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
+                //var location = await Geolocation.GetLocationAsync(request);
+
+                if (location != null)
+                {
+                    UserLocation = location;
+                }
             }
             catch (FeatureNotSupportedException)
             {
@@ -113,6 +120,12 @@ namespace kraken
                 // Handle permission exception
                 errorMessage = "No permission";
             }
+            catch (System.Reflection.TargetInvocationException ex)
+            {
+                var test = ex;
+                // Unable to get location
+                errorMessage = "Unable to get location";
+            }
             catch (Exception)
             {
                 // Unable to get location
@@ -121,7 +134,8 @@ namespace kraken
 
             if (errorMessage != null)
             {
-                await Application.Current.MainPage.DisplayAlert("Ошибка", errorMessage, "OK");
+                Console.WriteLine(errorMessage);
+                //await Application.Current.MainPage.DisplayAlert("Ошибка", errorMessage, "OK");
                 return null;
             }
 
