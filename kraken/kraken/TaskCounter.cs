@@ -13,7 +13,7 @@ namespace kraken
 {
     public class TaskCounter
     {
-        private const int MinutesInMilliseconds = 120000; // 5 minutes
+        private const int MinutesInMilliseconds = 300000; // 5 minutes
         private readonly HttpClient client;
         private readonly Uri uri = new Uri(string.Format(Constants.RestUrl, "masters/updateLocation"));
 

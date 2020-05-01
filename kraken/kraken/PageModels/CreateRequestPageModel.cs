@@ -63,6 +63,7 @@ namespace kraken.PageModels
 
             var typeList = await GetWorkTypes();
             WorkTypes = new ObservableCollection<WorkType>(typeList);
+            Description = String.Empty;
 
             GetUrgencyTypes();
         }

@@ -64,5 +64,18 @@ namespace kraken.Models
                 { "scheduled", "Заданное время" }
             };
         }
+
+        public override bool Equals(object obj)
+        {
+            if (this is null || obj is null) return false;
+
+            if (!(obj is Request)) return false;
+
+            var otherDialog = (Request)obj;
+            return uuid == otherDialog.uuid &&
+                IsFinished == otherDialog.IsFinished &&
+                Status == otherDialog.Status &&
+                MasterId == otherDialog.MasterId;
+        }
     }
 }

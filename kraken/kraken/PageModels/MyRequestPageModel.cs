@@ -4,6 +4,8 @@ using kraken.Services;
 using PropertyChanged;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -15,7 +17,9 @@ namespace kraken.PageModels
         readonly IRequestStorageService _requestStorage;
         Request _selectedRequest;
 
-        public List<Request> UserRequests { get; set; }
+        private List<Request> AllRequests { get; set; } = new List<Request>();
+
+        public ObservableCollection<Request> UserRequests { get; set; }
 
         public Request SelectedRequest
         {
@@ -59,7 +63,13 @@ namespace kraken.PageModels
 
         private async Task GetUserRequestsAsync()
         {
-            UserRequests = await _requestStorage.GetUserRequestsAsync();
+            var updatedList = await _requestStorage.GetUserRequestsAsync();
+
+            if (AllRequests.SequenceEqual(updatedList) == false)
+            {
+                AllRequests = updatedList;
+                UserRequests = new ObservableCollection<Request>(AllRequests.ToList());
+            }
         }
 
         private async void OpenDetailPage(Request selectedRequest)
