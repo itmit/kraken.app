@@ -79,7 +79,7 @@ namespace kraken.PageModels
                     Realm.Add(user, true);
                 });
 
-                CoreMethods.SwitchOutRootNavigation(NavigationContainerNames.MainContainer);
+                CoreMethods.SwitchOutRootNavigation(NavigationContainerNames.ClientTabsContainer);
             }
         }
 

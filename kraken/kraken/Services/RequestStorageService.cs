@@ -46,7 +46,7 @@ namespace kraken.Services
             string restMethod = "entity/" + RequestUuid + "/edit";
             Request Object = new Request();
 
-            System.Uri uri = new System.Uri(string.Format(Constants.RestUrl, restMethod));
+            Uri uri = new Uri(string.Format(Constants.RestUrl, restMethod));
 
             try
             {
@@ -69,7 +69,7 @@ namespace kraken.Services
                     Xamarin.Forms.Device.BeginInvokeOnMainThread(async () => { await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", errorMessage, "OK"); });
                 }
             }
-            catch (System.Exception)
+            catch (Exception)
             {
             }
 
@@ -214,6 +214,56 @@ namespace kraken.Services
 
             return Masters;
         }
+
+        public async Task<List<Master>> GetRequestMastersAsync(string RequestUuid)
+        {
+            if (IsThereInternet() == false)
+            {
+                return null;
+            }
+
+            if (!AuthenticationHeaderIsSet)
+            {
+                SetAuthenticationHeader();
+            }
+
+            string restMethod = "inquiry/requestMasters";
+            List<Master> Masters = new List<Master>();
+
+            Uri uri = new Uri(string.Format(Constants.RestUrl, restMethod));
+
+            try
+            {
+                JObject jmessage = new JObject
+                {
+                    { "uuid", RequestUuid }
+                };
+                string json = jmessage.ToString();
+                StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+
+                HttpResponseMessage response = null;
+                response = client.PostAsync(uri, content).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseContent = await response.Content.ReadAsStringAsync();
+                    JObject resultArr = JObject.Parse(responseContent);
+                    Masters = JsonConvert.DeserializeObject<List<Master>>(resultArr["data"].ToString());
+                }
+                else
+                {
+                    string errorInfo = await response.Content.ReadAsStringAsync();
+                    string errorMessage = ParseErrorMessage(errorInfo);
+
+                    Xamarin.Forms.Device.BeginInvokeOnMainThread(async () => { await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", errorMessage, "OK"); });
+                }
+            }
+            catch (Exception)
+            {
+            }
+
+            return Masters;
+        }
         #endregion
 
         #region Add/Update methods
@@ -230,7 +280,7 @@ namespace kraken.Services
             }
 
             string restMethod = "inquiry";
-            System.Uri uri = new System.Uri(string.Format(Constants.RestUrl, restMethod));
+            Uri uri = new Uri(string.Format(Constants.RestUrl, restMethod));
 
             try
             {
@@ -272,7 +322,28 @@ namespace kraken.Services
                     return false;
                 }
             }
-            catch (System.Exception ex)
+            catch (AggregateException ex) {
+                foreach (var exc in ex.InnerExceptions) {
+                    if (exc is NullReferenceException) {
+                        // handle NullReferenceException
+                        await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", string.Format("TimeoutException occured: {0} {1}", ex.Message, ex.StackTrace), "OK");
+                    }
+
+                    if (exc is TimeoutException) {
+                        // handle timeout
+                        await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", string.Format("TimeoutException occured: {0} {1}", ex.Message, ex.StackTrace), "OK");
+                    }
+                    else
+                    {
+                        await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
+                    }
+
+                    // catch another Exception
+                }
+
+                return false;
+            }
+            catch (Exception ex)
             {
                 await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
                 return false;
@@ -292,7 +363,7 @@ namespace kraken.Services
             }
 
             string restMethod = "masters/applyInquiry";
-            System.Uri uri = new System.Uri(string.Format(Constants.RestUrl, restMethod));
+            Uri uri = new Uri(string.Format(Constants.RestUrl, restMethod));
 
             try
             {
@@ -322,7 +393,58 @@ namespace kraken.Services
                     return false;
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
+            {
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
+                return false;
+            }
+        }
+
+        public async Task<bool> SendAcceptMasterRequest(string RequestUuid, Master selectedMaster)
+        {
+            if (IsThereInternet() == false)
+            {
+                return false;
+            }
+
+            if (!AuthenticationHeaderIsSet)
+            {
+                SetAuthenticationHeader();
+            }
+
+            string restMethod = "masters/applyMaster";
+            Uri uri = new Uri(string.Format(Constants.RestUrl, restMethod));
+
+            try
+            {
+                JObject jmessage = new JObject
+                {
+                    { "uuid", RequestUuid },
+                    { "master_id", selectedMaster.uuid }
+                };
+                string json = jmessage.ToString();
+
+                StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+                HttpResponseMessage response = null;
+                response = client.PostAsync(uri, content).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseMessage = await response.Content.ReadAsStringAsync();
+
+                    return true;
+                }
+                else
+                {
+                    string errorInfo = await response.Content.ReadAsStringAsync();
+                    string errorMessage = ParseErrorMessage(errorInfo);
+
+                    await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", errorMessage, "OK");
+
+                    return false;
+                }
+            }
+            catch (Exception ex)
             {
                 await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
                 return false;
@@ -342,7 +464,7 @@ namespace kraken.Services
             }
 
             string restMethod = "masters/cancelInquiry";
-            System.Uri uri = new System.Uri(string.Format(Constants.RestUrl, restMethod));
+            Uri uri = new Uri(string.Format(Constants.RestUrl, restMethod));
 
             try
             {
@@ -372,7 +494,7 @@ namespace kraken.Services
                     return false;
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
                 return false;

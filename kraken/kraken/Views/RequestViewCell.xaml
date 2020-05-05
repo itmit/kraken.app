@@ -15,8 +15,8 @@
                     <Label Text="{Binding UrgencyText}" HorizontalOptions="End" FontSize="Caption"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" Spacing="0">
-                    <Label Text="{Binding Description}" HorizontalTextAlignment="Start" FontSize="Caption"/>
-                    <Label Text="36 мин" HorizontalTextAlignment="End" FontSize="12" LineBreakMode="TailTruncation" WidthRequest="275" MaxLines="1"></Label>
+                    <Label Text="{Binding Description}" WidthRequest="275" HorizontalTextAlignment="Start" FontSize="Caption"/>
+                    <!--<Label Text="36 мин" HorizontalOptions="End" FontSize="12" MaxLines="1"></Label>-->
                 </StackLayout>
             </StackLayout>
         </StackLayout>

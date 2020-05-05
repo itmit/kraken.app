@@ -47,7 +47,7 @@ namespace kraken.PageModels
             {
                 return new Xamarin.Forms.Command(async (param) =>
                 {
-                    await OpenFileManager();
+                    //await OpenFileManager();
                 });
             }
         }
@@ -57,7 +57,7 @@ namespace kraken.PageModels
             _requestStorage = requestStorage;
         }
 
-        protected override async void ViewIsAppearing(object sender, System.EventArgs e)
+        protected override async void ViewIsAppearing(object sender, EventArgs e)
         {
             base.ViewIsAppearing(sender, e);
 

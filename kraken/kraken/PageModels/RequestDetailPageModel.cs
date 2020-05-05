@@ -15,12 +15,24 @@ namespace kraken.PageModels
     {
         readonly IRequestStorageService _requestStorage;
         Request Request;
+        private Master _selectedMaster;
 
         public string RequestName { get; private set; }
         public string RequestDescription { get; private set; }
         public string RequestStatus { get; private set; }
         public string RequestUrgency { get; private set; }
         public List<Master> Masters { get; private set; }
+
+        public Master SelectedMaster
+        {
+            get { return _selectedMaster; }
+            set
+            {
+                _selectedMaster = value;
+                if (value != null)
+                    SendAcceptMasterRequest(value);
+            }
+        }
 
         public bool IsMasterSelected { get; private set; }
         public bool IsCurrentUserMaster { get; private set; }
@@ -71,7 +83,7 @@ namespace kraken.PageModels
             CurrentPage.Title = Request.Work;
 
             FillRequestValues();
-            //GetMastersAsync();
+            GetRequestMastersAsync();
         }
 
         private void FillRequestValues()
@@ -109,6 +121,11 @@ namespace kraken.PageModels
             return user;
         }
 
+        private async void GetRequestMastersAsync()
+        {
+            Masters = await _requestStorage.GetRequestMastersAsync(Request.uuid);
+        }
+
         private async void SendAcceptRequest()
         {
             bool response = await _requestStorage.SendAcceptRequest(Request.uuid);
@@ -119,9 +136,26 @@ namespace kraken.PageModels
             }
         }
 
+        private async void SendAcceptMasterRequest(Master selectedMaster)
+        {
+            bool answer = await CoreMethods.DisplayAlert("Внимание", "Подтвердить выбор этого мастера?", "Да", "Нет");
+
+            if (answer == true)
+            {
+                bool response = await _requestStorage.SendAcceptMasterRequest(Request.uuid, selectedMaster);
+
+                if (response == true)
+                {
+                    IsMasterSelected = true;
+                    await CoreMethods.DisplayAlert("Успех", "Мастеру отправлено уведомление о принятие заявки", "Ок");
+                    _selectedMaster = null;
+                }
+            }
+        }
+
         private async void SendDeclineRequest()
         {
-            bool response = await _requestStorage.SendDeclineRequest(Request.uuid);
+            await _requestStorage.SendDeclineRequest(Request.uuid);
         }
     }
 }

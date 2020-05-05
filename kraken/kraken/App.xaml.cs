@@ -31,7 +31,8 @@ namespace kraken
 
             bool UserIsFound = IsUserFound();
 
-            ExtendedTabbedPage tabbedNavigation = SetUpTabbedNavigation();
+            ExtendedTabbedPage clientTabbedNavigation = SetUpClientTabbedNavigation();
+            ExtendedTabbedPage masterTabbedNavigation = SetUpMasterTabbedNavigation();
 
             if (!IsUserLoggedIn & !UserIsFound)
             {
@@ -39,7 +40,14 @@ namespace kraken
             }
             else
             {
-                MainPage = tabbedNavigation;
+                if(IsUserMaster)
+                {
+                    MainPage = masterTabbedNavigation;
+                }
+                else
+                {
+                    MainPage = clientTabbedNavigation;
+                }
             }
 
             if (UserIsFound & IsUserMaster)
@@ -49,31 +57,39 @@ namespace kraken
             }
         }
 
-        private ExtendedTabbedPage SetUpTabbedNavigation()
+        private ExtendedTabbedPage SetUpClientTabbedNavigation()
         {
-            var RequestPageLable = "Мои запросы";
-
-            ExtendedTabbedPage tabbedNavigation = new ExtendedTabbedPage(NavigationContainerNames.MainContainer);
+            ExtendedTabbedPage tabbedNavigation = new ExtendedTabbedPage(NavigationContainerNames.ClientTabsContainer);
             tabbedNavigation.On<Xamarin.Forms.PlatformConfiguration.Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);
 
             tabbedNavigation.AddTab<MyProfilePageModel>("Профиль", "ic_action_person.png", null);
-
-            if (IsUserMaster)
-            {
-                RequestPageLable = "Зпросы";
-            }
-            else
-            {
-                tabbedNavigation.AddTab<CreateRequestPageModel>("Создать запрос", "ic_action_note_add.png", null);
-            }
-            
-            tabbedNavigation.AddTab<MyRequestPageModel>(RequestPageLable, "ic_action_list_alt.png", null);
+            tabbedNavigation.AddTab<CreateRequestPageModel>("Создать запрос", "ic_action_note_add.png", null);
+            tabbedNavigation.AddTab<MyRequestPageModel>("Мои запросы", "ic_action_list_alt.png", null);
             tabbedNavigation.AddTab<ExitPageModel>("Выход", "ic_action_input.png", null);
 
             tabbedNavigation.SelectedTabColor = Color.Red;
             tabbedNavigation.UnselectedTabColor = Color.FromHex("#9E9E9E");
 
-            //tabbedNavigation.CurrentPageChanged += TabbedNavigation_CurrentPageChanged;
+            tabbedNavigation.CurrentPageChanged += TabbedNavigation_CurrentPageChanged;
+
+            return tabbedNavigation;
+        }
+
+        private ExtendedTabbedPage SetUpMasterTabbedNavigation()
+        {
+            var RequestPageLable = "Мои запросы";
+
+            ExtendedTabbedPage tabbedNavigation = new ExtendedTabbedPage(NavigationContainerNames.MasterTabsContainer);
+            tabbedNavigation.On<Xamarin.Forms.PlatformConfiguration.Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);
+
+            tabbedNavigation.AddTab<MyProfilePageModel>("Профиль", "ic_action_person.png", null);
+            tabbedNavigation.AddTab<MyRequestPageModel>("Запросы", "ic_action_list_alt.png", null);
+            tabbedNavigation.AddTab<ExitPageModel>("Выход", "ic_action_input.png", null);
+
+            tabbedNavigation.SelectedTabColor = Color.Red;
+            tabbedNavigation.UnselectedTabColor = Color.FromHex("#9E9E9E");
+
+            tabbedNavigation.CurrentPageChanged += TabbedNavigation_CurrentPageChanged;
 
             return tabbedNavigation;
         }

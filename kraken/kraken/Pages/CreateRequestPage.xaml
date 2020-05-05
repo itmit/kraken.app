@@ -39,7 +39,7 @@
                             <Image Source="ic_add_photo_alternate.png" HorizontalOptions="Center" WidthRequest="70"></Image>
                             <Label Text="Прикрепите фото или видеофайл" HorizontalOptions="Center"></Label>
                             <Button Text="Выбрать файл" TextColor="Red" BackgroundColor="White" CornerRadius="5" BorderColor="Red" BorderWidth="1" WidthRequest="175" Command="{Binding OpenFileManagerCommand}"></Button>
-                            <RelativeLayout x:Name="ListImage" IsVisible="False" HorizontalOptions="Center" WidthRequest="275" HeightRequest="80">
+                            <RelativeLayout x:Name="ListImage" HorizontalOptions="Center" WidthRequest="275" HeightRequest="80">
                                 <ListView Rotation="270" 
                                           RowHeight="80"
                                           SeparatorVisibility="None" 

@@ -4,6 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:converters="clr-namespace:kraken.Converters"
+             xmlns:listMaster="clr-namespace:kraken.Views"
              mc:Ignorable="d"
              x:Class="kraken.Pages.RequestDetailPage"
              Title="Мои запросы">
@@ -27,6 +28,25 @@
                     CornerRadius="5" 
                     IsVisible="{Binding IsCurrentUserMaster, Converter={StaticResource InverseBoolConverter}}"
                     Command="{Binding ShowMasterListCommand}"/>
+                <Label 
+                    IsVisible="{Binding IsCurrentUserMaster, Converter={StaticResource InverseBoolConverter}}"
+                    Text="Ответившие мастера" 
+                    FontSize="16" 
+                    FontAttributes="Bold" 
+                    Margin="20,0"></Label>
+                <ListView 
+                    IsVisible="{Binding IsCurrentUserMaster, Converter={StaticResource InverseBoolConverter}}"
+                    HasUnevenRows="True" 
+                    VerticalScrollBarVisibility="Never" 
+                    SeparatorVisibility="None" 
+                    ItemsSource="{Binding Masters}"
+                    SelectedItem="{Binding SelectedMaster}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <listMaster:MasterViewCell/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
             </StackLayout>
             <StackLayout IsVisible="{Binding IsCurrentUserMaster}">
                 <Button 

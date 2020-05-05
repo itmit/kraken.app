@@ -127,14 +127,14 @@ namespace kraken.Services
 
                     }
 
-                    await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Ошибка", errorMessage, "OK");
+                    await Application.Current.MainPage.DisplayAlert("Ошибка", errorMessage, "OK");
                     return false;
                 }
 
             }
             catch (Exception ex)
             {
-                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
+                await Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
             }
 
             return false;
@@ -178,14 +178,14 @@ namespace kraken.Services
                     string errorInfo = await response.Content.ReadAsStringAsync();
                     string errorMessage = ParseErrorMessage(errorInfo);
 
-                    Xamarin.Forms.Device.BeginInvokeOnMainThread(async () => { await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", errorMessage, "OK"); });
+                    Device.BeginInvokeOnMainThread(async () => { await Application.Current.MainPage.DisplayAlert("Не выполнено", errorMessage, "OK"); });
 
                     return false;
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
-                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
+                await Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
                 return false;
             }
         }
@@ -228,14 +228,39 @@ namespace kraken.Services
                     string errorInfo = await response.Content.ReadAsStringAsync();
                     string errorMessage = ParseErrorMessage(errorInfo);
 
-                    Xamarin.Forms.Device.BeginInvokeOnMainThread(async () => { await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", errorMessage, "OK"); });
+                    Device.BeginInvokeOnMainThread(async () => { await Application.Current.MainPage.DisplayAlert("Не выполнено", errorMessage, "OK"); });
 
                     return false;
                 }
             }
+            catch (AggregateException ex)
+            {
+                foreach (var exc in ex.InnerExceptions)
+                {
+                    if (exc is NullReferenceException)
+                    {
+                        // handle NullReferenceException
+                        await Application.Current.MainPage.DisplayAlert("Не выполнено", string.Format("TimeoutException occured: {0} {1}", ex.Message, ex.StackTrace), "OK");
+                    }
+
+                    if (exc is TimeoutException)
+                    {
+                        // handle timeout
+                        await Application.Current.MainPage.DisplayAlert("Не выполнено", string.Format("TimeoutException occured: {0} {1}", ex.Message, ex.StackTrace), "OK");
+                    }
+                    else
+                    {
+                        await Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
+                    }
+
+                    // catch another Exception
+                }
+
+                return false;
+            }
             catch (Exception ex)
             {
-                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
+                await Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
                 return false;
             }
         }
@@ -278,14 +303,14 @@ namespace kraken.Services
                     string errorInfo = await response.Content.ReadAsStringAsync();
                     string errorMessage = ParseErrorMessage(errorInfo);
 
-                    Xamarin.Forms.Device.BeginInvokeOnMainThread(async () => { await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", errorMessage, "OK"); });
+                    Device.BeginInvokeOnMainThread(async () => { await Application.Current.MainPage.DisplayAlert("Не выполнено", errorMessage, "OK"); });
 
                     return false;
                 }
             }
             catch (Exception ex)
             {
-                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
+                await Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
                 return false;
             }
         }

@@ -64,7 +64,14 @@ namespace kraken.PageModels
             if (isValid)
             {
                 App.IsUserLoggedIn = true;
-                CoreMethods.SwitchOutRootNavigation(NavigationContainerNames.MainContainer);
+                if (App.IsUserMaster)
+                {
+                    CoreMethods.SwitchOutRootNavigation(NavigationContainerNames.MasterTabsContainer);
+                }
+                else
+                {
+                    CoreMethods.SwitchOutRootNavigation(NavigationContainerNames.ClientTabsContainer);
+                }
             }
 
         }
