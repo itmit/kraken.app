@@ -14,16 +14,18 @@ namespace kraken.PageModels
     public class CreateRequestPageModel : FreshBasePageModel
     {
         readonly IRequestStorageService _requestStorage;
+        private Plugin.FilePicker.Abstractions.FileData FileData;
 
         public ObservableCollection<WorkType> WorkTypes { get; set; }
         public List<Urgency> Urgency { get; set; } = new List<Urgency>();
 
+        public string UserImage { get; set; }
+        
+        public bool IsFileUploaded { get; set; } = false;
+
         public WorkType SelectedType { get; set; }
         public Urgency SelectedUrgency { get; set; }
         public string Description { get; set; }
-
-        public List<string> UserFiles { get; set; } = new List<string>();
-        private List<string> UserFilesBase64 { get; set; } = new List<string>();
 
         public ICommand CreateRequestCommand
         {
@@ -47,7 +49,7 @@ namespace kraken.PageModels
             {
                 return new Xamarin.Forms.Command(async (param) =>
                 {
-                    //await OpenFileManager();
+                    await OpenFileManager();
                 });
             }
         }
@@ -120,7 +122,7 @@ namespace kraken.PageModels
                 StartedAt = "",
             };
 
-            var response = await _requestStorage.SendNewRequestAsync(NewRequest, UserFilesBase64.ToArray());
+            var response = await _requestStorage.SendNewRequestAsync(NewRequest, FileData);
 
             return response;
         }
@@ -132,9 +134,14 @@ namespace kraken.PageModels
                 Plugin.FilePicker.Abstractions.FileData fileData = await Plugin.FilePicker.CrossFilePicker.Current.PickFile();
                 if (fileData == null)
                     return; // user canceled file picking
-                
-                UserFiles.Add(fileData.FileName);
-                UserFilesBase64.Add("data:image/png;base64," + Convert.ToBase64String(fileData.DataArray));
+
+                FileData = fileData;
+                IsFileUploaded = true;
+
+                UserImage = fileData.FilePath;
+
+                //UserFiles.Add(fileData.FileName);
+                //UserFilesBase64.Add("data:image/png;base64," + Convert.ToBase64String(fileData.DataArray));
             }
             catch (Exception ex)
             {
@@ -144,7 +151,7 @@ namespace kraken.PageModels
 
         private bool ValidateInputData()
         {
-            if(SelectedType != null | SelectedUrgency != null | Description != null)
+            if(SelectedType != null & SelectedUrgency != null & Description != null)
             {
                 return true;
             }

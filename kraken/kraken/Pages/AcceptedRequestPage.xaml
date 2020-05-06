@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewCell="clr-namespace:kraken.Views"
+             mc:Ignorable="d"
+             x:Class="kraken.Pages.AcceptedRequestPage"
+             Title="Мои запросы">
+    <ContentPage.Content>
+        <!--Страница запросов мастера-->
+        <StackLayout>
+            <ListView HasUnevenRows="True" 
+                      SeparatorVisibility="None" 
+                      IsPullToRefreshEnabled="True"
+                      RefreshCommand="{Binding UpdateListCommand}"
+                      IsRefreshing="{Binding IsRefreshing}"
+                      ItemsSource="{Binding UserRequests}"
+                      SelectedItem="{Binding SelectedRequest, Mode=TwoWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <viewCell:RequestViewCell/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

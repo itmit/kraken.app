@@ -122,6 +122,47 @@ namespace kraken.Services
             return Requests;
         }
 
+        public async Task<List<Request>> GetMasterRequestsAsync()
+        {
+            if (IsThereInternet() == false)
+            {
+                return null;
+            }
+
+            if (!AuthenticationHeaderIsSet)
+            {
+                SetAuthenticationHeader();
+            }
+
+            string restMethod = "masters/getInquiryToMasterList";
+            
+            List<Request> Requests = new List<Request>();
+
+            Uri uri = new Uri(string.Format(Constants.RestUrl, restMethod));
+
+            try
+            {
+                var responseAwaiter = client.GetAsync(uri).ConfigureAwait(false);
+                var response = responseAwaiter.GetAwaiter().GetResult();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    JObject catalogArr = JObject.Parse(content);
+                    Requests = JsonConvert.DeserializeObject<List<Request>>(catalogArr["data"].ToString());
+                }
+                else
+                {
+                    string errorInfo = await response.Content.ReadAsStringAsync();
+                }
+            }
+            catch (Exception)
+            {
+            }
+
+            return Requests;
+        }
+
         public async Task<List<WorkType>> GetWorkTypesAsync()
         {
             if (IsThereInternet() == false)
@@ -267,7 +308,7 @@ namespace kraken.Services
         #endregion
 
         #region Add/Update methods
-        public async Task<bool> SendNewRequestAsync(Request CreatedRequest, string[] FilesArray)
+        public async Task<bool> SendNewRequestAsync(Request CreatedRequest, Plugin.FilePicker.Abstractions.FileData FilesData)
         {
             if (IsThereInternet() == false)
             {
@@ -286,25 +327,20 @@ namespace kraken.Services
             {
                 string userAddress = GetUserAddress();
 
-                JArray FilesJArray = new JArray();
-                foreach (string parameterName in FilesArray)
-                {
-                    FilesJArray.Add(parameterName);
-                }
+                MultipartFormDataContent formData = new MultipartFormDataContent();
 
-                JObject jmessage = new JObject
-                {
-                    { "work", CreatedRequest.Work },
-                    { "urgency", CreatedRequest.Urgency },
-                    { "description", CreatedRequest.Description },
-                    { "address", userAddress },
-                    { "docs", FilesJArray }
-                };
-                string json = jmessage.ToString();
+                formData.Add(new StringContent(CreatedRequest.Work), "work");
+                formData.Add(new StringContent(CreatedRequest.Urgency), "urgency");
+                formData.Add(new StringContent(CreatedRequest.Description), "description");
+                formData.Add(new StringContent(userAddress), "address");
 
-                StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+                if (FilesData != null)
+                {
+                    formData.Add(new StreamContent(new System.IO.MemoryStream(FilesData.DataArray)), "file", "upload.jpg");
+                }                
+
                 HttpResponseMessage response = null;
-                response = client.PostAsync(uri, content).Result;
+                response = await client.PostAsync(uri, formData);
 
                 if (response.IsSuccessStatusCode)
                 {

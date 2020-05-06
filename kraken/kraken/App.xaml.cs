@@ -77,12 +77,11 @@ namespace kraken
 
         private ExtendedTabbedPage SetUpMasterTabbedNavigation()
         {
-            var RequestPageLable = "Мои запросы";
-
             ExtendedTabbedPage tabbedNavigation = new ExtendedTabbedPage(NavigationContainerNames.MasterTabsContainer);
             tabbedNavigation.On<Xamarin.Forms.PlatformConfiguration.Android>().SetToolbarPlacement(ToolbarPlacement.Bottom);
 
             tabbedNavigation.AddTab<MyProfilePageModel>("Профиль", "ic_action_person.png", null);
+            tabbedNavigation.AddTab<AcceptedRequestPageModel>("Мои запросы", "ic_action_list_alt.png", null);
             tabbedNavigation.AddTab<MyRequestPageModel>("Запросы", "ic_action_list_alt.png", null);
             tabbedNavigation.AddTab<ExitPageModel>("Выход", "ic_action_input.png", null);
 

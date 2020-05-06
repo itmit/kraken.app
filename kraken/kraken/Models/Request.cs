@@ -55,6 +55,7 @@ namespace kraken.Models
             StatusDictionary = new Dictionary<string, string> {
                 { "created", "Создан" },
                 { "appointed", "Назначен исполнитель" },
+                { "performer appointed", "Назначен исполнитель" },
                 { "active", "На исполнении" }
             };
 

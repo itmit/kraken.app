@@ -11,11 +11,12 @@ namespace kraken.Services
 
         Task<Request> GetRequestFullInfo(string RequestUuid);
         Task<List<Request>> GetUserRequestsAsync();
+        Task<List<Request>> GetMasterRequestsAsync();
         Task<List<WorkType>> GetWorkTypesAsync();
         Task<List<Master>> GetMastersAsync(string RequestUuid);
         Task<List<Master>> GetRequestMastersAsync(string RequestUuid);
 
-        Task<bool> SendNewRequestAsync(Request CreatedRequest, string[] FilesArray);
+        Task<bool> SendNewRequestAsync(Request CreatedRequest, Plugin.FilePicker.Abstractions.FileData FilesData);
         Task<bool> SendAcceptRequest(string RequestUuid);
         Task<bool> SendDeclineRequest(string RequestUuid);
         Task<bool> SendAcceptMasterRequest(string uuid, Master selectedMaster);

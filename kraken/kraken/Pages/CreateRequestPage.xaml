@@ -1,9 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:imageCell="clr-namespace:kraken.Views"
+             xmlns:converters="clr-namespace:kraken.Converters"
              x:Class="kraken.Pages.CreateRequestPage"
              Title="Создать запрос">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.Content>
         <!--Страница создания запроса-->
         <ScrollView>
@@ -33,33 +38,18 @@
                     </Frame.BorderColor>
                     <Editor Placeholder="Описание работ" AutoSize="TextChanges" HeightRequest="100" FontSize="14" TextColor="Black" PlaceholderColor="Black" Text="{Binding Description}"/>
                 </Frame>
-                <Frame HasShadow="False" BackgroundColor="#eceff1" Margin="20,0" CornerRadius="5">
+                <Frame HasShadow="False" BackgroundColor="#eceff1" Margin="20,0" CornerRadius="5" IsVisible="{Binding IsFileUploaded, Converter={StaticResource InverseBoolConverter}}">
                     <Frame HasShadow="False" CornerRadius="5">
                         <StackLayout>
                             <Image Source="ic_add_photo_alternate.png" HorizontalOptions="Center" WidthRequest="70"></Image>
                             <Label Text="Прикрепите фото или видеофайл" HorizontalOptions="Center"></Label>
                             <Button Text="Выбрать файл" TextColor="Red" BackgroundColor="White" CornerRadius="5" BorderColor="Red" BorderWidth="1" WidthRequest="175" Command="{Binding OpenFileManagerCommand}"></Button>
-                            <RelativeLayout x:Name="ListImage" HorizontalOptions="Center" WidthRequest="275" HeightRequest="80">
-                                <ListView Rotation="270" 
-                                          RowHeight="80"
-                                          SeparatorVisibility="None" 
-                                          SelectionMode="None" 
-                                          VerticalScrollBarVisibility="Never" 
-                                          VerticalOptions="Center" 
-                                          HorizontalOptions="Center"
-                                          ItemsSource="{Binding UserFiles}"
-                                          RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-50}"
-                                          RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=-0.5, Constant=50}"
-                                          RelativeLayout.WidthConstraint="{ConstraintExpression Type=Constant, Constant=80}"
-                                          RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate>
-                                            <imageCell:ImageViewCell/>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-                            </RelativeLayout>
                         </StackLayout>
+                    </Frame>
+                </Frame>
+                <Frame HasShadow="False" BackgroundColor="#eceff1" Margin="20,0" CornerRadius="5" IsVisible="{Binding IsFileUploaded}">
+                    <Frame IsClippedToBounds="True" Padding="0" CornerRadius="5" Margin="5" VerticalOptions="Center" HorizontalOptions="Center">
+                        <Image Source="{Binding UserImage}" WidthRequest="50"/>
                     </Frame>
                 </Frame>
                 <Button Text="Опубликовать запрос" Style="{StaticResource RedButton}" Margin="20,10" CornerRadius="5" Command="{Binding CreateRequestCommand}"/>
