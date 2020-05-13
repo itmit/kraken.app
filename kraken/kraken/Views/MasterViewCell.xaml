@@ -13,7 +13,7 @@
             <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                 <StackLayout Orientation="Horizontal">
                     <Label Text="{Binding Name}" FontAttributes="Bold"/>
-                    <Label Text="36 мин" FontAttributes="Bold" HorizontalOptions="EndAndExpand"/>
+                    <!--<Label Text="36 мин" FontAttributes="Bold" HorizontalOptions="EndAndExpand"/>-->
                 </StackLayout>
                 <StackLayout>
                     <Label Text="{Binding Work}" FontSize="12"/>

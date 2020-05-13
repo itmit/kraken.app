@@ -11,12 +11,12 @@
             <BoxView BackgroundColor="Red" HeightRequest="8" WidthRequest="8" CornerRadius="4" VerticalOptions="Start" HorizontalOptions="Center" Margin="0,5"/>
             <StackLayout>
                 <StackLayout Orientation="Horizontal" Spacing="0">
-                    <Label Text="{Binding Work}" WidthRequest="275" FontAttributes="Bold" HorizontalTextAlignment="Start"/>
+                    <Label Text="{Binding Work}" WidthRequest="240" FontAttributes="Bold" HorizontalTextAlignment="Start"/>
                     <Label Text="{Binding UrgencyText}" HorizontalOptions="End" FontSize="Caption"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" Spacing="0">
-                    <Label Text="{Binding Description}" WidthRequest="275" HorizontalTextAlignment="Start" FontSize="Caption"/>
-                    <!--<Label Text="36 мин" HorizontalOptions="End" FontSize="12" MaxLines="1"></Label>-->
+                    <Label Text="{Binding Description}" WidthRequest="240" HorizontalTextAlignment="Start" FontSize="Caption"/>
+                    <Label Text="{Binding StatusText}" HorizontalOptions="End" FontSize="Caption"></Label>
                 </StackLayout>
             </StackLayout>
         </StackLayout>

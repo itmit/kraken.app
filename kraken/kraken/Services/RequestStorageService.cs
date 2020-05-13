@@ -536,6 +536,56 @@ namespace kraken.Services
                 return false;
             }
         }
+
+        public async Task<bool> CloseRequest(string RequestUuid)
+        {
+            if (IsThereInternet() == false)
+            {
+                return false;
+            }
+
+            if (!AuthenticationHeaderIsSet)
+            {
+                SetAuthenticationHeader();
+            }
+
+            string restMethod = "masters/closeInquiry";
+            Uri uri = new Uri(string.Format(Constants.RestUrl, restMethod));
+
+            try
+            {
+                JObject jmessage = new JObject
+                {
+                    { "uuid", RequestUuid }
+                };
+                string json = jmessage.ToString();
+
+                StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+                HttpResponseMessage response = null;
+                response = client.PostAsync(uri, content).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseMessage = await response.Content.ReadAsStringAsync();
+
+                    return true;
+                }
+                else
+                {
+                    string errorInfo = await response.Content.ReadAsStringAsync();
+                    string errorMessage = ParseErrorMessage(errorInfo);
+
+                    Xamarin.Forms.Device.BeginInvokeOnMainThread(async () => { await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", errorMessage, "OK"); });
+
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
+                return false;
+            }
+        }
         #endregion
 
         #region Utility private methods

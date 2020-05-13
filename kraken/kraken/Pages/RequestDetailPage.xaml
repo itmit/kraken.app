@@ -17,6 +17,7 @@
         <!--Мои запросы детальная страница-->
         <StackLayout>
             <StackLayout BackgroundColor="White" Margin="0,5" Padding="20">
+                <Image Source="{Binding RequestFileUrl}" HorizontalOptions="Center" HeightRequest="150" Aspect="AspectFit" IsVisible="{Binding IsRequestHasImage}"></Image>
                 <Label Text="{Binding RequestName}" FontAttributes="Bold"/>
                 <Label Text="{Binding RequestDescription}"/>
                 <Label Text="{Binding RequestUrgency}"/>
@@ -24,10 +25,17 @@
                 <Button 
                     Text="Доступные мастера" 
                     Style="{StaticResource RedButton}" 
-                    Margin="20,10" 
+                    Margin="0,10" 
                     CornerRadius="5" 
                     IsVisible="{Binding IsCurrentUserMaster, Converter={StaticResource InverseBoolConverter}}"
                     Command="{Binding ShowMasterListCommand}"/>
+                <Button 
+                    Text="Завершить" 
+                    Style="{StaticResource RedButton}" 
+                    Margin="0,10" 
+                    CornerRadius="5" 
+                    IsVisible="{Binding IsCloseRequestAvaliable}"
+                    Command="{Binding CloseRequestCommand}"/>
                 <Label 
                     IsVisible="{Binding IsCurrentUserMaster, Converter={StaticResource InverseBoolConverter}}"
                     Text="Ответившие мастера" 

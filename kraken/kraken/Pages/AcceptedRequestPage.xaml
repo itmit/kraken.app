@@ -14,8 +14,10 @@
                       SeparatorVisibility="None" 
                       IsPullToRefreshEnabled="True"
                       RefreshCommand="{Binding UpdateListCommand}"
+                      IsGroupingEnabled="True"
+                      GroupDisplayBinding="{Binding Key}"
                       IsRefreshing="{Binding IsRefreshing}"
-                      ItemsSource="{Binding UserRequests}"
+                      ItemsSource="{Binding RequestsGrouped}"
                       SelectedItem="{Binding SelectedRequest, Mode=TwoWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate>

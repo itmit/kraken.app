@@ -17,7 +17,7 @@ namespace kraken.PageModels
         private Plugin.FilePicker.Abstractions.FileData FileData;
 
         public ObservableCollection<WorkType> WorkTypes { get; set; }
-        public List<Urgency> Urgency { get; set; } = new List<Urgency>();
+        public List<Urgency> Urgency { get; set; }
 
         public string UserImage { get; set; }
         
@@ -36,6 +36,7 @@ namespace kraken.PageModels
                     bool isRequestSuccesful = await CreateRequest();
                     if (isRequestSuccesful)
                     {
+                        Description = String.Empty;
                         await CoreMethods.SwitchSelectedTab<MyRequestPageModel>();
                     }
                     tcs.SetResult(true);
@@ -63,11 +64,17 @@ namespace kraken.PageModels
         {
             base.ViewIsAppearing(sender, e);
 
-            var typeList = await GetWorkTypes();
-            WorkTypes = new ObservableCollection<WorkType>(typeList);
-            Description = String.Empty;
+            
+            if(WorkTypes == null)
+            {
+                var typeList = await GetWorkTypes();
+                WorkTypes = new ObservableCollection<WorkType>(typeList);
+            }
 
-            GetUrgencyTypes();
+            if(Urgency == null)
+            {
+                GetUrgencyTypes();
+            }
         }
 
         private async Task<List<WorkType>> GetWorkTypes()

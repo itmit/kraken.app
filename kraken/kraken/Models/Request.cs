@@ -40,6 +40,12 @@ namespace kraken.Models
         [JsonProperty("status")]
         public string Status { get; set; }
 
+        [JsonProperty("file")]
+        public string File { get; set; }
+
+        [JsonProperty("isMasterRequestExists")]
+        public string IsMasterRequestExists { get; set; }
+
         [JsonIgnore]
         public string StatusText { get { return StatusDictionary[Status]; } }
 
@@ -56,7 +62,8 @@ namespace kraken.Models
                 { "created", "Создан" },
                 { "appointed", "Назначен исполнитель" },
                 { "performer appointed", "Назначен исполнитель" },
-                { "active", "На исполнении" }
+                { "active", "На исполнении" },
+                { "closed", "Закрыт" }
             };
 
             UrgencyDictionary = new Dictionary<string, string> {

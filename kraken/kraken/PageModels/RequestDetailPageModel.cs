@@ -21,6 +21,7 @@ namespace kraken.PageModels
         public string RequestDescription { get; private set; }
         public string RequestStatus { get; private set; }
         public string RequestUrgency { get; private set; }
+        public string RequestFileUrl { get; private set; }
         public List<Master> Masters { get; private set; }
 
         public Master SelectedMaster
@@ -36,6 +37,8 @@ namespace kraken.PageModels
 
         public bool IsMasterSelected { get; private set; }
         public bool IsCurrentUserMaster { get; private set; }
+        public bool IsCloseRequestAvaliable { get; private set; }
+        public bool IsRequestHasImage { get; private set; }
 
         public ICommand ShowMasterListCommand
         {
@@ -71,6 +74,17 @@ namespace kraken.PageModels
             }
         }
 
+        public ICommand CloseRequestCommand
+        {
+            get
+            {
+                return new Command((param) =>
+                {
+                    CloseRequest();
+                });
+            }
+        }
+
         public RequestDetailPageModel(IRequestStorageService requestStorage)
         {
             _requestStorage = requestStorage;
@@ -93,17 +107,37 @@ namespace kraken.PageModels
             RequestStatus = "Статус: " + Request.StatusText;
             RequestUrgency = Request.UrgencyText;
 
+            if(Request.File == null)
+            {
+                IsRequestHasImage = false;
+            }
+            else
+            {
+                RequestFileUrl = string.Format(Constants.StorageUrl, Request.File);
+                IsRequestHasImage = true;
+            }
+
             User CurrentUser = GetCurrentUser();
 
             IsCurrentUserMaster = App.IsUserMaster;
 
-            if (Request.MasterId != null & Request.MasterId == CurrentUser.MasterId)
+            if(IsCurrentUserMaster)
             {
-                IsMasterSelected = true;
+                IsCloseRequestAvaliable = (Request.Status == "performer appointed" | Request.Status == "appointed");
             }
             else
             {
-                IsMasterSelected = false;
+                IsCloseRequestAvaliable = true;
+            }
+
+            if(Request.IsMasterRequestExists != null)
+            {
+                IsMasterSelected = System.Boolean.Parse(Request.IsMasterRequestExists);
+            }
+
+            if (Request.MasterId != null & Request.MasterId == CurrentUser.MasterId)
+            {
+                IsMasterSelected = true;
             }
         }
 
@@ -130,7 +164,7 @@ namespace kraken.PageModels
         {
             bool response = await _requestStorage.SendAcceptRequest(Request.uuid);
 
-            if(response == true)
+            if (response == true)
             {
                 IsMasterSelected = true;
             }
@@ -155,7 +189,24 @@ namespace kraken.PageModels
 
         private async void SendDeclineRequest()
         {
-            await _requestStorage.SendDeclineRequest(Request.uuid);
+            bool response = await _requestStorage.SendDeclineRequest(Request.uuid);
+
+            if (response == true)
+            {
+                IsMasterSelected = false;
+            }
+        }
+
+        private async void CloseRequest()
+        {
+            bool result = await _requestStorage.CloseRequest(Request.uuid);
+
+            if (result == true)
+            {
+                await CoreMethods.DisplayAlert("Успех", "Заявка успешно завершена", "Ок");
+                Request.IsFinished = "1";
+                Request.Status = "closed";
+            }
         }
     }
 }

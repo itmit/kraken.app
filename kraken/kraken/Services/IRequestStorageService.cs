@@ -20,5 +20,6 @@ namespace kraken.Services
         Task<bool> SendAcceptRequest(string RequestUuid);
         Task<bool> SendDeclineRequest(string RequestUuid);
         Task<bool> SendAcceptMasterRequest(string uuid, Master selectedMaster);
+        Task<bool> CloseRequest(string RequestUuid);
     }
 }

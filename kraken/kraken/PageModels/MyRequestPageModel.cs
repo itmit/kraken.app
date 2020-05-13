@@ -15,18 +15,18 @@ namespace kraken.PageModels
     public class MyRequestPageModel : FreshBasePageModel
     {
         readonly IRequestStorageService _requestStorage;
-        Request _selectedRequest;
 
         private List<Request> AllRequests { get; set; } = new List<Request>();
+
+        public ObservableCollection<Grouping<string, Request>> RequestsGrouped { get; set; }
 
         public ObservableCollection<Request> UserRequests { get; set; }
 
         public Request SelectedRequest
         {
-            get { return _selectedRequest; }
+            get => null;
             set
             {
-                _selectedRequest = value;
                 if (value != null)
                     OpenDetailPage(value);
             }
@@ -57,7 +57,6 @@ namespace kraken.PageModels
         protected override async void ViewIsAppearing(object sender, EventArgs e)
         {
             base.ViewIsAppearing(sender, e);
-
             await GetUserRequestsAsync();
         }
 
@@ -65,16 +64,32 @@ namespace kraken.PageModels
         {
             var updatedList = await _requestStorage.GetUserRequestsAsync();
 
-            if (AllRequests.SequenceEqual(updatedList) == false)
-            {
-                AllRequests = updatedList;
-                UserRequests = new ObservableCollection<Request>(AllRequests.ToList());
-            }
+            AllRequests = updatedList;
+            UserRequests = new ObservableCollection<Request>(AllRequests.ToList());
+
+            var sorted = from request in AllRequests
+                         orderby request.StatusText
+                         group request by request.StatusText into requestGroup
+                         select new Grouping<string, Request>(requestGroup.Key, requestGroup);
+
+            RequestsGrouped = new ObservableCollection<Grouping<string, Request>>(sorted);
         }
 
         private async void OpenDetailPage(Request selectedRequest)
         {
             await CoreMethods.PushPageModel<RequestDetailPageModel>(selectedRequest);
+        }
+    }
+
+    public class Grouping<K, T> : ObservableCollection<T>
+    {
+        public K Key { get; private set; }
+
+        public Grouping(K key, IEnumerable<T> items)
+        {
+            Key = key;
+            foreach (var item in items)
+                this.Items.Add(item);
         }
     }
 }

@@ -21,6 +21,8 @@ namespace kraken.PageModels
 
         public ObservableCollection<Request> UserRequests { get; set; }
 
+        public ObservableCollection<Grouping<string, Request>> RequestsGrouped { get; set; }
+
         public Request SelectedRequest
         {
             get { return _selectedRequest; }
@@ -65,11 +67,15 @@ namespace kraken.PageModels
         {
             var updatedList = await _requestStorage.GetMasterRequestsAsync();
 
-            if (AllRequests.SequenceEqual(updatedList) == false)
-            {
-                AllRequests = updatedList;
-                UserRequests = new ObservableCollection<Request>(AllRequests.ToList());
-            }
+            AllRequests = updatedList;
+            UserRequests = new ObservableCollection<Request>(AllRequests.ToList());
+
+            var sorted = from request in AllRequests
+                         orderby request.StatusText
+                         group request by request.StatusText into requestGroup
+                         select new Grouping<string, Request>(requestGroup.Key, requestGroup);
+
+            RequestsGrouped = new ObservableCollection<Grouping<string, Request>>(sorted);
         }
 
         private async void OpenDetailPage(Request selectedRequest)
