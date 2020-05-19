@@ -362,16 +362,16 @@ namespace kraken.Services
                 foreach (var exc in ex.InnerExceptions) {
                     if (exc is NullReferenceException) {
                         // handle NullReferenceException
-                        await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", string.Format("TimeoutException occured: {0} {1}", ex.Message, ex.StackTrace), "OK");
+                        await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", string.Format("TimeoutException occured: {0}", ex.Message), "OK");
                     }
 
                     if (exc is TimeoutException) {
                         // handle timeout
-                        await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", string.Format("TimeoutException occured: {0} {1}", ex.Message, ex.StackTrace), "OK");
+                        await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", string.Format("TimeoutException occured: {0}", ex.Message), "OK");
                     }
                     else
                     {
-                        await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
+                        await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message, "OK");
                     }
 
                     // catch another Exception
@@ -379,9 +379,14 @@ namespace kraken.Services
 
                 return false;
             }
+            catch (HttpRequestException e)
+            {
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", e.GetType().Name + "\n" + e.Message, "OK");
+                return false;
+            }
             catch (Exception ex)
             {
-                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message, "OK");
                 return false;
             }
         }
@@ -431,7 +436,7 @@ namespace kraken.Services
             }
             catch (Exception ex)
             {
-                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message, "OK");
                 return false;
             }
         }
@@ -482,7 +487,7 @@ namespace kraken.Services
             }
             catch (Exception ex)
             {
-                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message, "OK");
                 return false;
             }
         }
@@ -532,7 +537,7 @@ namespace kraken.Services
             }
             catch (Exception ex)
             {
-                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message, "OK");
                 return false;
             }
         }
@@ -582,7 +587,7 @@ namespace kraken.Services
             }
             catch (Exception ex)
             {
-                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message, "OK");
                 return false;
             }
         }

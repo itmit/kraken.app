@@ -85,7 +85,7 @@ namespace kraken
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
+                await Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message, "OK");
             }
         }
 

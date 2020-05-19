@@ -134,7 +134,7 @@ namespace kraken.Services
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
+                await Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message, "OK");
             }
 
             return false;
@@ -185,7 +185,7 @@ namespace kraken.Services
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
+                await Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message, "OK");
                 return false;
             }
         }
@@ -240,17 +240,17 @@ namespace kraken.Services
                     if (exc is NullReferenceException)
                     {
                         // handle NullReferenceException
-                        await Application.Current.MainPage.DisplayAlert("Не выполнено", string.Format("TimeoutException occured: {0} {1}", ex.Message, ex.StackTrace), "OK");
+                        await Application.Current.MainPage.DisplayAlert("Не выполнено", string.Format("TimeoutException occured: {0}", ex.Message), "OK");
                     }
 
                     if (exc is TimeoutException)
                     {
                         // handle timeout
-                        await Application.Current.MainPage.DisplayAlert("Не выполнено", string.Format("TimeoutException occured: {0} {1}", ex.Message, ex.StackTrace), "OK");
+                        await Application.Current.MainPage.DisplayAlert("Не выполнено", string.Format("TimeoutException occured: {0}", ex.Message), "OK");
                     }
                     else
                     {
-                        await Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
+                        await Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message, "OK");
                     }
 
                     // catch another Exception
@@ -260,7 +260,7 @@ namespace kraken.Services
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
+                await Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message, "OK");
                 return false;
             }
         }
@@ -310,7 +310,7 @@ namespace kraken.Services
             }
             catch (Exception ex)
             {
-                await Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message + "\n" + ex.StackTrace, "OK");
+                await Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message, "OK");
                 return false;
             }
         }
