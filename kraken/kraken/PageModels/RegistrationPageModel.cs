@@ -87,7 +87,7 @@ namespace kraken.PageModels
         {
             //return user.Name == Constants.Username && user.PhoneNumber == Constants.Password;
             if (string.IsNullOrWhiteSpace(user.Name) |
-                string.IsNullOrWhiteSpace(user.Phone) | user.Phone.Length < 11 |
+                string.IsNullOrWhiteSpace(user.Phone) | user.Phone.Length < 6 |
                 string.IsNullOrWhiteSpace(user.Password) | user.Password.Length < 5)
             {
                 MessageLabel = "Неверно указано имя, номер телефона или пароль";

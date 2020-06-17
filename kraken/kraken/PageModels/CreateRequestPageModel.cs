@@ -15,16 +15,29 @@ namespace kraken.PageModels
     {
         readonly IRequestStorageService _requestStorage;
         private Plugin.FilePicker.Abstractions.FileData FileData;
+        private Urgency selectedUrgency;
 
         public ObservableCollection<WorkType> WorkTypes { get; set; }
         public List<Urgency> Urgency { get; set; }
 
         public string UserImage { get; set; }
-        
+
         public bool IsFileUploaded { get; set; } = false;
 
         public WorkType SelectedType { get; set; }
-        public Urgency SelectedUrgency { get; set; }
+        public Urgency SelectedUrgency 
+        { 
+            get => selectedUrgency;
+            set
+            {
+                if (value.Code == "scheduled")
+                    IsTimeVisible = true;
+                else
+                    IsTimeVisible = false;
+
+                selectedUrgency = value;
+            }
+        }
         public string Description { get; set; }
 
         public ICommand CreateRequestCommand
@@ -55,6 +68,8 @@ namespace kraken.PageModels
             }
         }
 
+        public bool IsTimeVisible { get; private set; }
+
         public CreateRequestPageModel(IRequestStorageService requestStorage)
         {
             _requestStorage = requestStorage;
@@ -64,14 +79,14 @@ namespace kraken.PageModels
         {
             base.ViewIsAppearing(sender, e);
 
-            
-            if(WorkTypes == null)
+
+            if (WorkTypes == null)
             {
                 var typeList = await GetWorkTypes();
                 WorkTypes = new ObservableCollection<WorkType>(typeList);
             }
 
-            if(Urgency == null)
+            if (Urgency == null)
             {
                 GetUrgencyTypes();
             }
@@ -115,7 +130,7 @@ namespace kraken.PageModels
         {
             bool isValid = ValidateInputData();
 
-            if(isValid == false)
+            if (isValid == false)
             {
                 await CoreMethods.DisplayAlert("Ошибка", "Неуказаны род работ, срочность или описание", "Ok");
                 return false;
@@ -158,7 +173,7 @@ namespace kraken.PageModels
 
         private bool ValidateInputData()
         {
-            if(SelectedType != null & SelectedUrgency != null & Description != null)
+            if (SelectedType != null & SelectedUrgency != null & Description != null)
             {
                 return true;
             }
