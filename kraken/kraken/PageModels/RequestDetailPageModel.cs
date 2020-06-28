@@ -17,12 +17,18 @@ namespace kraken.PageModels
         Request Request;
         private Master _selectedMaster;
 
+        #region Public Variables
         public string RequestName { get; private set; }
         public string RequestDescription { get; private set; }
         public string RequestStatus { get; private set; }
+        public string MasterDistance { get; private set; }
+        public string RequestAddress { get; private set; }
+        public string RequestPhone { get; private set; }
+        public string RequestClientName { get; private set; }
         public string RequestUrgency { get; private set; }
         public string RequestFileUrl { get; private set; }
         public List<Master> Masters { get; private set; }
+        public int TotalMasters { get; private set; }
 
         public Master SelectedMaster
         {
@@ -39,7 +45,9 @@ namespace kraken.PageModels
         public bool IsCurrentUserMaster { get; private set; }
         public bool IsCloseRequestAvaliable { get; private set; }
         public bool IsRequestHasImage { get; private set; }
+        #endregion
 
+        #region Commands
         public ICommand ShowMasterListCommand
         {
             get
@@ -84,6 +92,7 @@ namespace kraken.PageModels
                 });
             }
         }
+        #endregion
 
         public RequestDetailPageModel(IRequestStorageService requestStorage)
         {
@@ -105,7 +114,10 @@ namespace kraken.PageModels
             RequestName = Request.Work;
             RequestDescription = Request.Description;
             RequestStatus = "Статус: " + Request.StatusText;
-            RequestUrgency = Request.UrgencyText;
+            MasterDistance = Request.MasterDistance + " км";
+            RequestAddress = Request.Address;
+            RequestPhone = Request.Phone;
+            RequestClientName = Request.Name;
 
             if(Request.File == null)
             {
@@ -116,8 +128,6 @@ namespace kraken.PageModels
                 RequestFileUrl = string.Format(Constants.StorageUrl, Request.File);
                 IsRequestHasImage = true;
             }
-
-            User CurrentUser = GetCurrentUser();
 
             IsCurrentUserMaster = App.IsUserMaster;
 
@@ -132,32 +142,22 @@ namespace kraken.PageModels
 
             if(Request.IsMasterRequestExists != null)
             {
-                IsMasterSelected = System.Boolean.Parse(Request.IsMasterRequestExists);
+                var isRequestExists = System.Boolean.Parse(Request.IsMasterRequestExists);
+                if(isRequestExists == true & IsCloseRequestAvaliable == false)
+                {
+                    IsMasterSelected = false;
+                }
+                else
+                {
+                    IsMasterSelected = isRequestExists;
+                }
             }
-
-            if (Request.MasterId != null & Request.MasterId == CurrentUser.MasterId)
-            {
-                IsMasterSelected = true;
-            }
-        }
-
-        private User GetCurrentUser()
-        {
-            Realm realm = Realm.GetInstance();
-            var users = realm.All<User>();
-            User user = new User();
-
-            if (users.Count() > 0)
-            {
-                user = users.Last();
-            }
-
-            return user;
         }
 
         private async void GetRequestMastersAsync()
         {
             Masters = await _requestStorage.GetRequestMastersAsync(Request.uuid);
+            TotalMasters = Masters.Count;
         }
 
         private async void SendAcceptRequest()

@@ -19,6 +19,7 @@ namespace kraken.Services
         Task<bool> SendNewRequestAsync(Request CreatedRequest, Plugin.FilePicker.Abstractions.FileData FilesData);
         Task<bool> SendAcceptRequest(string RequestUuid);
         Task<bool> SendDeclineRequest(string RequestUuid);
+        Task<bool> SelectMaster(string uuid, Master selectedMaster);
         Task<bool> SendAcceptMasterRequest(string uuid, Master selectedMaster);
         Task<bool> CloseRequest(string RequestUuid);
     }

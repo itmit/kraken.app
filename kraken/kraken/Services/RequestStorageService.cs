@@ -441,6 +441,57 @@ namespace kraken.Services
             }
         }
 
+        public async Task<bool> SelectMaster(string RequestUuid, Master selectedMaster)
+        {
+            if (IsThereInternet() == false)
+            {
+                return false;
+            }
+
+            if (!AuthenticationHeaderIsSet)
+            {
+                SetAuthenticationHeader();
+            }
+
+            string restMethod = "inquiry/selectMaster";
+            Uri uri = new Uri(string.Format(Constants.RestUrl, restMethod));
+
+            try
+            {
+                JObject jmessage = new JObject
+                {
+                    { "uuid_inquiry", RequestUuid },
+                    { "uuid_master", selectedMaster.uuid }
+                };
+                string json = jmessage.ToString();
+
+                StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+                HttpResponseMessage response = null;
+                response = client.PostAsync(uri, content).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseMessage = await response.Content.ReadAsStringAsync();
+
+                    return true;
+                }
+                else
+                {
+                    string errorInfo = await response.Content.ReadAsStringAsync();
+                    string errorMessage = ParseErrorMessage(errorInfo);
+
+                    await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", errorMessage, "OK");
+
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                await Xamarin.Forms.Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message, "OK");
+                return false;
+            }
+        }
+
         public async Task<bool> SendAcceptMasterRequest(string RequestUuid, Master selectedMaster)
         {
             if (IsThereInternet() == false)

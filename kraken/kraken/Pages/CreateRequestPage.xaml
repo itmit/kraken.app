@@ -44,15 +44,31 @@
                 <Frame HasShadow="False" BackgroundColor="#eceff1" Margin="20,0" CornerRadius="5" IsVisible="{Binding IsFileUploaded, Converter={StaticResource InverseBoolConverter}}">
                     <Frame HasShadow="False" CornerRadius="5">
                         <StackLayout>
-                            <Image Source="ic_add_photo_alternate.png" HorizontalOptions="Center" WidthRequest="70"></Image>
+                            <Image Source="ic_add_photo_alternate.png" HorizontalOptions="Center" WidthRequest="70">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding OpenFileManagerCommand}" NumberOfTapsRequired="1" />
+                                </Image.GestureRecognizers>
+                            </Image>
                             <Label Text="Прикрепите фото или видеофайл" HorizontalOptions="Center"></Label>
-                            <Button Text="Выбрать файл" TextColor="Red" BackgroundColor="White" CornerRadius="5" BorderColor="Red" BorderWidth="1" WidthRequest="175" Command="{Binding OpenFileManagerCommand}"></Button>
+                            <Button 
+                                Text="Выбрать файл" 
+                                TextColor="Red" 
+                                BackgroundColor="White" 
+                                CornerRadius="5" 
+                                BorderColor="Red" 
+                                BorderWidth="1" 
+                                WidthRequest="175"
+                                Command="{Binding OpenFileManagerCommand}"></Button>
                         </StackLayout>
                     </Frame>
                 </Frame>
                 <Frame HasShadow="False" BackgroundColor="#eceff1" Margin="20,0" CornerRadius="5" IsVisible="{Binding IsFileUploaded}">
                     <Frame IsClippedToBounds="True" Padding="0" CornerRadius="5" Margin="5" VerticalOptions="Center" HorizontalOptions="Center">
-                        <Image Source="{Binding UserImage}" WidthRequest="50"/>
+                        <Image Source="{Binding UserImage}" WidthRequest="50">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenFileManagerCommand}" NumberOfTapsRequired="1" />
+                            </Image.GestureRecognizers>
+                        </Image>
                     </Frame>
                 </Frame>
                 <Button Text="Опубликовать запрос" Style="{StaticResource RedButton}" Margin="20,10" CornerRadius="5" Command="{Binding CreateRequestCommand}"/>

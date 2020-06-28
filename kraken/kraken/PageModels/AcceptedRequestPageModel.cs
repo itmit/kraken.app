@@ -71,7 +71,7 @@ namespace kraken.PageModels
             UserRequests = new ObservableCollection<Request>(AllRequests.ToList());
 
             var sorted = from request in AllRequests
-                         orderby request.StatusText
+                         orderby request.StatusText descending
                          group request by request.StatusText into requestGroup
                          select new Grouping<string, Request>(requestGroup.Key, requestGroup);
 

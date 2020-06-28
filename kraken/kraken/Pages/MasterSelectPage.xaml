@@ -13,7 +13,7 @@
                 HasUnevenRows="True" 
                 VerticalScrollBarVisibility="Never" 
                 SeparatorVisibility="None" 
-                SelectionMode="None"
+                SelectedItem="{Binding SelectedMaster}"
                 ItemsSource="{Binding Masters}">
                 <ListView.ItemTemplate>
                     <DataTemplate>

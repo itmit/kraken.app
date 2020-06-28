@@ -20,5 +20,27 @@ namespace kraken.Models
 
         [JsonProperty("rating")]
         public string Rating { get; set; }
+
+        [JsonProperty("travelDistance")]
+        public string Distance { get; set; }
+
+        [JsonProperty("travelDuration")]
+        public string Duration { get; set; }
+
+        [JsonProperty("way")]
+        public string Way { get; set; }
+
+        public string WayText
+        {
+            get
+            {
+                if (Way != null & Way == "walking")
+                {
+                    return "Пешком";
+                }
+
+                return "На машине";
+            }
+        }
     }
 }
