@@ -6,9 +6,9 @@
              xmlns:design="clr-namespace:kraken"
              mc:Ignorable="d"
              x:Class="kraken.Views.MasterViewCell">
-  <ViewCell.View>
-      <!--Ячейка представления для списка доступных мастеров-->
-      <StackLayout Orientation="Horizontal" BackgroundColor="White" Margin="0,5" Padding="10,5">
+    <ViewCell.View>
+        <!--Ячейка представления для списка доступных мастеров-->
+        <StackLayout Orientation="Horizontal" BackgroundColor="White" Margin="0,5" Padding="10,5">
             <Image Source="ic_build.png" WidthRequest="65"/>
             <StackLayout HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
                 <StackLayout Orientation="Horizontal">
@@ -16,18 +16,20 @@
                     <!--<Label Text="36 мин" FontAttributes="Bold" HorizontalOptions="EndAndExpand"/>-->
                 </StackLayout>
                 <StackLayout>
-                    <Label Text="{Binding Work}" FontSize="12"/>
-                    <!--<Grid HorizontalOptions="End">
-                        <Frame x:Name="Favourites" HasShadow="False" CornerRadius="5" BorderColor="Red" HorizontalOptions="End" Padding="5">
-                            <Label Text="Добавить в избранное" TextColor="Red" HorizontalOptions="End" FontSize="12"/>
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped" Command="{Binding .}" NumberOfTapsRequired="1"/>
-                            </Frame.GestureRecognizers>
-                        </Frame>
-                        <Image x:Name="Grade" Source="ic_action_star.png" IsVisible="False" HorizontalOptions="End" WidthRequest="24"/>
-                    </Grid>-->
+                    <Label Text="{Binding WayText}" FontSize="12"/>
+                    <Label>
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <FormattedString.Spans>
+                                    <Span Text="Расстояние: "></Span>
+                                    <Span Text="{Binding Distance}"></Span>
+                                    <Span Text=" км"></Span>
+                                </FormattedString.Spans>
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
                 </StackLayout>
             </StackLayout>
-      </StackLayout>
-  </ViewCell.View>
+        </StackLayout>
+    </ViewCell.View>
 </ViewCell>

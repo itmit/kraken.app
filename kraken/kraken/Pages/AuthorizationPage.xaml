@@ -8,38 +8,40 @@
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <!--Страница авторизации-->
-        <StackLayout Margin="20" VerticalOptions="Center" Spacing="0">
-            <Image Source="ic_vas.png" HorizontalOptions="Center" WidthRequest="300" HeightRequest="300"/>
-            <Grid Margin="10">
-                <Grid.Resources>
-                    <ResourceDictionary>
-                        <Style x:Key="Entry" TargetType="Entry">
-                            <Setter Property="VerticalOptions" Value="Center"/>
-                            <Setter Property="CursorPosition" Value="0"/>
-                            <Setter Property="PlaceholderColor" Value="Black"/>
-                            <Setter Property="TextColor" Value="Black"/>
-                        </Style>
-                    </ResourceDictionary>
-                </Grid.Resources>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Image Grid.Column="0" Grid.Row="0" VerticalOptions="Center" Source="ic_action_account_circle.png" WidthRequest="24"/>
-                <Entry Grid.Column="1" Grid.Row="0" Placeholder="Email" Text="{Binding EmailEntry}" Style="{StaticResource Entry}" VerticalOptions="Center"/>
-                <Image Grid.Column="0" Grid.Row="1" VerticalOptions="Center" Source="ic_action_lock.png" WidthRequest="24"/>
-                <Entry Grid.Column="1" Grid.Row="1" Placeholder="Пароль" IsPassword="True" Text="{Binding PasswordEntry}" Style="{StaticResource Entry}" VerticalOptions="Center"/>
-            </Grid>
-            <Button Text="Вход" Style="{StaticResource RedButton}" HorizontalOptions="Center" WidthRequest="175" Command="{Binding OnLoginButtonClicked}"/>
-            <Label Text="Зарегистрироваться" VerticalOptions="EndAndExpand" HorizontalOptions="Center" Margin="0,100,0,0">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding OpenRegisterationCommand}" NumberOfTapsRequired="1"/>
-                </Label.GestureRecognizers>
-            </Label>
-        </StackLayout>
+        <ScrollView>
+            <StackLayout Margin="20" VerticalOptions="Center" Spacing="0">
+                <Image Source="ic_vas.png" HorizontalOptions="Center" WidthRequest="300" HeightRequest="300"/>
+                <Grid Margin="10">
+                    <Grid.Resources>
+                        <ResourceDictionary>
+                            <Style x:Key="Entry" TargetType="Entry">
+                                <Setter Property="VerticalOptions" Value="Center"/>
+                                <Setter Property="CursorPosition" Value="0"/>
+                                <Setter Property="PlaceholderColor" Value="Black"/>
+                                <Setter Property="TextColor" Value="Black"/>
+                            </Style>
+                        </ResourceDictionary>
+                    </Grid.Resources>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Image Grid.Column="0" Grid.Row="0" VerticalOptions="Center" Source="ic_action_account_circle.png" WidthRequest="24"/>
+                    <Entry Grid.Column="1" Grid.Row="0" Placeholder="Email" Text="{Binding EmailEntry}" Style="{StaticResource Entry}" VerticalOptions="Center"/>
+                    <Image Grid.Column="0" Grid.Row="1" VerticalOptions="Center" Source="ic_action_lock.png" WidthRequest="24"/>
+                    <Entry Grid.Column="1" Grid.Row="1" Placeholder="Пароль" IsPassword="True" Text="{Binding PasswordEntry}" Style="{StaticResource Entry}" VerticalOptions="Center"/>
+                </Grid>
+                <Button Text="Вход" Style="{StaticResource RedButton}" HorizontalOptions="Center" WidthRequest="175" Command="{Binding OnLoginButtonClicked}"/>
+                <Label Text="Зарегистрироваться" VerticalOptions="EndAndExpand" HorizontalOptions="Center" Margin="0,100,0,0">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenRegisterationCommand}" NumberOfTapsRequired="1"/>
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

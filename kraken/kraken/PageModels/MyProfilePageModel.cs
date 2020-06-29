@@ -94,7 +94,14 @@ namespace kraken.PageModels
 
         async void OpenRequestsPage()
         {
-            await CoreMethods.SwitchSelectedTab<MyRequestPageModel>();
+            if (IsUserMaster)
+            {
+                await CoreMethods.SwitchSelectedTab<AcceptedRequestPageModel>();
+            }
+            else
+            {
+                await CoreMethods.SwitchSelectedTab<MyRequestPageModel>();
+            }
         }
 
         public MyProfilePageModel(IUserService userService)

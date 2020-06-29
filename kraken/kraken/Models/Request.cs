@@ -28,6 +28,12 @@ namespace kraken.Models
         [JsonProperty("address")]
         public string Address { get; set; }
 
+        [JsonProperty("phone")]
+        public string Phone { get; set; }
+
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
         [JsonProperty("started_at")]
         public string StartedAt { get; set; }
 
@@ -46,11 +52,28 @@ namespace kraken.Models
         [JsonProperty("isMasterRequestExists")]
         public string IsMasterRequestExists { get; set; }
 
+        [JsonProperty("masterDistance")]
+        public string MasterDistance { get; set; }
+
         [JsonIgnore]
         public string StatusText { get { return StatusDictionary[Status]; } }
 
         [JsonIgnore]
         public string UrgencyText { get { return UrgencyDictionary[Urgency]; } }
+
+        [JsonIgnore]
+        public bool IsRedDotVisible 
+        { 
+            get 
+            {
+                if (Status != null & Status != "closed")
+                {
+                    return true;
+                }
+
+                return false; 
+            } 
+        }
 
 
         private Dictionary<string, string> StatusDictionary { get; set; }
@@ -59,9 +82,10 @@ namespace kraken.Models
         public Request()
         {
             StatusDictionary = new Dictionary<string, string> {
-                { "created", "Создан" },
+                { "created", "Заявка" },
                 { "appointed", "Назначен исполнитель" },
                 { "performer appointed", "Назначен исполнитель" },
+                { "answered", "Ответ от мастера" },
                 { "active", "На исполнении" },
                 { "closed", "Закрыт" }
             };

@@ -10,6 +10,7 @@ namespace kraken.PageModels
     public class MasterSelectPageModel : FreshBasePageModel
     {
         readonly IRequestStorageService _requestStorage;
+        private Master _selectedMaster;
 
         public MasterSelectPageModel(IRequestStorageService requestStorage)
         {
@@ -18,6 +19,17 @@ namespace kraken.PageModels
 
         public Request Request { get; private set; }
         public List<Master> Masters { get; private set; }
+
+        public Master SelectedMaster
+        {
+            get { return _selectedMaster; }
+            set
+            {
+                _selectedMaster = value;
+                if (value != null)
+                    SelectMaster(value);
+            }
+        }
 
         public override void Init(object initData)
         {
@@ -31,6 +43,21 @@ namespace kraken.PageModels
         private async void GetMastersAsync()
         {
             Masters = await _requestStorage.GetMastersAsync(Request.uuid);
+        }
+
+        private async void SelectMaster(Master selectedMaster)
+        {
+            bool answer = await CoreMethods.DisplayAlert("Внимание", "Подтвердить выбор этого мастера?", "Да", "Нет");
+
+            if (answer == true)
+            {
+                bool response = await _requestStorage.SelectMaster(Request.uuid, selectedMaster);
+
+                if (response == true)
+                {
+                    await CoreMethods.DisplayAlert("Успех", "Мастеру отправлено уведомление о принятие заявки", "Ок");
+                }
+            }
         }
     }
 }

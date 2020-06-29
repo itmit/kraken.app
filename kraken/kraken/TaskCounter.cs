@@ -8,12 +8,13 @@ using System.Net.Http;
 using Realms;
 using kraken.Models;
 using System.Linq;
+using static Xamarin.Essentials.Permissions;
 
 namespace kraken
 {
     public class TaskCounter
     {
-        private const int MinutesInMilliseconds = 300000; // 5 minutes
+        private const int MinutesInMilliseconds = 60000; // 5 minutes
         private readonly HttpClient client;
         private readonly Uri uri = new Uri(string.Format(Constants.RestUrl, "masters/updateLocation"));
 
@@ -43,9 +44,9 @@ namespace kraken
                 {
                     token.ThrowIfCancellationRequested();
 
-                    await Task.Delay(MinutesInMilliseconds);
-
                     SendUserCoordinates();
+
+                    await Task.Delay(MinutesInMilliseconds);
                 }
             }, token);
         }
@@ -95,6 +96,13 @@ namespace kraken
             Location UserLocation = new Location();
             try
             {
+                var status = await CheckAndRequestLocationPermission();
+                if (status != PermissionStatus.Granted)
+                {
+                    // Notify user permission was denied
+                    await Application.Current.MainPage.DisplayAlert("Ошибка", "невозможно отправить координаты. Отказано в доступе", "OK");
+                    return null;
+                }
                 var location = await Geolocation.GetLastKnownLocationAsync();
                 //var request = new GeolocationRequest(GeolocationAccuracy.Medium, TimeSpan.FromSeconds(10));
                 //var location = await Geolocation.GetLocationAsync(request);
@@ -140,6 +148,37 @@ namespace kraken
             }
 
             return UserLocation;
+        }
+
+        public async Task<PermissionStatus> CheckAndRequestLocationPermission()
+        {
+            var status = await Permissions.CheckStatusAsync<Permissions.LocationWhenInUse>();
+            if (status != PermissionStatus.Granted)
+            {
+                status = await BeginInvokeOnMainThreadAsync(() => Permissions.RequestAsync<Permissions.LocationWhenInUse>());           
+            }
+
+            // Additionally could prompt the user to turn on in settings
+
+            return status;
+        }
+
+        private Task<T> BeginInvokeOnMainThreadAsync<T>(Func<Task<T>> a)
+        {
+            var tcs = new TaskCompletionSource<T>();
+            Device.BeginInvokeOnMainThread(async () =>
+            {
+                try
+                {
+                    var result = await a();
+                    tcs.SetResult(result);
+                }
+                catch (Exception ex)
+                {
+                    tcs.SetException(ex);
+                }
+            });
+            return tcs.Task;
         }
     }
 }

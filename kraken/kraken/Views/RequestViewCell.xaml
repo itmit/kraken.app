@@ -8,7 +8,15 @@
   <ViewCell.View>
       <!--Ячейка представление для списка мои запросы-->
         <StackLayout Margin="0,5" BackgroundColor="White" Orientation="Horizontal" Padding="10">
-            <BoxView BackgroundColor="Red" HeightRequest="8" WidthRequest="8" CornerRadius="4" VerticalOptions="Start" HorizontalOptions="Center" Margin="0,5"/>
+            <BoxView 
+                IsVisible="{Binding IsRedDotVisible}"
+                BackgroundColor="Red" 
+                HeightRequest="8" 
+                WidthRequest="8" 
+                CornerRadius="4" 
+                VerticalOptions="Start" 
+                HorizontalOptions="Center" 
+                Margin="0,5"/>
             <StackLayout>
                 <StackLayout Orientation="Horizontal" Spacing="0">
                     <Label Text="{Binding Work}" WidthRequest="240" FontAttributes="Bold" HorizontalTextAlignment="Start"/>

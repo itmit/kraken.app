@@ -39,6 +39,7 @@ namespace kraken.PageModels
             }
         }
         public string Description { get; set; }
+        public string SelectedTime { get; set; }
 
         public ICommand CreateRequestCommand
         {
@@ -49,7 +50,12 @@ namespace kraken.PageModels
                     bool isRequestSuccesful = await CreateRequest();
                     if (isRequestSuccesful)
                     {
+                        SelectedType = null;
+                        selectedUrgency = null;
+                        SelectedTime = null;
+                        UserImage = null;
                         Description = String.Empty;
+                        IsFileUploaded = false;
                         await CoreMethods.SwitchSelectedTab<MyRequestPageModel>();
                     }
                     tcs.SetResult(true);
