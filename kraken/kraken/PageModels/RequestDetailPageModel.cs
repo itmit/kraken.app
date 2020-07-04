@@ -45,6 +45,7 @@ namespace kraken.PageModels
         public bool IsCurrentUserMaster { get; private set; }
         public bool IsCloseRequestAvaliable { get; private set; }
         public bool IsRequestHasImage { get; private set; }
+        public bool IsSelectMasterButtonVisible { get; private set; }
         #endregion
 
         #region Commands
@@ -134,10 +135,19 @@ namespace kraken.PageModels
             if(IsCurrentUserMaster)
             {
                 IsCloseRequestAvaliable = (Request.Status == "performer appointed" | Request.Status == "appointed");
+                IsSelectMasterButtonVisible = false;
             }
             else
             {
                 IsCloseRequestAvaliable = true;
+                if (Request.Status == "performer appointed" | Request.Status == "appointed")
+                {
+                    IsSelectMasterButtonVisible = false;
+                }
+                else
+                {
+                    IsSelectMasterButtonVisible = true;
+                }
             }
 
             if(Request.IsMasterRequestExists != null)
@@ -152,6 +162,7 @@ namespace kraken.PageModels
                     IsMasterSelected = isRequestExists;
                 }
             }
+
         }
 
         private async void GetRequestMastersAsync()
@@ -172,6 +183,12 @@ namespace kraken.PageModels
 
         private async void SendAcceptMasterRequest(Master selectedMaster)
         {
+            if(Request.Status == "appointed" | Request.Status == "performer appointed" | Request.Status == "active")
+            {
+                await CoreMethods.DisplayAlert("Не выполнено", "У заявки уже назначен исполнитель", "Ок");
+                return;
+            }
+
             bool answer = await CoreMethods.DisplayAlert("Внимание", "Подтвердить выбор этого мастера?", "Да", "Нет");
 
             if (answer == true)
@@ -180,6 +197,7 @@ namespace kraken.PageModels
 
                 if (response == true)
                 {
+                    Request.Status = "performer appointed";
                     IsMasterSelected = true;
                     await CoreMethods.DisplayAlert("Успех", "Мастеру отправлено уведомление о принятие заявки", "Ок");
                     _selectedMaster = null;

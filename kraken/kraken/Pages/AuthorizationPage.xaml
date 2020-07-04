@@ -36,7 +36,12 @@
                     <Entry Grid.Column="1" Grid.Row="1" Placeholder="Пароль" IsPassword="True" Text="{Binding PasswordEntry}" Style="{StaticResource Entry}" VerticalOptions="Center"/>
                 </Grid>
                 <Button Text="Вход" Style="{StaticResource RedButton}" HorizontalOptions="Center" WidthRequest="175" Command="{Binding OnLoginButtonClicked}"/>
-                <Label Text="Зарегистрироваться" VerticalOptions="EndAndExpand" HorizontalOptions="Center" Margin="0,100,0,0">
+                <Label Text="Забыли пароль?" Margin="0,100,0,20" HorizontalOptions="Center">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding OpenRestorePassCommand}" NumberOfTapsRequired="1"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Text="Зарегистрироваться" VerticalOptions="EndAndExpand" HorizontalOptions="Center">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding OpenRegisterationCommand}" NumberOfTapsRequired="1"/>
                     </Label.GestureRecognizers>

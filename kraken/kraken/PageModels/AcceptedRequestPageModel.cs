@@ -60,6 +60,8 @@ namespace kraken.PageModels
         {
             base.ViewIsAppearing(sender, e);
 
+            _selectedRequest = null;
+
             await GetMasterRequestsAsync();
         }
 

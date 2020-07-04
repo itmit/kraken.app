@@ -50,9 +50,6 @@ namespace kraken.PageModels
                     bool isRequestSuccesful = await CreateRequest();
                     if (isRequestSuccesful)
                     {
-                        SelectedType = null;
-                        selectedUrgency = null;
-                        SelectedTime = null;
                         UserImage = null;
                         Description = String.Empty;
                         IsFileUploaded = false;

@@ -48,9 +48,25 @@ namespace kraken.PageModels
             }
         }
 
+        public ICommand OpenRestorePassCommand
+        {
+            get
+            {
+                return new Xamarin.Forms.Command((param) =>
+                {
+                    OpenRestorePassPage();
+                });
+            }
+        }
+
         async void OpenRegisterPage()
         {
             await CoreMethods.PushPageModel<RegistrationPageModel>();
+        }
+
+        private async void OpenRestorePassPage()
+        {
+            await CoreMethods.PushPageModel<RestorePassPageModel>();
         }
 
         async Task OnLoginClickedAsync()

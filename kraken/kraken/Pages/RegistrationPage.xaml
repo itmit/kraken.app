@@ -21,7 +21,7 @@
                 <Entry Placeholder="Организация" Text="{Binding Organization}"/>
                 <Entry Placeholder="E-mail" Text="{Binding Email}"/>
                 <Entry Placeholder="Телефон" Text="{Binding Phone}"/>
-                <Editor Placeholder="Адрес&#10;&#10;" AutoSize="TextChanges" Text="{Binding Adress}" TextColor="Black" PlaceholderColor="Black"/>
+                <Editor Placeholder="Адрес: улица дом, город" AutoSize="TextChanges" Text="{Binding Adress}" TextColor="Black" PlaceholderColor="Black"/>
                 <Entry Placeholder="Пароль" Text="{Binding Password}" IsPassword="True"/>
                 <Entry Placeholder="Повторите пароль" Text="{Binding RepeatPassword}" IsPassword="True"/>
                 <Button Text="Зарегистрироваться" Style="{StaticResource RedButton}" HorizontalOptions="Center" WidthRequest="200" Command="{Binding OnRegisterButtonClicked}"/>

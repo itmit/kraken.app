@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="kraken.Pages.RestorePassPage">
+    <ContentPage.Content>
+        <StackLayout Margin="0,0" Spacing="0">
+            <StackLayout.Resources>
+                <ResourceDictionary>
+                    <Style x:Key="Entry" TargetType="Entry">
+                        <Setter Property="VerticalOptions" Value="Center"/>
+                        <Setter Property="CursorPosition" Value="0"/>
+                        <Setter Property="PlaceholderColor" Value="Black"/>
+                        <Setter Property="TextColor" Value="Black"/>
+                    </Style>
+                </ResourceDictionary>
+            </StackLayout.Resources>
+            <Frame Margin="15,0,15,10" IsVisible="{Binding IsFirstStep}">
+                <Entry Placeholder="Ваш E-mail" Style="{StaticResource Entry}" Text="{Binding EmailEntry}"/>
+            </Frame>
+            <Button Text="Отправить код" Margin="15,0,15,10" IsEnabled="False" IsVisible="{Binding IsFirstStep}" Command="{Binding SendEmailCommand}"/>
+
+            <Frame Margin="15,0,15,10" IsVisible="{Binding IsSecondStep}">
+                <Entry Placeholder="Код" IsPassword="True" Style="{StaticResource Entry}" Text="{Binding CodeEntry}"/>
+            </Frame>
+            <Frame Margin="15,0,15,20" IsVisible="{Binding IsSecondStep}">
+                <Entry Placeholder="Придумайте пароль" IsPassword="True" Style="{StaticResource Entry}" Text="{Binding PasswordEntry}"/>
+            </Frame>
+            <Frame Margin="15,0,15,20" IsVisible="{Binding IsSecondStep}">
+                <Entry Placeholder="Повторите пароль" IsPassword="True" Style="{StaticResource Entry}" Text="{Binding RepeatPasswordEntry}"/>
+            </Frame>
+            <Button Text="Сменить пароль" Margin="15,0,15,10" IsEnabled="False" IsVisible="{Binding IsSecondStep}" Command="{Binding SendPasswordCommand}"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
