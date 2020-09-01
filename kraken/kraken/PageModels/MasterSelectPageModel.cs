@@ -27,8 +27,10 @@ namespace kraken.PageModels
             {
                 _selectedMaster = value;
                 if (value != null)
-                    SelectMaster(value);
-            }
+				{
+					SelectMaster(value);
+				}
+			}
         }
 
         public override void Init(object initData)
@@ -49,11 +51,11 @@ namespace kraken.PageModels
         {
             bool answer = await CoreMethods.DisplayAlert("Внимание", "Подтвердить выбор этого мастера?", "Да", "Нет");
 
-            if (answer == true)
+            if (answer)
             {
                 bool response = await _requestStorage.SelectMaster(Request.uuid, selectedMaster);
 
-                if (response == true)
+                if (response)
                 {
                     await CoreMethods.DisplayAlert("Успех", "Мастеру отправлено уведомление о принятие заявки", "Ок");
                 }

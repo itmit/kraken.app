@@ -23,6 +23,29 @@ namespace kraken.Models
         public string DeviceToken { get; set; }
 
         public string ClientType { get; set; }
-        public string Token { get; internal set; }
-    }
+
+		public string Token
+		{
+			get; 
+			internal set;
+		}
+
+        public string Distance
+        {
+			get;
+			set;
+		}
+
+		public string DrivingMode
+		{
+			get;
+			set;
+		}
+
+		public string Status
+		{
+			get;
+			set;
+		}
+	}
 }

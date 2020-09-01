@@ -47,26 +47,26 @@
                 </Label>
 
                 <Label Text="Параметры: "/>
-                <Picker 
-                    Title="Радиус поиска (км)" 
-                    Style="{StaticResource DefaultPicker}"
-                    ItemDisplayBinding="{Binding Value}"
-                    ItemsSource="{Binding DistanceList}" 
-                    SelectedItem="{Binding SelectedDistance}"></Picker>
-                <Picker 
-                    Title="Средство передвижения" 
-                    IsVisible="{Binding IsUserMaster}"
-                    Style="{StaticResource DefaultPicker}"
-                    ItemDisplayBinding="{Binding Value}"
-                    ItemsSource="{Binding DrivingList}" 
-                    SelectedItem="{Binding SelectedVehicle}"></Picker>
-                <Picker 
-                    Title="Cтатус" 
-                    IsVisible="{Binding IsUserMaster}"
-                    Style="{StaticResource DefaultPicker}"
-                    ItemDisplayBinding="{Binding Value}"
-                    ItemsSource="{Binding StatusList}" 
-                    SelectedItem="{Binding SelectedStatus}"></Picker>
+                <Picker x:Name="RadiusPiker"
+                        Title="Радиус поиска (км)" 
+                        Style="{StaticResource DefaultPicker}"
+                        ItemDisplayBinding="{Binding Value}" 
+                        ItemsSource="{Binding DistanceList}" 
+                        SelectedItem="{Binding SelectedDistance}"/>
+                <Picker x:Name="DriveModePiker"
+                        Title="Средство передвижения" 
+                        IsVisible="{Binding IsUserMaster}"
+                        Style="{StaticResource DefaultPicker}"
+                        ItemDisplayBinding="{Binding Value}"
+                        ItemsSource="{Binding DrivingList}" 
+                        SelectedItem="{Binding SelectedVehicle}"></Picker>
+                <Picker x:Name="StatusPiker"
+                        Title="Cтатус" 
+                        IsVisible="{Binding IsUserMaster}"
+                        Style="{StaticResource DefaultPicker}"
+                        ItemDisplayBinding="{Binding Value}"
+                        ItemsSource="{Binding StatusList}" 
+                        SelectedItem="{Binding SelectedStatus}"></Picker>
                 <Button 
                     Text="Мои запросы" 
                     TextColor="Red" 

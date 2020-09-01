@@ -1,385 +1,464 @@
-﻿using kraken.Models;
-using Realms;
-using System;
+﻿using System;
 using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
 using System.Net.Http.Headers;
-using Newtonsoft.Json.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using kraken.Messages;
+using kraken.Models;
+using Newtonsoft.Json.Linq;
+using Plugin.Connectivity;
+using Realms;
 using Xamarin.Forms;
 
 namespace kraken.Services
 {
-    public class UserService : IUserService
-    {
-        readonly HttpClient client;
+	public class UserService : IUserService
+	{
+		#region Data
+		#region Fields
+		private readonly HttpClient _client;
+		#endregion
+		#endregion
 
-        public static bool AuthenticationHeaderIsSet { get; set; }
+		#region .ctor
+		public UserService()
+		{
+			_client = new HttpClient
+			{
+				MaxResponseContentBufferSize = 209715200 // 200 MB
+			};
+			_client.DefaultRequestHeaders.Add("Accept", "application/json");
 
-        public Realm Realm { get { return Realm.GetInstance(); } }
+			SetAuthenticationHeader();
+		}
+		#endregion
 
-        public UserService()
-        {
-            client = new HttpClient
-            {
-                MaxResponseContentBufferSize = 209715200 // 200 MB
-            };
-            client.DefaultRequestHeaders.Add("Accept", "application/json");
+		#region Properties
+		private static bool AuthenticationHeaderIsSet
+		{
+			get;
+			set;
+		}
 
-            SetAuthenticationHeader();
-        }
+		private static Realm Realm => Realm.GetInstance();
+		#endregion
 
-        public async Task<bool> LoginUserAsync(string EmailEntry, string PasswordEntry)
-        {
-            if (IsThereInternet() == false)
-            {
-                return false;
-            }
+		#region IUserService members
+		public async Task<bool> LoginUserAsync(string emailEntry, string passwordEntry)
+		{
+			if (IsThereInternet() == false)
+			{
+				return false;
+			}
 
-            if (!AuthenticationHeaderIsSet)
-            {
-                SetAuthenticationHeader();
-            }
+			if (!AuthenticationHeaderIsSet)
+			{
+				SetAuthenticationHeader();
+			}
 
-            string restMethod = "login";
-            Uri uri = new Uri(string.Format(Constants.RestUrl, restMethod));
+			const string restMethod = "login";
+			var uri = new Uri(string.Format(Constants.RestUrl, restMethod));
 
-            try
-            {
-                JObject jmessage = new JObject
-                {
-                    { "email", EmailEntry },
-                    { "password", PasswordEntry },
-                    { "deviceToken", App.DeviceToken }
-                };
+			try
+			{
+				var jMessage = new JObject
+				{
+					{
+						"email", emailEntry
+					},
+					{
+						"password", passwordEntry
+					},
+					{
+						"deviceToken", App.DeviceToken
+					}
+				};
 
-                string json = jmessage.ToString();
-                StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+				var json = jMessage.ToString();
+				var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-                HttpResponseMessage response = null;
-                response = client.PostAsync(uri, content).Result;
+				var response = _client.PostAsync(uri, content)
+									  .Result;
 
-                if (response.IsSuccessStatusCode)
-                {
-                    string userInfo = await response.Content.ReadAsStringAsync();
-                    JObject userObj = JObject.Parse(userInfo);
+				if (response.IsSuccessStatusCode)
+				{
+					var userInfo = await response.Content.ReadAsStringAsync();
+					var userObj = JObject.Parse(userInfo);
 
-                    User currentUser;
+					var isMaster = userObj["data"]["client_type"]
+									   .ToString() ==
+								   "master";
 
-                    var isMaster = (userObj["data"]["client_type"].ToString() == "master");
+					var currentUser = new User
+					{
+						Name = userObj["data"]["client_info"]["name"]
+							.ToString(),
+						Phone = userObj["data"]["client_info"]["phone"]
+							.ToString(),
+						ClientType = userObj["data"]["client_type"]
+							.ToString(),
+						Token = userObj["data"]["access_token"]
+							.ToString(),
+						Email = emailEntry,
+						DeviceToken = App.DeviceToken
+					};
 
-                    currentUser = new User
-                    {
-                        Name = userObj["data"]["client_info"]["name"].ToString(),
-                        Phone = userObj["data"]["client_info"]["phone"].ToString(),
-                        ClientType = userObj["data"]["client_type"].ToString(),
-                        Token = userObj["data"]["access_token"].ToString(),
-                        Email = EmailEntry,
-                        DeviceToken = App.DeviceToken,
-                    };
+					if (isMaster)
+					{
+						currentUser.MasterId = userObj["data"]["client_info"]["master_id"]
+							.ToString();
+						currentUser.Distance = userObj["data"]["client_info"]["radius"]
+							.ToString();
+						currentUser.Status = userObj["data"]["client_info"]["status"]
+							.ToString();
+						currentUser.DrivingMode = userObj["data"]["client_info"]["way"]
+							.ToString();
+						App.IsUserMaster = true;
+					}
+					else
+					{
+						currentUser.Organization = userObj["data"]["client_info"]["organization"]
+							.ToString();
+						currentUser.Address = userObj["data"]["client_info"]["address"]
+							.ToString();
+					}
 
-                    if (isMaster)
-                    {
-                        currentUser.MasterId = userObj["data"]["client_info"]["master_id"].ToString();
-                        App.IsUserMaster = true;
-                    }
-                    else
-                    {
-                        currentUser.Organization = userObj["data"]["client_info"]["organization"].ToString();
-                        currentUser.Address = userObj["data"]["client_info"]["address"].ToString();
-                    }
+					Realm.Write(() =>
+					{
+						Realm.Add(currentUser, true);
+					});
 
-                    Realm.Write(() =>
-                    {
-                        Realm.Add(currentUser, true);
-                    });
+					if (isMaster)
+					{
+						StartSendingCoordinates();
+					}
 
-                    if(isMaster)
-                    {
-                        StartSendingCoordinates();
-                    }
+					return true;
+				}
 
-                    return true;
-                }
-                else
-                {
-                    string errorMessage = "";
-                    string errorInfo = await response.Content.ReadAsStringAsync();
-                    JObject errorObj = JObject.Parse(errorInfo);
+				var errorMessage = "";
+				var errorInfo = await response.Content.ReadAsStringAsync();
+				var errorObj = JObject.Parse(errorInfo);
 
-                    if (errorObj.ContainsKey("error"))
-                    {
-                        errorMessage = (string)errorObj["error"];
-                    }
-                    else if (errorObj.ContainsKey("errors"))
-                    {
-                        JToken errors = errorObj["errors"];
+				if (errorObj.ContainsKey("error"))
+				{
+					errorMessage = (string) errorObj["error"];
+				}
+				else if (errorObj.ContainsKey("errors"))
+				{
+					var errors = errorObj["errors"];
 
-                        if (errors["email"] != null)
-                        {
-                            errorMessage = (string)(errors["email"].First);
-                        }
-                        else if (errors["password"] != null)
-                        {
-                            errorMessage = (string)(errors["password"].First);
-                        }
+					if (errors["email"] != null)
+					{
+						errorMessage = (string) errors["email"]
+							.First;
+					}
+					else if (errors["password"] != null)
+					{
+						errorMessage = (string) errors["password"]
+							.First;
+					}
+				}
 
-                    }
+				await Application.Current.MainPage.DisplayAlert("Ошибка", errorMessage, "OK");
+				return false;
+			}
+			catch (Exception ex)
+			{
+				await Application.Current.MainPage.DisplayAlert("Не выполнено",
+																ex.GetType()
+																  .Name +
+																"\n" +
+																ex.Message,
+																"OK");
+			}
 
-                    await Application.Current.MainPage.DisplayAlert("Ошибка", errorMessage, "OK");
-                    return false;
-                }
+			return false;
+		}
 
-            }
-            catch (Exception ex)
-            {
-                await Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message, "OK");
-            }
+		public async Task<bool> SetDrivingModeAsync(string modeCode)
+		{
+			if (IsThereInternet() == false)
+			{
+				return false;
+			}
 
-            return false;
-        }
+			if (!AuthenticationHeaderIsSet)
+			{
+				SetAuthenticationHeader();
+			}
 
-        public async Task<bool> SetDrivingModeAsync(string modeCode)
-        {
-            if (IsThereInternet() == false)
-            {
-                return false;
-            }
+			var restMethod = "masters/changeWayToTravel";
+			var uri = new Uri(string.Format(Constants.RestUrl, restMethod));
 
-            if (!AuthenticationHeaderIsSet)
-            {
-                SetAuthenticationHeader();
-            }
+			try
+			{
+				var jmessage = new JObject
+				{
+					{
+						"way", modeCode
+					}
+				};
+				var json = jmessage.ToString();
 
-            string restMethod = "masters/changeWayToTravel";
-            Uri uri = new Uri(string.Format(Constants.RestUrl, restMethod));
+				var content = new StringContent(json, Encoding.UTF8, "application/json");
+				HttpResponseMessage response = null;
+				response = _client.PostAsync(uri, content)
+								  .Result;
 
-            try
-            {
-                JObject jmessage = new JObject
-                {
-                    { "way", modeCode }
-                };
-                string json = jmessage.ToString();
+				if (response.IsSuccessStatusCode)
+				{
+					var responseMessage = await response.Content.ReadAsStringAsync();
+					
+					Realm.Write(() =>
+					{
+						Realm.All<User>().Single().DrivingMode = modeCode;
+					});
 
-                StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response = null;
-                response = client.PostAsync(uri, content).Result;
+					return true;
+				}
 
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseMessage = await response.Content.ReadAsStringAsync();
+				var errorInfo = await response.Content.ReadAsStringAsync();
+				var errorMessage = ParseErrorMessage(errorInfo);
 
-                    return true;
-                }
-                else
-                {
-                    string errorInfo = await response.Content.ReadAsStringAsync();
-                    string errorMessage = ParseErrorMessage(errorInfo);
+				Device.BeginInvokeOnMainThread(async () =>
+				{
+					await Application.Current.MainPage.DisplayAlert("Не выполнено", errorMessage, "OK");
+				});
 
-                    Device.BeginInvokeOnMainThread(async () => { await Application.Current.MainPage.DisplayAlert("Не выполнено", errorMessage, "OK"); });
+				return false;
+			}
+			catch (Exception ex)
+			{
+				await Application.Current.MainPage.DisplayAlert("Не выполнено",
+																ex.GetType()
+																  .Name +
+																"\n" +
+																ex.Message,
+																"OK");
+				return false;
+			}
+		}
 
-                    return false;
-                }
-            }
-            catch (Exception ex)
-            {
-                await Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message, "OK");
-                return false;
-            }
-        }
+		public async Task<bool> SetSearchFilterAsync(string radiusValue)
+		{
+			if (IsThereInternet() == false)
+			{
+				return false;
+			}
 
-        public async Task<bool> SetSearchFilterAsync(string radiusValue)
-        {
-            if (IsThereInternet() == false)
-            {
-                return false;
-            }
+			if (!AuthenticationHeaderIsSet)
+			{
+				SetAuthenticationHeader();
+			}
 
-            if (!AuthenticationHeaderIsSet)
-            {
-                SetAuthenticationHeader();
-            }
+			var restMethod = "client/changeRadius";
+			var uri = new Uri(string.Format(Constants.RestUrl, restMethod));
 
-            string restMethod = "client/changeRadius";
-            Uri uri = new Uri(string.Format(Constants.RestUrl, restMethod));
+			try
+			{
+				var jmessage = new JObject
+				{
+					{
+						"radius", radiusValue
+					}
+				};
+				var json = jmessage.ToString();
 
-            try
-            {
-                JObject jmessage = new JObject
-                {
-                    { "radius", radiusValue }
-                };
-                string json = jmessage.ToString();
+				var content = new StringContent(json, Encoding.UTF8, "application/json");
+				var response = _client.PostAsync(uri, content)
+								  .Result;
 
-                StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response = null;
-                response = client.PostAsync(uri, content).Result;
+				if (response.IsSuccessStatusCode)
+				{
+					var responseMessage = await response.Content.ReadAsStringAsync();
+					Realm.Write(() =>
+					{
+						Realm.All<User>().Single().Distance = radiusValue;
+					});
+					return true;
+				}
 
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseMessage = await response.Content.ReadAsStringAsync();
+				var errorInfo = await response.Content.ReadAsStringAsync();
+				var errorMessage = ParseErrorMessage(errorInfo);
 
-                    return true;
-                }
-                else
-                {
-                    string errorInfo = await response.Content.ReadAsStringAsync();
-                    string errorMessage = ParseErrorMessage(errorInfo);
+				Device.BeginInvokeOnMainThread(async () =>
+				{
+					await Application.Current.MainPage.DisplayAlert("Не выполнено", errorMessage, "OK");
+				});
 
-                    Device.BeginInvokeOnMainThread(async () => { await Application.Current.MainPage.DisplayAlert("Не выполнено", errorMessage, "OK"); });
+				return false;
+			}
+			catch (AggregateException ex)
+			{
+				foreach (var exc in ex.InnerExceptions)
+				{
+					if (exc is NullReferenceException)
+					{
+						// handle NullReferenceException
+						await Application.Current.MainPage.DisplayAlert("Не выполнено", string.Format("TimeoutException occured: {0}", ex.Message), "OK");
+					}
 
-                    return false;
-                }
-            }
-            catch (AggregateException ex)
-            {
-                foreach (var exc in ex.InnerExceptions)
-                {
-                    if (exc is NullReferenceException)
-                    {
-                        // handle NullReferenceException
-                        await Application.Current.MainPage.DisplayAlert("Не выполнено", string.Format("TimeoutException occured: {0}", ex.Message), "OK");
-                    }
+					if (exc is TimeoutException)
+					{
+						// handle timeout
+						await Application.Current.MainPage.DisplayAlert("Не выполнено", string.Format("TimeoutException occured: {0}", ex.Message), "OK");
+					}
+					else
+					{
+						await Application.Current.MainPage.DisplayAlert("Не выполнено",
+																		ex.GetType()
+																		  .Name +
+																		"\n" +
+																		ex.Message,
+																		"OK");
+					}
 
-                    if (exc is TimeoutException)
-                    {
-                        // handle timeout
-                        await Application.Current.MainPage.DisplayAlert("Не выполнено", string.Format("TimeoutException occured: {0}", ex.Message), "OK");
-                    }
-                    else
-                    {
-                        await Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message, "OK");
-                    }
+					// catch another Exception
+				}
 
-                    // catch another Exception
-                }
+				return false;
+			}
+			catch (Exception ex)
+			{
+				await Application.Current.MainPage.DisplayAlert("Не выполнено",
+																ex.GetType()
+																  .Name +
+																"\n" +
+																ex.Message,
+																"OK");
+				return false;
+			}
+		}
 
-                return false;
-            }
-            catch (Exception ex)
-            {
-                await Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message, "OK");
-                return false;
-            }
-        }
+		public async Task<bool> SetStatusAsync(string statusValue)
+		{
+			if (IsThereInternet() == false)
+			{
+				return false;
+			}
 
-        public async Task<bool> SetStatusAsync(string statusValue)
-        {
-            if (IsThereInternet() == false)
-            {
-                return false;
-            }
+			if (!AuthenticationHeaderIsSet)
+			{
+				SetAuthenticationHeader();
+			}
 
-            if (!AuthenticationHeaderIsSet)
-            {
-                SetAuthenticationHeader();
-            }
+			var restMethod = "masters/changeStatus";
+			var uri = new Uri(string.Format(Constants.RestUrl, restMethod));
 
-            string restMethod = "masters/changeStatus";
-            Uri uri = new Uri(string.Format(Constants.RestUrl, restMethod));
+			try
+			{
+				var jmessage = new JObject
+				{
+					{
+						"status", statusValue
+					}
+				};
+				var json = jmessage.ToString();
 
-            try
-            {
-                JObject jmessage = new JObject
-                {
-                    { "status", statusValue }
-                };
-                string json = jmessage.ToString();
+				var content = new StringContent(json, Encoding.UTF8, "application/json");
+				HttpResponseMessage response = null;
+				response = _client.PostAsync(uri, content)
+								  .Result;
 
-                StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
-                HttpResponseMessage response = null;
-                response = client.PostAsync(uri, content).Result;
+				if (response.IsSuccessStatusCode)
+				{
+					var responseMessage = await response.Content.ReadAsStringAsync();
+					Realm.Write(() =>
+					{
+						Realm.All<User>().Single().Status = statusValue;
+					});
+					return true;
+				}
 
-                if (response.IsSuccessStatusCode)
-                {
-                    string responseMessage = await response.Content.ReadAsStringAsync();
+				var errorInfo = await response.Content.ReadAsStringAsync();
+				var errorMessage = ParseErrorMessage(errorInfo);
 
-                    return true;
-                }
-                else
-                {
-                    string errorInfo = await response.Content.ReadAsStringAsync();
-                    string errorMessage = ParseErrorMessage(errorInfo);
+				Device.BeginInvokeOnMainThread(async () =>
+				{
+					await Application.Current.MainPage.DisplayAlert("Не выполнено", errorMessage, "OK");
+				});
 
-                    Device.BeginInvokeOnMainThread(async () => { await Application.Current.MainPage.DisplayAlert("Не выполнено", errorMessage, "OK"); });
+				return false;
+			}
+			catch (Exception ex)
+			{
+				await Application.Current.MainPage.DisplayAlert("Не выполнено",
+																ex.GetType()
+																  .Name +
+																"\n" +
+																ex.Message,
+																"OK");
+				return false;
+			}
+		}
+		#endregion
 
-                    return false;
-                }
-            }
-            catch (Exception ex)
-            {
-                await Application.Current.MainPage.DisplayAlert("Не выполнено", ex.GetType().Name + "\n" + ex.Message, "OK");
-                return false;
-            }
-        }
+		#region Utility private methods
+		public void StartSendingCoordinates()
+		{
+			var message = new StartLongRunningTaskMessage();
+			MessagingCenter.Send(message, "StartLongRunningTaskMessage");
+		}
 
-        #region Utility private methods
-        public void StartSendingCoordinates()
-        {
-            var message = new StartLongRunningTaskMessage();
-            MessagingCenter.Send(message, "StartLongRunningTaskMessage");
-        }
-        public void StopSendingCoordinates()
-        {
-            var message = new StopLongRunningTaskMessage();
-            MessagingCenter.Send(message, "StopLongRunningTaskMessage");
-        }
-        private bool IsThereInternet()
-        {
-            // TODO: if no internet, show alert
-            return Plugin.Connectivity.CrossConnectivity.Current.IsConnected;
-        }
+		public void StopSendingCoordinates()
+		{
+			var message = new StopLongRunningTaskMessage();
+			MessagingCenter.Send(message, "StopLongRunningTaskMessage");
+		}
 
-        private string ParseErrorMessage(string errorInfo)
-        {
-            string errorMessage = "";
-            JObject errorObj = JObject.Parse(errorInfo);
+		// TODO: if no internet, show alert
+		private bool IsThereInternet() => CrossConnectivity.Current.IsConnected;
 
-            if (errorObj.ContainsKey("error"))
-            {
-                errorMessage = (string)errorObj["error"];
-            }
-            else if (errorObj.ContainsKey("message"))
-            {
-                errorMessage = (string)errorObj["message"];
-            }
-            else if (errorObj.ContainsKey("errors"))
-            {
-                JToken errors = errorObj["errors"];
+		private string ParseErrorMessage(string errorInfo)
+		{
+			var errorMessage = "";
+			var errorObj = JObject.Parse(errorInfo);
 
-                if (errors["data"] != null)
-                {
-                    errorMessage = (string)(errors["data"].First);
-                }
-                else if (errors["name"] != null)
-                {
-                    errorMessage = (string)(errors["name"].First);
-                }
+			if (errorObj.ContainsKey("error"))
+			{
+				errorMessage = (string) errorObj["error"];
+			}
+			else if (errorObj.ContainsKey("message"))
+			{
+				errorMessage = (string) errorObj["message"];
+			}
+			else if (errorObj.ContainsKey("errors"))
+			{
+				var errors = errorObj["errors"];
 
-            }
+				if (errors["data"] != null)
+				{
+					errorMessage = (string) errors["data"]
+						.First;
+				}
+				else if (errors["name"] != null)
+				{
+					errorMessage = (string) errors["name"]
+						.First;
+				}
+			}
 
-            return errorMessage;
-        }
+			return errorMessage;
+		}
 
-        private void SetAuthenticationHeader()
-        {
-            Realm realm = Realm.GetInstance();
-            var users = realm.All<User>();
-            User user;
+		private void SetAuthenticationHeader()
+		{
+			var realm = Realm.GetInstance();
+			var users = realm.All<User>();
 
-            if (users.Count() > 0)
-            {
-                user = users.Last();
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
-                AuthenticationHeaderIsSet = true;
-            }
-            else
-            {
-                AuthenticationHeaderIsSet = false;
-            }
-        }
-        #endregion
-    }
+			if (users.Any())
+			{
+				var user = users.Last();
+				_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
+				AuthenticationHeaderIsSet = true;
+			}
+			else
+			{
+				AuthenticationHeaderIsSet = false;
+			}
+		}
+		#endregion
+	}
 }

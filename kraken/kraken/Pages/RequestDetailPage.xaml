@@ -96,6 +96,7 @@
                         HasUnevenRows="True" 
                         VerticalScrollBarVisibility="Never" 
                         SeparatorVisibility="None" 
+                        ItemSelected="ListView_OnItemSelected"
                         ItemsSource="{Binding Masters}"
                         SelectedItem="{Binding SelectedMaster}">
                         <ListView.ItemTemplate>
@@ -111,14 +112,14 @@
                         Style="{StaticResource RedButton}" 
                         Margin="20,10" 
                         CornerRadius="5" 
-                        IsVisible="{Binding IsMasterSelected}"
+                        IsVisible="{Binding CanCancelRequest}"
                         Command="{Binding DeclineRequestCommand}"/>
                     <Button 
                         Text="Принять заявку" 
                         Style="{StaticResource RedButton}" 
                         Margin="20,10" 
                         CornerRadius="5" 
-                        IsVisible="{Binding IsMasterSelected, Converter={StaticResource InverseBoolConverter}}"
+                        IsVisible="{Binding CanAcceptRequest}"
                         Command="{Binding AcceptRequestCommand}"/>
                 </StackLayout>
             </StackLayout>

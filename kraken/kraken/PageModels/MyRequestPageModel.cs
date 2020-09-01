@@ -28,8 +28,10 @@ namespace kraken.PageModels
             set
             {
                 if (value != null)
-                    OpenDetailPage(value);
-            }
+				{
+					OpenDetailPage(value);
+				}
+			}
         }
 
         public bool IsRefreshing { get; set; } = false;

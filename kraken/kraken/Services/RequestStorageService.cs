@@ -13,7 +13,7 @@ namespace kraken.Services
 {
     public class RequestStorageService : IRequestStorageService
     {
-        readonly HttpClient client;
+        private readonly HttpClient _client;
 
         public static bool AuthenticationHeaderIsSet { get; set; }
 
@@ -21,11 +21,11 @@ namespace kraken.Services
 
         public RequestStorageService()
         {
-            client = new HttpClient
+            _client = new HttpClient
             {
                 MaxResponseContentBufferSize = 209715200 // 200 MB
             };
-            client.DefaultRequestHeaders.Add("Accept", "application/json");
+            _client.DefaultRequestHeaders.Add("Accept", "application/json");
 
             SetAuthenticationHeader();
         }
@@ -50,7 +50,7 @@ namespace kraken.Services
 
             try
             {
-                var responseAwaiter = client.GetAsync(uri).ConfigureAwait(false);
+                var responseAwaiter = _client.GetAsync(uri).ConfigureAwait(false);
                 var response = responseAwaiter.GetAwaiter().GetResult();
 
                 if (response.IsSuccessStatusCode)
@@ -101,7 +101,7 @@ namespace kraken.Services
 
             try
             {
-                var responseAwaiter = client.GetAsync(uri).ConfigureAwait(false);
+                var responseAwaiter = _client.GetAsync(uri).ConfigureAwait(false);
                 var response = responseAwaiter.GetAwaiter().GetResult();
 
                 if (response.IsSuccessStatusCode)
@@ -142,7 +142,7 @@ namespace kraken.Services
 
             try
             {
-                var responseAwaiter = client.GetAsync(uri).ConfigureAwait(false);
+                var responseAwaiter = _client.GetAsync(uri).ConfigureAwait(false);
                 var response = responseAwaiter.GetAwaiter().GetResult();
 
                 if (response.IsSuccessStatusCode)
@@ -182,7 +182,7 @@ namespace kraken.Services
 
             try
             {
-                var responseAwaiter = client.GetAsync(uri).ConfigureAwait(false);
+                var responseAwaiter = _client.GetAsync(uri).ConfigureAwait(false);
                 var response = responseAwaiter.GetAwaiter().GetResult();
 
                 if (response.IsSuccessStatusCode)
@@ -233,7 +233,7 @@ namespace kraken.Services
                 StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = null;
-                response = client.PostAsync(uri, content).Result;
+                response = _client.PostAsync(uri, content).Result;
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -283,7 +283,7 @@ namespace kraken.Services
                 StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
 
                 HttpResponseMessage response = null;
-                response = client.PostAsync(uri, content).Result;
+                response = _client.PostAsync(uri, content).Result;
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -340,7 +340,7 @@ namespace kraken.Services
                 }                
 
                 HttpResponseMessage response = null;
-                response = await client.PostAsync(uri, formData);
+                response = await _client.PostAsync(uri, formData);
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -416,7 +416,7 @@ namespace kraken.Services
 
                 StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
                 HttpResponseMessage response = null;
-                response = client.PostAsync(uri, content).Result;
+                response = _client.PostAsync(uri, content).Result;
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -467,7 +467,7 @@ namespace kraken.Services
 
                 StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
                 HttpResponseMessage response = null;
-                response = client.PostAsync(uri, content).Result;
+                response = _client.PostAsync(uri, content).Result;
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -518,7 +518,7 @@ namespace kraken.Services
 
                 StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
                 HttpResponseMessage response = null;
-                response = client.PostAsync(uri, content).Result;
+                response = _client.PostAsync(uri, content).Result;
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -568,7 +568,7 @@ namespace kraken.Services
 
                 StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
                 HttpResponseMessage response = null;
-                response = client.PostAsync(uri, content).Result;
+                response = _client.PostAsync(uri, content).Result;
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -618,7 +618,7 @@ namespace kraken.Services
 
                 StringContent content = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
                 HttpResponseMessage response = null;
-                response = client.PostAsync(uri, content).Result;
+                response = _client.PostAsync(uri, content).Result;
 
                 if (response.IsSuccessStatusCode)
                 {
@@ -684,14 +684,13 @@ namespace kraken.Services
 
         private void SetAuthenticationHeader()
         {
-            Realm realm = Realm.GetInstance();
+            var realm = Realm.GetInstance();
             var users = realm.All<User>();
-            User user;
 
-            if (users.Count() > 0)
+			if (users.Any())
             {
-                user = users.Last();
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
+                var user = users.Last();
+                _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", user.Token);
                 AuthenticationHeaderIsSet = true;
             }
             else

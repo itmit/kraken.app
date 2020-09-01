@@ -7,17 +7,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Input;
 using Xamarin.Forms;
+using static System.Boolean;
 
 namespace kraken.PageModels
 {
     [AddINotifyPropertyChangedInterface]
     public class RequestDetailPageModel : FreshBasePageModel
     {
-        readonly IRequestStorageService _requestStorage;
-        Request Request;
+		private readonly IRequestStorageService _requestStorage;
+		private Request _request;
         private Master _selectedMaster;
+		private bool _isMasterSelected;
+		private bool _isCloseRequestAvaliable;
 
-        #region Public Variables
+		#region Public Variables
         public string RequestName { get; private set; }
         public string RequestDescription { get; private set; }
         public string RequestStatus { get; private set; }
@@ -37,14 +40,37 @@ namespace kraken.PageModels
             {
                 _selectedMaster = value;
                 if (value != null)
-                    SendAcceptMasterRequest(value);
-            }
+				{
+					SendAcceptMasterRequest(value);
+				}
+			}
         }
 
-        public bool IsMasterSelected { get; private set; }
-        public bool IsCurrentUserMaster { get; private set; }
-        public bool IsCloseRequestAvaliable { get; private set; }
-        public bool IsRequestHasImage { get; private set; }
+		public bool IsMasterSelected
+		{
+			get => _isMasterSelected;
+			private set 
+			{
+				_isMasterSelected = value;
+				RaisePropertyChanged(nameof(CanAcceptRequest));
+				RaisePropertyChanged(nameof(CanCancelRequest));
+			}
+        }
+
+		public bool IsCurrentUserMaster { get; private set; }
+
+		public bool IsCloseRequestAvaliable
+		{
+			get => _isCloseRequestAvaliable;
+			private set
+			{
+				_isCloseRequestAvaliable = value;
+				RaisePropertyChanged(nameof(CanAcceptRequest));
+				RaisePropertyChanged(nameof(CanCancelRequest));
+			}
+        }
+
+		public bool IsRequestHasImage { get; private set; }
         public bool IsSelectMasterButtonVisible { get; private set; }
         #endregion
 
@@ -56,7 +82,7 @@ namespace kraken.PageModels
                 return new Command(async (param) =>
                 {
 
-                    await CoreMethods.PushPageModel<MasterSelectPageModel>(Request);
+                    await CoreMethods.PushPageModel<MasterSelectPageModel>(_request);
                 });
             }
         }
@@ -103,30 +129,47 @@ namespace kraken.PageModels
         public override void Init(object initData)
         {
             base.Init(initData);
-            Request = (Request)initData;
-            CurrentPage.Title = Request.Work;
+
+			var users = Realm.All<User>();
+			if (!users.Any())
+			{
+				return;
+			}
+
+			CurrentUser = users.Single();
+
+            _request = (Request)initData;
+            CurrentPage.Title = _request.Work;
 
             FillRequestValues();
             GetRequestMastersAsync();
-        }
+		}
+
+		private User CurrentUser
+		{
+			get;
+			set;
+		}
+
+		private static Realm Realm => Realm.GetInstance();
 
         private void FillRequestValues()
         {
-            RequestName = Request.Work;
-            RequestDescription = Request.Description;
-            RequestStatus = "Статус: " + Request.StatusText;
-            MasterDistance = Request.MasterDistance + " км";
-            RequestAddress = Request.Address;
-            RequestPhone = Request.Phone;
-            RequestClientName = Request.Name;
+            RequestName = _request.Work;
+            RequestDescription = _request.Description;
+            RequestStatus = "Статус: " + _request.StatusText;
+            MasterDistance = _request.MasterDistance + " км";
+            RequestAddress = _request.Address;
+            RequestPhone = _request.Phone;
+            RequestClientName = _request.Name;
 
-            if(Request.File == null)
+            if(_request.File == null)
             {
                 IsRequestHasImage = false;
             }
             else
             {
-                RequestFileUrl = string.Format(Constants.StorageUrl, Request.File);
+                RequestFileUrl = string.Format(Constants.StorageUrl, _request.File);
                 IsRequestHasImage = true;
             }
 
@@ -134,13 +177,13 @@ namespace kraken.PageModels
 
             if(IsCurrentUserMaster)
             {
-                IsCloseRequestAvaliable = (Request.Status == "performer appointed" | Request.Status == "appointed");
+                IsCloseRequestAvaliable = (_request.Status == "performer appointed" | _request.Status == "appointed");
                 IsSelectMasterButtonVisible = false;
             }
             else
             {
                 IsCloseRequestAvaliable = true;
-                if (Request.Status == "performer appointed" | Request.Status == "appointed")
+                if (_request.Status == "performer appointed" | _request.Status == "appointed")
                 {
                     IsSelectMasterButtonVisible = false;
                 }
@@ -150,66 +193,78 @@ namespace kraken.PageModels
                 }
             }
 
-            if(Request.IsMasterRequestExists != null)
-            {
-                var isRequestExists = System.Boolean.Parse(Request.IsMasterRequestExists);
-                if(isRequestExists == true & IsCloseRequestAvaliable == false)
-                {
-                    IsMasterSelected = false;
-                }
-                else
-                {
-                    IsMasterSelected = isRequestExists;
-                }
-            }
+			if (_request.IsMasterRequestExists == null)
+			{
+				return;
+			}
 
-        }
+			IsMasterSelected = Parse(_request.IsMasterRequestExists);
+		}
+
+		public bool CanAcceptRequest => (!IsMasterSelected || _request.Status == "1X customer chose master" && IsMasterSelected) && CurrentUser.Status == "free" && !IsCloseRequestAvaliable;
+
+		public bool CanCancelRequest => IsMasterSelected  & IsCloseRequestAvaliable;
 
         private async void GetRequestMastersAsync()
         {
-            Masters = await _requestStorage.GetRequestMastersAsync(Request.uuid);
+            Masters = await _requestStorage.GetRequestMastersAsync(_request.uuid);
             TotalMasters = Masters.Count;
         }
 
         private async void SendAcceptRequest()
         {
-            bool response = await _requestStorage.SendAcceptRequest(Request.uuid);
+            var response = await _requestStorage.SendAcceptRequest(_request.uuid);
 
-            if (response == true)
-            {
-                IsMasterSelected = true;
-            }
-        }
+			if (!response)
+			{
+				return;
+			}
+
+			IsMasterSelected = true;
+			if (_request.Status != "1X customer chose master")
+			{
+				return;
+			}
+
+			_request.Status = "performer appointed";
+			RequestStatus = "Статус: " + _request.StatusText;
+            RaisePropertyChanged(nameof(CanAcceptRequest));
+            RaisePropertyChanged(nameof(CanCancelRequest));
+		}
 
         private async void SendAcceptMasterRequest(Master selectedMaster)
         {
-            if(Request.Status == "appointed" | Request.Status == "performer appointed" | Request.Status == "active")
+            if(_request.Status == "appointed" | _request.Status == "performer appointed" | _request.Status == "active")
             {
                 await CoreMethods.DisplayAlert("Не выполнено", "У заявки уже назначен исполнитель", "Ок");
                 return;
             }
 
-            bool answer = await CoreMethods.DisplayAlert("Внимание", "Подтвердить выбор этого мастера?", "Да", "Нет");
+            var answer = await CoreMethods.DisplayAlert("Внимание", "Подтвердить выбор этого мастера?", "Да", "Нет");
 
-            if (answer == true)
-            {
-                bool response = await _requestStorage.SendAcceptMasterRequest(Request.uuid, selectedMaster);
+			if (!answer)
+			{
+				return;
+			}
 
-                if (response == true)
-                {
-                    Request.Status = "performer appointed";
-                    IsMasterSelected = true;
-                    await CoreMethods.DisplayAlert("Успех", "Мастеру отправлено уведомление о принятие заявки", "Ок");
-                    _selectedMaster = null;
-                }
-            }
-        }
+			var response = await _requestStorage.SendAcceptMasterRequest(_request.uuid, selectedMaster);
+
+			if (!response)
+			{
+				return;
+			}
+
+			_request.Status = "performer appointed";
+			IsMasterSelected = true;
+			await CoreMethods.DisplayAlert("Успех", "Мастеру отправлено уведомление о принятие заявки", "Ок");
+			_selectedMaster = null;
+		}
 
         private async void SendDeclineRequest()
         {
-            bool response = await _requestStorage.SendDeclineRequest(Request.uuid);
+            var response = await _requestStorage.SendDeclineRequest(_request.uuid);
 
-            if (response == true)
+            if (response)
             {
                 IsMasterSelected = false;
             }
@@ -217,14 +272,16 @@ namespace kraken.PageModels
 
         private async void CloseRequest()
         {
-            bool result = await _requestStorage.CloseRequest(Request.uuid);
+            var result = await _requestStorage.CloseRequest(_request.uuid);
 
-            if (result == true)
-            {
-                await CoreMethods.DisplayAlert("Успех", "Заявка успешно завершена", "Ок");
-                Request.IsFinished = "1";
-                Request.Status = "closed";
-            }
-        }
+			if (!result)
+			{
+				return;
+			}
+
+			await CoreMethods.DisplayAlert("Успех", "Заявка успешно завершена", "Ок");
+			_request.IsFinished = "1";
+			_request.Status = "closed";
+		}
     }
 }

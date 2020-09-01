@@ -87,7 +87,8 @@ namespace kraken.Models
                 { "performer appointed", "Назначен исполнитель" },
                 { "answered", "Ответ от мастера" },
                 { "active", "На исполнении" },
-                { "closed", "Закрыт" }
+                { "closed", "Закрыт" },
+                { "1X customer chose master", "Вам заявка" }
             };
 
             UrgencyDictionary = new Dictionary<string, string> {

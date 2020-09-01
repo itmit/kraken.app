@@ -1,4 +1,6 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using kraken.PageModels;
+using Xamarin.Forms;
 
 namespace kraken.Pages
 {
@@ -8,5 +10,5 @@ namespace kraken.Pages
         {
             InitializeComponent();
         }
-    }
+	}
 }

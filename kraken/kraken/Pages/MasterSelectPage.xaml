@@ -12,7 +12,8 @@
             <ListView 
                 HasUnevenRows="True" 
                 VerticalScrollBarVisibility="Never" 
-                SeparatorVisibility="None" 
+                SeparatorVisibility="None"
+                ItemSelected="ListView_OnItemSelected"
                 SelectedItem="{Binding SelectedMaster}"
                 ItemsSource="{Binding Masters}">
                 <ListView.ItemTemplate>

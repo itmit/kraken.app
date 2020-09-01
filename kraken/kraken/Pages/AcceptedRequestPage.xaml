@@ -18,6 +18,7 @@
                       GroupDisplayBinding="{Binding Key}"
                       IsRefreshing="{Binding IsRefreshing}"
                       ItemsSource="{Binding RequestsGrouped}"
+                      ItemSelected="ListView_OnItemSelected"
                       SelectedItem="{Binding SelectedRequest, Mode=TwoWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
